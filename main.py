@@ -1,5 +1,6 @@
 from    bs4 import  BeautifulSoup   
 import  requests,   traceback,  csv
+print("oi")
 
 def scrap(url):
     headers =   {
@@ -59,4 +60,3 @@ with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
     writer.writeheader()
     writer.writerows(dados)
     print("\nDados exportados para 'portalzuk.csv'\n")
-
