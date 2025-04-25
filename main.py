@@ -1,5 +1,5 @@
 from    bs4 import  BeautifulSoup   
-import  requests,   traceback
+import  requests,   traceback,  csv
 
 def scrap(url):
     headers =   {
@@ -32,15 +32,14 @@ def scrap(url):
                     if not (valor_label and valor_value and valor_data):
                         continue
 
-                    if  valor_label and valor_value and valor_data:
-                        data = {
-                            valor_label.get_text(strip=True) if valor_label else None,
-                            valor_value.get_text(strip=True) if valor_value else None,
-                            valor_data.get_text(strip=True) if valor_data else None,
-                            lote_label.get_text(strip=True) if lote_label else None,
-                            address_tag.get_text(separator=" ", strip=True) if address_tag else None,
-                        }
-                        results.append(data)
+                    data = {
+                        "rotulo":valor_label.get_text(strip=True),
+                        "valor":valor_value.get_text(strip=True),
+                        "data":valor_data.get_text(strip=True),
+                        "lote":lote_label.get_text(strip=True) if lote_label else None,
+                        "endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
+                    }
+                    results.append(data)
 
     except  Exception   as  e:
         print(e)
@@ -52,3 +51,12 @@ dados=scrap("https://www.portalzuk.com.br/leilao-de-imoveis/")
 for d in dados:
     print(f"--> {d}")
     print("-" * 40)
+
+with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
+    fieldnames=["rotulo","valor","data","lote","endereco"]
+    writer=csv.DictWriter(csvfile,fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerows(dados)
+    print("\nDados exportados para 'portalzuk.csv'\n")
+
