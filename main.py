@@ -34,7 +34,7 @@ def scrap(url):
 
                     data = {
                         "rotulo":valor_label.get_text(strip=True),
-                        "valor (R$)":valor_value.get_text(strip=True).replace("R$", ""),
+                        "valor (R$  )":valor_value.get_text(strip=True).replace("R$", ""),
                         "data":valor_data.get_text(strip=True),
                         "lote":lote_label.get_text(strip=True) if lote_label else None,
                         "endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
@@ -53,7 +53,7 @@ for d in dados:
     print("-" * 40)
 
 with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
-    fieldnames=["rotulo","valor","data","lote","endereco"]
+    fieldnames=["rotulo","valor (R$)","data","lote","endereco"]
     writer=csv.DictWriter(csvfile,fieldnames=fieldnames)
 
     writer.writeheader()
