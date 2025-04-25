@@ -1,6 +1,5 @@
 from    bs4 import  BeautifulSoup   
 import  requests,   traceback,  csv
-print("oi")
 
 def scrap(url):
     headers =   {
@@ -35,7 +34,7 @@ def scrap(url):
 
                     data = {
                         "rotulo":valor_label.get_text(strip=True),
-                        "valor":valor_value.get_text(strip=True),
+                        "valor (R$)":valor_value.get_text(strip=True).replace("R$", ""),
                         "data":valor_data.get_text(strip=True),
                         "lote":lote_label.get_text(strip=True) if lote_label else None,
                         "endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
