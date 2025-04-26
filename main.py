@@ -1,7 +1,22 @@
 from    bs4 import  BeautifulSoup   
 import  requests,   traceback,  csv
 
-def scrap(url):
+
+def scrapItensPages(url):
+    headers =   {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
+        }
+
+    try:
+        html  =   requests.get(url,    headers=headers)
+        soup    =   BeautifulSoup(html.text, "html.parser")
+
+        itens_div=soup.find_all(class_="property-featured-items")
+        # for iten    in  itens:
+            # label
+        
+
+def scrapMainPage(url):
     headers =   {
         'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
         }
@@ -21,6 +36,10 @@ def scrap(url):
             valor_label = valor_value = valor_data = None  # Evita erro
             lote_label = card.find(class_="card-property-price-lote")
             address_tag = card.find(class_="card-property-address")
+            link_tag=card.find(class_="card-property-image-wrapper").find("a")
+            link=link_tag.find("a")["href"]if   link_tag    and link_tag.find("a")else  None
+            if  link    and not link.startswitch("http"):
+                link="https://{url}"+link
             
             for prices_ul in prices_uls:
                 prices_li=prices_ul.find_all(class_="card-property-price")
@@ -31,6 +50,8 @@ def scrap(url):
 
                     if not (valor_label and valor_value and valor_data):
                         continue
+                    
+                    scrapItensPages(link)
 
                     data = {
                         "rotulo":valor_label.get_text(strip=True),
@@ -47,7 +68,8 @@ def scrap(url):
 
     return  results
 
-dados=scrap("https://www.portalzuk.com.br/leilao-de-imoveis/")    
+
+dados=scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/")    
 for d in dados:
     print(f"--> {d}")
     print("-" * 40)
