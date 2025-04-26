@@ -1,6 +1,6 @@
 from    bs4 import  BeautifulSoup   
 import  requests,   traceback,  csv
-from    concurrent.futures  import  ThreadPoolExecutor,as_completed
+# from    concurrent.futures  import  ThreadPoolExecutor,as_completed
 
 def scrapItensPages(url):
     headers = {
@@ -64,6 +64,10 @@ def scrapItensPages(url):
             d_compromissario_c_tag=c.find("p",class_="property-status-text")
             d_compromissario_c=d_compromissario_c_tag.get_text(strip=True)
             extra_data["Direitos do Compromissario Comprador"]=d_compromissario_c
+
+            d_preferencia_tag=c.find("p",class_="text_subtitle")
+            d_preferencia=d_preferencia_tag.get_text(strip=True)
+            extra_data["Direito de Preferencia"]=d_preferencia
 
         return  extra_data
 
