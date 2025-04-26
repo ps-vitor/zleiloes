@@ -1,84 +1,84 @@
-rotulo,valor (R$),data,lote,endereco
-1º leilão,"171.407,12",07/04/2025 às 10:10,Apartamento,"São Vicente / SP - Parque São Vicente Rua Carlos Gomes,  69"
-2º leilão," 103.502,4840",28/04/2025 às 10:10,Apartamento,"São Vicente / SP - Parque São Vicente Rua Carlos Gomes,  69"
+Rotulo,Valor (R$),Data,Lote,Endereco,link,Andar,Metragem construída,Metragem privativa,Metragem terreno,Metragem total,Metragem útil,Quartos,Vagas
+1º leilão,"171.407,12",07/04/2025 às 10:10,Apartamento,"São Vicente / SP - Parque São Vicente Rua Carlos Gomes,  69",https://www.portalzuk.com.br/imovel/sp/sao-vicente/parque-sao-vicente/rua-carlos-gomes-69/32443-198209,3,,,,"64,24m²","51,80m²",,
+2º leilão," 103.502,4840",28/04/2025 às 10:10,Apartamento,"São Vicente / SP - Parque São Vicente Rua Carlos Gomes,  69",https://www.portalzuk.com.br/imovel/sp/sao-vicente/parque-sao-vicente/rua-carlos-gomes-69/32443-198209,3,,,,"64,24m²","51,80m²",,
 1º leilão,"
-                      454.468,57",28/04/2025 às 10:20,Apartamento,"São Paulo / SP - Barra Funda Rua Lopes de Oliveira,  112"
-2º leilão," 272.681,1440",19/05/2025 às 10:20,Apartamento,"São Paulo / SP - Barra Funda Rua Lopes de Oliveira,  112"
+                      454.468,57",28/04/2025 às 10:20,Apartamento,"São Paulo / SP - Barra Funda Rua Lopes de Oliveira,  112",https://www.portalzuk.com.br/imovel/sp/sao-paulo/barra-funda/rua-lopes-de-oliveira-112/32771-200361,,,,,"108,76m²","64,13m²",3,1
+2º leilão," 272.681,1440",19/05/2025 às 10:20,Apartamento,"São Paulo / SP - Barra Funda Rua Lopes de Oliveira,  112",https://www.portalzuk.com.br/imovel/sp/sao-paulo/barra-funda/rua-lopes-de-oliveira-112/32771-200361,,,,,"108,76m²","64,13m²",3,1
 1º leilão,"
-                      978.616,45",28/04/2025 às 10:30,Casa,"Brasília / DF - Candangolândia Quadra Qr 2,  S/n"
-2º leilão," 499.094,3949",05/05/2025 às 10:30,Casa,"Brasília / DF - Candangolândia Quadra Qr 2,  S/n"
+                      978.616,45",28/04/2025 às 10:30,Casa,"Brasília / DF - Candangolândia Quadra Qr 2,  S/n",https://www.portalzuk.com.br/imovel/df/brasilia/candangolandia/quadra-qr-2-s-n/32909-201284,,"31,35m²",,"123,15m²",,,,
+2º leilão," 499.094,3949",05/05/2025 às 10:30,Casa,"Brasília / DF - Candangolândia Quadra Qr 2,  S/n",https://www.portalzuk.com.br/imovel/df/brasilia/candangolandia/quadra-qr-2-s-n/32909-201284,,"31,35m²",,"123,15m²",,,,
 1º leilão,"
-                      332.132,79",28/04/2025 às 10:30,Casa,"Campinas / SP - Aero Continental Rua João José Pereira,  56"
-2º leilão," 166.066,4050",20/05/2025 às 10:30,Casa,"Campinas / SP - Aero Continental Rua João José Pereira,  56"
+                      332.132,79",28/04/2025 às 10:30,Casa,"Campinas / SP - Aero Continental Rua João José Pereira,  56",https://www.portalzuk.com.br/imovel/sp/campinas/aero-continental/rua-joao-jose-pereira-56/32856-200703,,"154,00m²",,"295,00m²",,,,
+2º leilão," 166.066,4050",20/05/2025 às 10:30,Casa,"Campinas / SP - Aero Continental Rua João José Pereira,  56",https://www.portalzuk.com.br/imovel/sp/campinas/aero-continental/rua-joao-jose-pereira-56/32856-200703,,"154,00m²",,"295,00m²",,,,
 1º leilão,"
-                      200.300,87",28/04/2025 às 10:40,Apartamento,"Campinas / SP - Vila União Rua da Padroeira,  935"
-2º leilão," 170.255,7415",19/05/2025 às 10:40,Apartamento,"Campinas / SP - Vila União Rua da Padroeira,  935"
+                      200.300,87",28/04/2025 às 10:40,Apartamento,"Campinas / SP - Vila União Rua da Padroeira,  935",https://www.portalzuk.com.br/imovel/sp/campinas/vila-uniao/rua-da-padroeira-935/32779-200380,1,,,,"57,06m²","51,71m²",2,1
+2º leilão," 170.255,7415",19/05/2025 às 10:40,Apartamento,"Campinas / SP - Vila União Rua da Padroeira,  935",https://www.portalzuk.com.br/imovel/sp/campinas/vila-uniao/rua-da-padroeira-935/32779-200380,1,,,,"57,06m²","51,71m²",2,1
 1º leilão,"
-                      289.122,24",28/04/2025 às 10:50,Terreno,"Cajati / SP - Vila Antunes Avenida João Felizardo,  s/nº"
-2º leilão," 144.561,1250",19/05/2025 às 10:50,Terreno,"Cajati / SP - Vila Antunes Avenida João Felizardo,  s/nº"
-1º leilão,"282.852,39",14/04/2025 às 11:00,Apartamento,"Guarulhos / SP - Parque Primavera Estrada do Zirconio,  840"
-2º leilão," 141.426,2050",28/04/2025 às 11:00,Apartamento,"Guarulhos / SP - Parque Primavera Estrada do Zirconio,  840"
+                      289.122,24",28/04/2025 às 10:50,Terreno,"Cajati / SP - Vila Antunes Avenida João Felizardo,  s/nº",https://www.portalzuk.com.br/imovel/sp/cajati/vila-antunes/avenida-joao-felizardo-s-nº/32780-200381,,,,"2.599,94m²",,,,
+2º leilão," 144.561,1250",19/05/2025 às 10:50,Terreno,"Cajati / SP - Vila Antunes Avenida João Felizardo,  s/nº",https://www.portalzuk.com.br/imovel/sp/cajati/vila-antunes/avenida-joao-felizardo-s-nº/32780-200381,,,,"2.599,94m²",,,,
+1º leilão,"282.852,39",14/04/2025 às 11:00,Apartamento,"Guarulhos / SP - Parque Primavera Estrada do Zirconio,  840",https://www.portalzuk.com.br/imovel/sp/guarulhos/parque-primavera/estrada-do-zirconio-840/32718-200177,7,,,,"60,91m²","45,25m²",,1
+2º leilão," 141.426,2050",28/04/2025 às 11:00,Apartamento,"Guarulhos / SP - Parque Primavera Estrada do Zirconio,  840",https://www.portalzuk.com.br/imovel/sp/guarulhos/parque-primavera/estrada-do-zirconio-840/32718-200177,7,,,,"60,91m²","45,25m²",,1
 1º leilão,"
-                      599.813,33",28/04/2025 às 11:00,Casa,"São Paulo / SP - Penha de França Rua Moliterno,  281"
-2º leilão," 569.822,665",19/05/2025 às 11:00,Casa,"São Paulo / SP - Penha de França Rua Moliterno,  281"
-1º leilão,"131.285,45",14/04/2025 às 11:01,Apartamento,"Campos dos Goytacazes / RJ - Parque João Maria Rua Doutor João Maria,  202"
-2º leilão," 79.602,9739",28/04/2025 às 11:01,Apartamento,"Campos dos Goytacazes / RJ - Parque João Maria Rua Doutor João Maria,  202"
+                      599.813,33",28/04/2025 às 11:00,Casa,"São Paulo / SP - Penha de França Rua Moliterno,  281",https://www.portalzuk.com.br/imovel/sp/sao-paulo/penha-de-franca/rua-moliterno-281/32781-200382,,,,"224,00m²",,,,
+2º leilão," 569.822,665",19/05/2025 às 11:00,Casa,"São Paulo / SP - Penha de França Rua Moliterno,  281",https://www.portalzuk.com.br/imovel/sp/sao-paulo/penha-de-franca/rua-moliterno-281/32781-200382,,,,"224,00m²",,,,
+1º leilão,"131.285,45",14/04/2025 às 11:01,Apartamento,"Campos dos Goytacazes / RJ - Parque João Maria Rua Doutor João Maria,  202",https://www.portalzuk.com.br/imovel/rj/campos-dos-goytacazes/parque-joao-maria/rua-doutor-joao-maria-202/32718-200286,,,,,,,,
+2º leilão," 79.602,9739",28/04/2025 às 11:01,Apartamento,"Campos dos Goytacazes / RJ - Parque João Maria Rua Doutor João Maria,  202",https://www.portalzuk.com.br/imovel/rj/campos-dos-goytacazes/parque-joao-maria/rua-doutor-joao-maria-202/32718-200286,,,,,,,,
 1º leilão,"
-                      593.000,00",28/04/2025 às 11:02,Casa,"Paracuru / CE - Lagoa Rua Sociedade Cósmica,  20"
-2º leilão," 355.800,0040",30/04/2025 às 11:02,Casa,"Paracuru / CE - Lagoa Rua Sociedade Cósmica,  20"
-1º leilão,"302.492,19",14/04/2025 às 11:02,Apartamento,"São Paulo / SP - Lauzane Paulista Rua Tavannes,  145"
-2º leilão," 151.246,1050",28/04/2025 às 11:02,Apartamento,"São Paulo / SP - Lauzane Paulista Rua Tavannes,  145"
-1º leilão,"2.335.605,14",14/04/2025 às 11:04,Casa,"Cajamar / SP - Serra dos Lagos Rua Ametista,  526"
-2º leilão," 2.051.154,2012",28/04/2025 às 11:04,Casa,"Cajamar / SP - Serra dos Lagos Rua Ametista,  526"
-1º leilão,"288.651,09",14/04/2025 às 11:05,Apartamento,"Salvador / BA - Piatã Rua Marcos Pinheiro,  69"
-2º leilão," 235.854,4018",28/04/2025 às 11:05,Apartamento,"Salvador / BA - Piatã Rua Marcos Pinheiro,  69"
+                      593.000,00",28/04/2025 às 11:02,Casa,"Paracuru / CE - Lagoa Rua Sociedade Cósmica,  20",https://www.portalzuk.com.br/imovel/ce/paracuru/lagoa/rua-sociedade-cosmica-20/32876-200917,,"395,00m²",,"455,00m²",,,,
+2º leilão," 355.800,0040",30/04/2025 às 11:02,Casa,"Paracuru / CE - Lagoa Rua Sociedade Cósmica,  20",https://www.portalzuk.com.br/imovel/ce/paracuru/lagoa/rua-sociedade-cosmica-20/32876-200917,,"395,00m²",,"455,00m²",,,,
+1º leilão,"302.492,19",14/04/2025 às 11:02,Apartamento,"São Paulo / SP - Lauzane Paulista Rua Tavannes,  145",https://www.portalzuk.com.br/imovel/sp/sao-paulo/lauzane-paulista/rua-tavannes-145/32718-200296,3,,,,"85,49m²","42,60m²",,1
+2º leilão," 151.246,1050",28/04/2025 às 11:02,Apartamento,"São Paulo / SP - Lauzane Paulista Rua Tavannes,  145",https://www.portalzuk.com.br/imovel/sp/sao-paulo/lauzane-paulista/rua-tavannes-145/32718-200296,3,,,,"85,49m²","42,60m²",,1
+1º leilão,"2.335.605,14",14/04/2025 às 11:04,Casa,"Cajamar / SP - Serra dos Lagos Rua Ametista,  526",https://www.portalzuk.com.br/imovel/sp/cajamar/serra-dos-lagos/rua-ametista-526/32718-200473,,"321,87m²",,"1.028,62m²",,,,
+2º leilão," 2.051.154,2012",28/04/2025 às 11:04,Casa,"Cajamar / SP - Serra dos Lagos Rua Ametista,  526",https://www.portalzuk.com.br/imovel/sp/cajamar/serra-dos-lagos/rua-ametista-526/32718-200473,,"321,87m²",,"1.028,62m²",,,,
+1º leilão,"288.651,09",14/04/2025 às 11:05,Apartamento,"Salvador / BA - Piatã Rua Marcos Pinheiro,  69",https://www.portalzuk.com.br/imovel/ba/salvador/piata/rua-marcos-pinheiro-69/32718-200474,,,,,"111,37m²","56,22m²",2,1
+2º leilão," 235.854,4018",28/04/2025 às 11:05,Apartamento,"Salvador / BA - Piatã Rua Marcos Pinheiro,  69",https://www.portalzuk.com.br/imovel/ba/salvador/piata/rua-marcos-pinheiro-69/32718-200474,,,,,,,,
 1º leilão,"
-                      436.456,86",28/04/2025 às 11:05,Apartamento,"Teresina / PI - Lourival Parente Rua Agenor Veloso,  1200"
-2º leilão," 305.511,4830",30/04/2025 às 11:05,Apartamento,"Teresina / PI - Lourival Parente Rua Agenor Veloso,  1200"
-1º leilão,"352.181,52",14/04/2025 às 11:06,Apartamento,"Fortaleza / CE - Aldeota Rua Isac Meyer,  20"
-2º leilão," 222.975,6537",28/04/2025 às 11:06,Apartamento,"Fortaleza / CE - Aldeota Rua Isac Meyer,  20"
+                      436.456,86",28/04/2025 às 11:05,Apartamento,"Teresina / PI - Lourival Parente Rua Agenor Veloso,  1200",https://www.portalzuk.com.br/imovel/pi/teresina/lourival-parente/rua-agenor-veloso-1200/32876-200918,,,,,,,,
+2º leilão," 305.511,4830",30/04/2025 às 11:05,Apartamento,"Teresina / PI - Lourival Parente Rua Agenor Veloso,  1200",https://www.portalzuk.com.br/imovel/pi/teresina/lourival-parente/rua-agenor-veloso-1200/32876-200918,,,,,,,,
+1º leilão,"352.181,52",14/04/2025 às 11:06,Apartamento,"Fortaleza / CE - Aldeota Rua Isac Meyer,  20",https://www.portalzuk.com.br/imovel/ce/fortaleza/aldeota/rua-isac-meyer-20/32718-200475,,,,,,,,
+2º leilão," 222.975,6537",28/04/2025 às 11:06,Apartamento,"Fortaleza / CE - Aldeota Rua Isac Meyer,  20",https://www.portalzuk.com.br/imovel/ce/fortaleza/aldeota/rua-isac-meyer-20/32718-200475,,,,,"149,18m²","89,34m²",,2
 1º leilão,"
-                      754.442,07",28/04/2025 às 11:08,Casa,"São Paulo / SP - Jardim Eliane Rua Tacacazeiro,  283"
-2º leilão," 537.344,4129",30/04/2025 às 11:08,Casa,"São Paulo / SP - Jardim Eliane Rua Tacacazeiro,  283"
+                      754.442,07",28/04/2025 às 11:08,Casa,"São Paulo / SP - Jardim Eliane Rua Tacacazeiro,  283",https://www.portalzuk.com.br/imovel/sp/sao-paulo/jardim-eliane/rua-tacacazeiro-283/32876-200919,,,"67,83m²","163,32m²",,,,
+2º leilão," 537.344,4129",30/04/2025 às 11:08,Casa,"São Paulo / SP - Jardim Eliane Rua Tacacazeiro,  283",https://www.portalzuk.com.br/imovel/sp/sao-paulo/jardim-eliane/rua-tacacazeiro-283/32876-200919,,,,,,,,
 1º leilão,"
-                      291.943,22",28/04/2025 às 11:14,Casa,"Trindade / GO - Jardim Decolores Avenida João Xxiii,  s/nº"
-2º leilão," 243.849,2716",30/04/2025 às 11:14,Casa,"Trindade / GO - Jardim Decolores Avenida João Xxiii,  s/nº"
+                      291.943,22",28/04/2025 às 11:14,Casa,"Trindade / GO - Jardim Decolores Avenida João Xxiii,  s/nº",https://www.portalzuk.com.br/imovel/go/trindade/jardim-decolores/avenida-joao-xxiii-s-nº-/32876-200921,,,,,,,,
+2º leilão," 243.849,2716",30/04/2025 às 11:14,Casa,"Trindade / GO - Jardim Decolores Avenida João Xxiii,  s/nº",https://www.portalzuk.com.br/imovel/go/trindade/jardim-decolores/avenida-joao-xxiii-s-nº-/32876-200921,,,,,,,,
 1º leilão,"
-                      637.000,00",28/04/2025 às 11:17,Casa,"Curitiba / PR - Guaíra Rua Assis Figueiredo,  928"
-2º leilão," 382.200,0040",30/04/2025 às 11:17,Casa,"Curitiba / PR - Guaíra Rua Assis Figueiredo,  928"
+                      637.000,00",28/04/2025 às 11:17,Casa,"Curitiba / PR - Guaíra Rua Assis Figueiredo,  928",https://www.portalzuk.com.br/imovel/pr/curitiba/guaira/rua-assis-figueiredo-928/32876-200922,,,,,,,,
+2º leilão," 382.200,0040",30/04/2025 às 11:17,Casa,"Curitiba / PR - Guaíra Rua Assis Figueiredo,  928",https://www.portalzuk.com.br/imovel/pr/curitiba/guaira/rua-assis-figueiredo-928/32876-200922,,,,,,,,
 1º leilão,"
-                      437.000,00",28/04/2025 às 11:20,Casa,"Primavera do Leste / MT - Residencial Buritis Primavera Rua Butiá,  553"
-2º leilão," 262.200,0040",30/04/2025 às 11:20,Casa,"Primavera do Leste / MT - Residencial Buritis Primavera Rua Butiá,  553"
+                      437.000,00",28/04/2025 às 11:20,Casa,"Primavera do Leste / MT - Residencial Buritis Primavera Rua Butiá,  553",https://www.portalzuk.com.br/imovel/mt/primavera-do-leste/residencial-buritis-primavera/rua-butia-553/32876-200923,,,,,,,,
+2º leilão," 262.200,0040",30/04/2025 às 11:20,Casa,"Primavera do Leste / MT - Residencial Buritis Primavera Rua Butiá,  553",https://www.portalzuk.com.br/imovel/mt/primavera-do-leste/residencial-buritis-primavera/rua-butia-553/32876-200923,,,,,,,,
 1º leilão,"
-                      461.883,07",28/04/2025 às 11:23,Casa,"Goiânia / GO - Feliz Rua L3,  189"
-2º leilão," 261.600,0043",30/04/2025 às 11:23,Casa,"Goiânia / GO - Feliz Rua L3,  189"
+                      461.883,07",28/04/2025 às 11:23,Casa,"Goiânia / GO - Feliz Rua L3,  189",https://www.portalzuk.com.br/imovel/go/goiania/feliz/rua-l3-189/32876-200924,,,,,,,,
+2º leilão," 261.600,0043",30/04/2025 às 11:23,Casa,"Goiânia / GO - Feliz Rua L3,  189",https://www.portalzuk.com.br/imovel/go/goiania/feliz/rua-l3-189/32876-200924,,,,,,,,
 1º leilão,"
-                      805.285,37",28/04/2025 às 11:26,Casa,"Ituiutaba / MG - Natal Rua Zero,  423"
-2º leilão," 597.241,8926",30/04/2025 às 11:26,Casa,"Ituiutaba / MG - Natal Rua Zero,  423"
+                      805.285,37",28/04/2025 às 11:26,Casa,"Ituiutaba / MG - Natal Rua Zero,  423",https://www.portalzuk.com.br/imovel/mg/ituiutaba/natal/rua-zero-423/32876-200925,,,,,,,,
+2º leilão," 597.241,8926",30/04/2025 às 11:26,Casa,"Ituiutaba / MG - Natal Rua Zero,  423",https://www.portalzuk.com.br/imovel/mg/ituiutaba/natal/rua-zero-423/32876-200925,,,,,,,,
 1º leilão,"
-                      659.377,59",28/04/2025 às 11:29,Casa,"Sobral / CE - Padre Ibiapina Rua João Xxiii,  1104"
-2º leilão," 585.985,1311",30/04/2025 às 11:29,Casa,"Sobral / CE - Padre Ibiapina Rua João Xxiii,  1104"
+                      659.377,59",28/04/2025 às 11:29,Casa,"Sobral / CE - Padre Ibiapina Rua João Xxiii,  1104",https://www.portalzuk.com.br/imovel/ce/sobral/padre-ibiapina/rua-joao-xxiii-1104/32876-200926,,,,,,,,
+2º leilão," 585.985,1311",30/04/2025 às 11:29,Casa,"Sobral / CE - Padre Ibiapina Rua João Xxiii,  1104",https://www.portalzuk.com.br/imovel/ce/sobral/padre-ibiapina/rua-joao-xxiii-1104/32876-200926,,,,,,,,
 1º leilão,"
-                      600.298,93",28/04/2025 às 11:32,Casa,"Goiânia / GO - Residencial Portinari Rua P 11,  s/nº"
-2º leilão," 362.824,3940",30/04/2025 às 11:32,Casa,"Goiânia / GO - Residencial Portinari Rua P 11,  s/nº"
+                      600.298,93",28/04/2025 às 11:32,Casa,"Goiânia / GO - Residencial Portinari Rua P 11,  s/nº",https://www.portalzuk.com.br/imovel/go/goiania/residencial-portinari/rua-p-11-s-nº-/32876-200927,,,,,,,,
+2º leilão," 362.824,3940",30/04/2025 às 11:32,Casa,"Goiânia / GO - Residencial Portinari Rua P 11,  s/nº",https://www.portalzuk.com.br/imovel/go/goiania/residencial-portinari/rua-p-11-s-nº-/32876-200927,,,,,,,,
 1º leilão,"
-                      847.619,19",28/04/2025 às 11:35,Casa,"Mara Rosa / GO - Residencial Bela Vista Rua Duas Cabeceiras,  s/nº"
-2º leilão," 623.607,3026",30/04/2025 às 11:35,Casa,"Mara Rosa / GO - Residencial Bela Vista Rua Duas Cabeceiras,  s/nº"
+                      847.619,19",28/04/2025 às 11:35,Casa,"Mara Rosa / GO - Residencial Bela Vista Rua Duas Cabeceiras,  s/nº",https://www.portalzuk.com.br/imovel/go/mara-rosa/residencial-bela-vista/rua-duas-cabeceiras-s-nº-/32876-200928,,,,,,,,
+2º leilão," 623.607,3026",30/04/2025 às 11:35,Casa,"Mara Rosa / GO - Residencial Bela Vista Rua Duas Cabeceiras,  s/nº",https://www.portalzuk.com.br/imovel/go/mara-rosa/residencial-bela-vista/rua-duas-cabeceiras-s-nº-/32876-200928,,,,,,,,
 1º leilão,"
-                      531.018,63",28/04/2025 às 11:38,Casa,"Bady Bassitt / SP - Honório Gumercindo de Moraes Rua Alcides Lanzoni,  172"
-2º leilão," 208.800,0061",30/04/2025 às 11:38,Casa,"Bady Bassitt / SP - Honório Gumercindo de Moraes Rua Alcides Lanzoni,  172"
+                      531.018,63",28/04/2025 às 11:38,Casa,"Bady Bassitt / SP - Honório Gumercindo de Moraes Rua Alcides Lanzoni,  172",https://www.portalzuk.com.br/imovel/sp/bady-bassitt/honorio-gumercindo-de-moraes/rua-alcides-lanzoni-172/32876-200929,,,,,,,,
+2º leilão," 208.800,0061",30/04/2025 às 11:38,Casa,"Bady Bassitt / SP - Honório Gumercindo de Moraes Rua Alcides Lanzoni,  172",https://www.portalzuk.com.br/imovel/sp/bady-bassitt/honorio-gumercindo-de-moraes/rua-alcides-lanzoni-172/32876-200929,,,,,,,,
 1º leilão,"
-                      778.406,82",28/04/2025 às 11:41,Casa,"Cascavel / PR - Canadá Rua Sadi Lazari,  396"
-2º leilão," 384.000,0051",30/04/2025 às 11:41,Casa,"Cascavel / PR - Canadá Rua Sadi Lazari,  396"
+                      778.406,82",28/04/2025 às 11:41,Casa,"Cascavel / PR - Canadá Rua Sadi Lazari,  396",https://www.portalzuk.com.br/imovel/pr/cascavel/canada/rua-sadi-lazari-396/32876-200930,,,,,,,,
+2º leilão," 384.000,0051",30/04/2025 às 11:41,Casa,"Cascavel / PR - Canadá Rua Sadi Lazari,  396",https://www.portalzuk.com.br/imovel/pr/cascavel/canada/rua-sadi-lazari-396/32876-200930,,,,,,,,
 1º leilão,"
-                      823.267,69",28/04/2025 às 11:44,Casa,"Patos de Minas / MG - Boa Vista Rua Pedro Vaz da Mota,  44"
-2º leilão," 467.326,6543",30/04/2025 às 11:44,Casa,"Patos de Minas / MG - Boa Vista Rua Pedro Vaz da Mota,  44"
+                      823.267,69",28/04/2025 às 11:44,Casa,"Patos de Minas / MG - Boa Vista Rua Pedro Vaz da Mota,  44",https://www.portalzuk.com.br/imovel/mg/patos-de-minas/boa-vista/rua-pedro-vaz-da-mota-44/32876-200931,,,,,,,,
+2º leilão," 467.326,6543",30/04/2025 às 11:44,Casa,"Patos de Minas / MG - Boa Vista Rua Pedro Vaz da Mota,  44",https://www.portalzuk.com.br/imovel/mg/patos-de-minas/boa-vista/rua-pedro-vaz-da-mota-44/32876-200931,,,,,,,,
 1º leilão,"
-                      531.781,57",28/04/2025 às 11:47,Casa,"Presidente Prudente / SP - Brasil Novo Rua Professora Olívia Abuchala Kesrouani,  50"
-2º leilão," 409.692,3723",30/04/2025 às 11:47,Casa,"Presidente Prudente / SP - Brasil Novo Rua Professora Olívia Abuchala Kesrouani,  50"
+                      531.781,57",28/04/2025 às 11:47,Casa,"Presidente Prudente / SP - Brasil Novo Rua Professora Olívia Abuchala Kesrouani,  50",https://www.portalzuk.com.br/imovel/sp/presidente-prudente/brasil-novo/rua-professora-olivia-abuchala-kesrouani-50/32876-201049,,,,,,,,
+2º leilão," 409.692,3723",30/04/2025 às 11:47,Casa,"Presidente Prudente / SP - Brasil Novo Rua Professora Olívia Abuchala Kesrouani,  50",https://www.portalzuk.com.br/imovel/sp/presidente-prudente/brasil-novo/rua-professora-olivia-abuchala-kesrouani-50/32876-201049,,,,,,,,
 1º leilão,"
-                      391.901,80",28/04/2025 às 11:50,Casa,"Marabá / PA - Nova Marabá Rua 09,  s/nº"
-2º leilão," 185.107,8653",30/04/2025 às 11:50,Casa,"Marabá / PA - Nova Marabá Rua 09,  s/nº"
+                      391.901,80",28/04/2025 às 11:50,Casa,"Marabá / PA - Nova Marabá Rua 09,  s/nº",https://www.portalzuk.com.br/imovel/pa/maraba/nova-maraba/rua-09-s-nº-/32876-201050,,,,,,,,
+2º leilão," 185.107,8653",30/04/2025 às 11:50,Casa,"Marabá / PA - Nova Marabá Rua 09,  s/nº",https://www.portalzuk.com.br/imovel/pa/maraba/nova-maraba/rua-09-s-nº-/32876-201050,,,,,,,,
 1º leilão,"
-                      9.884.965,05",28/04/2025 às 11:53,Apartamento,"Rio de Janeiro / RJ - Barra da Tijuca Avenida Flamboyants da Península,  155"
-2º leilão," 3.424.128,4465",30/04/2025 às 11:53,Apartamento,"Rio de Janeiro / RJ - Barra da Tijuca Avenida Flamboyants da Península,  155"
+                      9.884.965,05",28/04/2025 às 11:53,Apartamento,"Rio de Janeiro / RJ - Barra da Tijuca Avenida Flamboyants da Península,  155",https://www.portalzuk.com.br/imovel/rj/rio-de-janeiro/barra-da-tijuca/avenida-flamboyants-da-peninsula-155/32876-201051,,,,,,,,
+2º leilão," 3.424.128,4465",30/04/2025 às 11:53,Apartamento,"Rio de Janeiro / RJ - Barra da Tijuca Avenida Flamboyants da Península,  155",https://www.portalzuk.com.br/imovel/rj/rio-de-janeiro/barra-da-tijuca/avenida-flamboyants-da-peninsula-155/32876-201051,,,,,,,,

@@ -1,27 +1,36 @@
 from    bs4 import  BeautifulSoup   
 import  requests,   traceback,  csv
+from    concurrent.futures  import  ThreadPoolExecutor,as_completed
 
-
-def scrapItensPages(url, headers):
+def scrapItensPages(url):
+    headers = {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
+    }
+    extra_data={}
     try:
         if url is None:
             print("[ERRO] URL está None! Não é possível fazer a requisição.")
-            return
+            return  extra_data
+
         html = requests.get(url, headers=headers)
         soup = BeautifulSoup(html.text, "html.parser")
 
-        itens_div = soup.find_all(class_="property-featured-items")
-        for iten in itens_div:
-            iten_label_tag = iten.find("span", class_="property-featured-item-label")
-            iten_value_tag = iten.find("span", class_="property-featured-item-value")
-            if  iten_label_tag  and iten_value_tag:
-                try:
-                    iten_label=iten_label_tag.get_text(strip=True)
-                    iten_value=iten_value_tag.get_text(strip=True)
-                except  Exception   as  e:
-                    print(e)
-                    traceback.print_exc()
+        itens_div = soup.find_all("div",class_="property-featured-items")
+        for itens in itens_div:
+            all_itens=itens.find_all("div",class_="property-featured-item")
+            for iten    in  all_itens:
+                iten_label_tag = iten.find("span", class_="property-featured-item-label")
+                iten_value_tag = iten.find("span", class_="property-featured-item-value")
+                if  iten_label_tag  and iten_value_tag:
+                    try:
+                        iten_label=iten_label_tag.get_text(strip=True)
+                        iten_value=iten_value_tag.get_text(strip=True)
+                        extra_data[iten_label]=iten_value
+                    except  Exception   as  e:
+                        print(e)
+                        traceback.print_exc()
 
+        return  extra_data
 
     except Exception as e:
         print(e)
@@ -66,14 +75,15 @@ def scrapMainPage(url):
                     if not (valor_label and valor_value and valor_data):
                         continue
                     
-                    scrapItensPages(link,headers)
+                    # scrapItensPages(link,headers)
 
                     data = {
-                        "rotulo":valor_label.get_text(strip=True),
-                        "valor (R$)":valor_value.get_text(strip=True).replace("R$", ""),
-                        "data":valor_data.get_text(strip=True),
-                        "lote":lote_label.get_text(strip=True) if lote_label else None,
-                        "endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
+                        "link":link,
+                        "Rotulo":valor_label.get_text(strip=True),
+                        "Valor (R$)":valor_value.get_text(strip=True).replace("R$", ""),
+                        "Data":valor_data.get_text(strip=True),
+                        "Lote":lote_label.get_text(strip=True) if lote_label else None,
+                        "Endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
                     }
                     results.append(data)
 
@@ -84,16 +94,49 @@ def scrapMainPage(url):
     return  results
 
 
+def main():
+    try:
+        dados=scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/") 
 
-dados=scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/")    
-# for d in dados:
-    # print(f"--> {d}")
-    # print("-" * 40)
+        with    ThreadPoolExecutor(max_workers=10)as    executor:
+            future_to_data={
+                executor.submit(scrapItensPages,d["link"]):d   for d   in  dados   if  d["link"]
+            }
 
-with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
-    fieldnames=["rotulo","valor (R$)","data","lote","endereco"]
-    writer=csv.DictWriter(csvfile,fieldnames=fieldnames)
+            for future  in  as_completed(future_to_data):
+                data=future_to_data[future]
+                try:
+                    extra_info=future.result()
+                    data.update(extra_info)
+                except  Exception   as  e:
+                    print(f"Erro no procesamento paralelo: {e}")
+        
+        all_keys=set()
+        for d   in  dados:
+            all_keys.update(d.keys())
+        all_keys.discard("link")
 
-    writer.writeheader()
-    writer.writerows(dados)
-    print("\nDados exportados para 'portalzuk.csv'\n")
+        with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
+            fieldnames=[
+                "Rotulo","Valor (R$)","Data","Lote","Endereco","link"
+            ]+sorted(k  for k   in  all_keys    if  k   not in[
+                "Rotulo","Valor (R$)","Data","Lote","Endereco","link"
+            ])
+
+            writer=csv.DictWriter(csvfile,fieldnames=fieldnames)
+
+            writer.writeheader()
+            writer.writerows(dados)
+
+            for d in dados:
+                d.pop("link",None)
+                print(f"--> {d}")
+                print("-" * 40)
+
+    except  Exception   as  e:
+        print(e)
+    finally:
+        print("\nDados exportados para 'portalzuk.csv'\n")
+
+if  __name__   ==   "__main__":
+    main()
