@@ -12,7 +12,7 @@ def scrapItensPages(url):
             print("[ERRO] URL está None! Não é possível fazer a requisição.")
             return  extra_data
 
-        html = requests.get(url, headers=headers)
+        html = requests.get(url, headers=headers,timeout=10)
         soup = BeautifulSoup(html.text, "html.parser")
 
         itens_div = soup.find_all("div",class_="property-featured-items")
@@ -30,6 +30,41 @@ def scrapItensPages(url):
                         print(e)
                         traceback.print_exc()
 
+        content=soup.find_all("div",class_="content")
+        for c   in  content:
+            situation_tag=c.find("span",class_="property-status-title")
+            situation=situation_tag.get_text(strip=True)
+            extra_data["Situacao"]=situation
+
+            matricula_tag=c.find("p",{"class":"text_subtitle","id":"itens_matricula"})
+            matricula=matricula_tag.get_text(strip=True)
+            extra_data["Matricula do imovel"]=matricula
+
+            observacoes_tag=c.find("div",{"class":"property-info-text div-text-observacoes"})
+            observacoes = observacoes_tag.get_text(strip=True)
+            extra_data["Observacoes"]=observacoes
+
+        
+            link_tag = c.find("a", class_="glossary-link")
+            link = link_tag["href"]
+            extra_data["Link do processo"]=link
+
+            visitacao_tag=c.find("div",class_="property-info-text")
+            visitacao=visitacao_tag.get_text(strip=True)
+            extra_data["Visitacao"]=visitacao
+
+            f_pagamento_h3_tag=c.find("h3",class_="property-info-title")
+            f_pagamento_h3=f_pagamento_h3_tag.get_text(strip=True)
+            f_pagamento_ul=c.find_all(class_="property-payments-items")
+            for f   in  f_pagamento_ul:
+                f_tag=f.find("p",class_="property-payments-item-text")
+                f_text=f_tag.get_text(strip=True)
+                extra_data[f_pagamento_h3]=f_text
+
+            d_compromissario_c_tag=c.find("p",class_="property-status-text")
+            d_compromissario_c=d_compromissario_c_tag.get_text(strip=True)
+            extra_data["Direitos do Compromissario Comprador"]=d_compromissario_c
+
         return  extra_data
 
     except Exception as e:
@@ -45,12 +80,11 @@ def scrapMainPage(url):
     results=[]
 
     try:
-        html  =   requests.get(url,    headers=headers)
+        html  =   requests.get(url,    headers=headers,timeout=10)
         soup    =   BeautifulSoup(html.text, "html.parser")
         
         section=soup.find(class_="s-list-properties")
         cards=section.find_all(class_="card-property")
-        # print(section)
         for card in cards:
             card_content = card.find(class_="card-property-content") 
             prices_uls = card.find_all("ul", class_="card-property-prices")
@@ -63,8 +97,6 @@ def scrapMainPage(url):
             if link and not link.startswith("http"):
                 link = "https://www.portalzuk.com.br" + link
 
-            print(link)
-
             for prices_ul in prices_uls:
                 prices_li=prices_ul.find_all(class_="card-property-price")
                 for prices   in  prices_li:
@@ -75,15 +107,13 @@ def scrapMainPage(url):
                     if not (valor_label and valor_value and valor_data):
                         continue
                     
-                    # scrapItensPages(link,headers)
-
                     data = {
-                        "link":link,
                         "Rotulo":valor_label.get_text(strip=True),
-                        "Valor (R$)":valor_value.get_text(strip=True).replace("R$", ""),
+                        "Valor (R$)":valor_value.get_text(strip=True).replace("R$", "").replace(".","").replace(",",".").strip(),
                         "Data":valor_data.get_text(strip=True),
                         "Lote":lote_label.get_text(strip=True) if lote_label else None,
                         "Endereco":address_tag.get_text(separator=" ", strip=True) if address_tag else None,
+                        "link":link,
                     }
                     results.append(data)
 
@@ -116,22 +146,19 @@ def main():
             all_keys.update(d.keys())
         all_keys.discard("link")
 
-        with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
-            fieldnames=[
-                "Rotulo","Valor (R$)","Data","Lote","Endereco","link"
+        fieldnames=[
+                "Rotulo","Valor (R$)","Data","Lote","Endereco",
             ]+sorted(k  for k   in  all_keys    if  k   not in[
-                "Rotulo","Valor (R$)","Data","Lote","Endereco","link"
-            ])
+                "Rotulo","Valor (R$)","Data","Lote","Endereco",
+        ])
 
+        with    open("portalzuk.csv","w",newline="",encoding="utf-8")   as  csvfile:
             writer=csv.DictWriter(csvfile,fieldnames=fieldnames)
-
             writer.writeheader()
-            writer.writerows(dados)
-
             for d in dados:
-                d.pop("link",None)
-                print(f"--> {d}")
-                print("-" * 40)
+                d.pop("link")
+                
+            writer.writerows(dados)
 
     except  Exception   as  e:
         print(e)
