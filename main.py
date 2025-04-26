@@ -12,7 +12,7 @@ def scrapItensPages(url):
             print("[ERRO] URL está None! Não é possível fazer a requisição.")
             return  extra_data
 
-        html = requests.get(url, headers=headers,timeout=10)
+        html = requests.get(url, headers=headers,timeout=20)
         soup = BeautifulSoup(html.text, "html.parser")
 
         itens_div = soup.find_all("div",class_="property-featured-items")
@@ -80,7 +80,7 @@ def scrapMainPage(url):
     results=[]
 
     try:
-        html  =   requests.get(url,    headers=headers,timeout=10)
+        html  =   requests.get(url,    headers=headers,timeout=20)
         soup    =   BeautifulSoup(html.text, "html.parser")
         
         section=soup.find(class_="s-list-properties")
@@ -128,7 +128,7 @@ def main():
     try:
         dados=scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/") 
 
-        with    ThreadPoolExecutor(max_workers=10)as    executor:
+        with    ThreadPoolExecutor(max_workers=5)as    executor:
             future_to_data={
                 executor.submit(scrapItensPages,d["link"]):d   for d   in  dados   if  d["link"]
             }
