@@ -1,19 +1,21 @@
 from    bs4 import  BeautifulSoup   
 import  requests,traceback,csv,time
-from multiprocessing import Pool,cpu_count
+# from multiprocessing import Pool,cpu_count
+from    concurrent.futures  import  ThreadPoolExecutor,as_completed
 
+session=requests.Session()
+session.headers.update({
+    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'  
+})
 
 def scrapItensPages(url):
-    headers = {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
-    }
     extra_data={}
     try:
         if url is None:
             print("[ERRO] URL está None! Não é possível fazer a requisição.")
             return  extra_data
 
-        html = requests.get(url, headers=headers,timeout=20)
+        html = session.get(url,timeout=20)
         soup = BeautifulSoup(html.text, "html.parser")
 
         itens_div = soup.find_all("div",class_="property-featured-items")
@@ -33,42 +35,21 @@ def scrapItensPages(url):
 
         content=soup.find_all("div",class_="content")
         for c   in  content:
-            situation_tag=c.find("span",class_="property-status-title")
-            situation=situation_tag.get_text(strip=True)
-            extra_data["Situacao"]=situation
-
-            matricula_tag=c.find("p",{"class":"text_subtitle","id":"itens_matricula"})
-            matricula=matricula_tag.get_text(strip=True)
-            extra_data["Matricula do imovel"]=matricula
-
-            observacoes_tag=c.find("div",{"class":"property-info-text div-text-observacoes"})
-            observacoes = observacoes_tag.get_text(strip=True)
-            extra_data["Observacoes"]=observacoes
-
-        
-            link_tag = c.find("a", class_="glossary-link")
-            link = link_tag["href"]
-            extra_data["Link do processo"]=link
-
-            visitacao_tag=c.find("div",class_="property-info-text")
-            visitacao=visitacao_tag.get_text(strip=True)
-            extra_data["Visitacao"]=visitacao
+            extra_data["Situacao"]=c.find("span",class_="property-status-title").get_text(strip=True)
+            extra_data["Matricula do imovel"]=c.find("p",{"class":"text_subtitle","id":"itens_matricula"}).get_text(strip=True)
+            extra_data["Observacoes"]=c.find("div",{"class":"property-info-text div-text-observacoes"}).get_text(strip=True)
+            extra_data["Link do processo"]= c.find("a", class_="glossary-link")["href"]
+            extra_data["Visitacao"]=c.find("div",class_="property-info-text").get_text(strip=True)
 
             f_pagamento_h3_tag=c.find("h3",class_="property-info-title")
             f_pagamento_h3=f_pagamento_h3_tag.get_text(strip=True)
             f_pagamento_ul=c.find_all(class_="property-payments-items")
             for f   in  f_pagamento_ul:
-                f_tag=f.find("p",class_="property-payments-item-text")
-                f_text=f_tag.get_text(strip=True)
-                extra_data[f_pagamento_h3]=f_text
+                extra_data[f_pagamento_h3]=f.find("p",class_="property-payments-item-text").get_text(strip=True)
 
-            d_compromissario_c_tag=c.find("p",class_="property-status-text")
-            d_compromissario_c=d_compromissario_c_tag.get_text(strip=True)
-            extra_data["Direitos do Compromissario Comprador"]=d_compromissario_c
+            extra_data["Direitos do Compromissario Comprador"]=c.find("p",class_="property-status-text").get_text(strip=True)
 
-            d_preferencia_tag=c.find("p",class_="text_subtitle")
-            d_preferencia=d_preferencia_tag.get_text(strip=True)
-            extra_data["Direito de Preferencia"]=d_preferencia
+            extra_data["Direito de Preferencia"]=c.find("p",class_="text_subtitle").get_text(strip=True)
 
         return  extra_data
 
@@ -78,14 +59,10 @@ def scrapItensPages(url):
 
 
 def scrapMainPage(url):
-    headers =   {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
-        }
-
     results=[]
 
     try:
-        html  =   requests.get(url,    headers=headers,timeout=20)
+        html  =   session.get(url,timeout=20)
         soup    =   BeautifulSoup(html.text, "html.parser")
         
         section=soup.find(class_="s-list-properties")
@@ -138,11 +115,19 @@ def main():
                 # extra_info=scrapItensPages(data["link"])
                 # data.update(extra_info)
 
+        with    ThreadPoolExecutor(max_workers=min(len(links),cpu_count()*2))as executor:
+            futures={executor.submit(scrapItensPages,link):link for link    in  links}
+            extra_infos=[]
+            for future  in  as_completed(futures):
+                try:
+                    extra_info=future.result()
+                    extra_infos.append(extra_info)
+                except  Exception   as  e:
+                    print(f"Erro ao obter dados de {futures[future]}:   {e}")
+                    extra_infos.append({})
+
         links = [d["link"] for d in dados if d["link"]]
         
-        with Pool(processes=min(len(links), cpu_count())) as pool:
-            extra_infos = pool.map(scrapItensPages, links)
-
         for data, extra_info in zip(dados, extra_infos):
             if extra_info:
                 data.update(extra_info)
