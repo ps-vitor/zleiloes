@@ -1,6 +1,7 @@
 from    bs4 import  BeautifulSoup   
-import  requests,   traceback,  csv
-# from    concurrent.futures  import  ThreadPoolExecutor,as_completed
+import  requests,traceback,csv,time
+from multiprocessing import Pool,cpu_count
+
 
 def scrapItensPages(url):
     headers = {
@@ -131,25 +132,21 @@ def scrapMainPage(url):
 def main():
     try:
         dados=scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/") 
+                
+        # for data    in  dados:
+            # if  data["link"]:
+                # extra_info=scrapItensPages(data["link"])
+                # data.update(extra_info)
 
-        # with    ThreadPoolExecutor(max_workers=5)as    executor:
-        #     future_to_data={
-        #         executor.submit(scrapItensPages,d["link"]):d   for d   in  dados   if  d["link"]
-        #     }
-
-        #     for future  in  as_completed(future_to_data):
-        #         data=future_to_data[future]
-        #         try:
-        #             extra_info=future.result()
-        #             data.update(extra_info)
-        #         except  Exception   as  e:
-        #             print(f"Erro no procesamento paralelo: {e}")
+        links = [d["link"] for d in dados if d["link"]]
         
-        for data    in  dados:
-            if  data["link"]:
-                extra_info=scrapItensPages(data["link"])
-                data.update(extra_info)
+        with Pool(processes=min(len(links), cpu_count())) as pool:
+            extra_infos = pool.map(scrapItensPages, links)
 
+        for data, extra_info in zip(dados, extra_infos):
+            if extra_info:
+                data.update(extra_info)
+        
         all_keys=set()
         for d   in  dados:
             all_keys.update(d.keys())
@@ -175,4 +172,7 @@ def main():
         print("\nDados exportados para 'portalzuk.csv'\n")
 
 if  __name__   ==   "__main__":
+    start=time.time()
     main()
+    end=time.time()
+    print(f"Tempo total de execução: {end-start:.2f} segundos")
