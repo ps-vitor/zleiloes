@@ -1,4 +1,4 @@
-module github.com/ps-vitor/leiloes-sys/tree/goscraper
+module github.com/ps-vitor/leiloes-sys
 
 go 1.24.3
 
