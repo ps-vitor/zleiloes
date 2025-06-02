@@ -1,3 +1,5 @@
+// ./backend/internal/api/services/listing_service.go
+
 package services
 
 import (
@@ -6,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"your_project/internal/models"
+	"leiloes_sys/internal/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

@@ -1,3 +1,5 @@
+// ./backend/cmd/portalzuk/main.go
+
 package main
 
 import (
@@ -5,7 +7,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ps-vitor/leiloes-sys/backend/internal/scraping/collectors/portalzuk"
+	"github.com/ps-vitor/leiloes_sys/tree/goscraper/backend/internal/scraping/collectors/portalzuk"
 )
 
 func main() {
