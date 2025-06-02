@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"leiloes-sys/internal/models"
+	"github.com/ps-vitor/leiloes-sys/backend/internal/api/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
