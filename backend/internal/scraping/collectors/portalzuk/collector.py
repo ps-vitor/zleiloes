@@ -1,5 +1,5 @@
 from    bs4 import  BeautifulSoup   
-import  requests,traceback,csv,time
+import  requests,traceback,csv
 # from multiprocessing import Pool,cpu_count
 from    concurrent.futures  import  ThreadPoolExecutor,as_completed
 
@@ -155,9 +155,3 @@ def main():
         print(e)
     finally:
         print("\nDados exportados para 'portalzuk.csv'\n")
-
-if  __name__   ==   "__main__":
-    start=time.time()
-    main()
-    end=time.time()
-    print(f"Tempo total de execução: {end-start:.2f} segundos")

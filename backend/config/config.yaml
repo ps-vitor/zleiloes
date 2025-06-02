@@ -1,0 +1,13 @@
+database:
+  host: "postgres"
+  port: 5432
+  user: "auction_user"
+  password: "${DB_PASSWORD}"
+  name: "auction_db"
+
+redis:
+  address: "redis:6379"
+
+server:
+  port: 8080
+  env: "development"

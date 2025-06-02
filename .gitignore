@@ -172,3 +172,17 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# Golang
+bin/
+build/
+*.exe
+*.out
+*.test
+coverage.out
+
+# Go modules
+go.sum
+*.mod~
+
