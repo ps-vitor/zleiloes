@@ -1,4 +1,4 @@
-module github.com/ps-vitor/leiloes-sys
+module github.com/ps-vitor/leiloes-sys/backend
 
 go 1.24.3
 
