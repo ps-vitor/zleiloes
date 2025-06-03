@@ -1,4 +1,4 @@
-// backend/internal/scraping/services/portalzuk/service.go
+// backend/internal/scrapers/portalzuk/client.go
 package portalzuk
 
 import (
@@ -8,20 +8,22 @@ import (
 )
 
 type Property struct {
-	// Defina a estrutura baseada no seu retorno Python
+	ID    string  `json:"id"`
+	Title string  `json:"title"`
+	Price float64 `json:"price"`
 }
 
 func Scrape() ([]Property, error) {
-	cmd := exec.Command("python3", "-m", "backend.internal.scraping.collectors.portalzuk.collector")
+	cmd := exec.Command("python3", "../scrapers/portalzuk/scraper.py")
 
-	output, err := cmd.Output()
+	output, err := cmd.CombinedOutput()
 	if err != nil {
+		log.Printf("Python error: %s\n", output)
 		return nil, err
 	}
 
 	var properties []Property
 	if err := json.Unmarshal(output, &properties); err != nil {
-		log.Printf("Error decoding Python output: %v", err)
 		return nil, err
 	}
 
