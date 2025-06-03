@@ -1,37 +1,50 @@
+# infrastructure/docker/docker-compose.yml
 version: '3.8'
+
 services:
   postgres:
-    image: postgres:14
+    image: postgres:14-alpine
     environment:
-      POSTGRES_USER: auction_user
-      POSTGRES_PASSWORD: auction_pass
-      POSTGRES_DB: auction_db
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${DB_USER:-auction_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-auction_pass}
+      POSTGRES_DB: ${DB_NAME:-auction_db}
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   redis:
-    image: redis:6
-    ports:
-      - "6379:6379"
+    image: redis:6-alpine
+    command: redis-server --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
 
   backend:
     build:
-      context: ../../backend
-      dockerfile: Dockerfile.dev
+      context: ../..
+      dockerfile: infrastructure/docker/api.dockerfile
+    environment:
+      - DB_HOST=postgres
+      - REDIS_ADDRESS=redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
-      - redis
 
-  frontend:
+  scraping-service:
     build:
-      context: ../../frontend
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
+      context: ../..
+      dockerfile: infrastructure/docker/scraping.dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   pgdata:

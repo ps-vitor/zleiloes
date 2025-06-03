@@ -1,4 +1,4 @@
-// cmd/scraping-service/main.go
+// backend/cmd/scraping-service/main.go
 package main
 
 import (
@@ -19,7 +19,7 @@ func main() {
 		log.Fatalf("Erro ao executar o scraper: %v\nOutput:%s", err, string(output))
 	}
 	log.Printf("Scraper finalizado:\n%s\n", string(output))
-	log.Println("Iniciando servidor...")
+	log.Println("Iniciando servidor 8081...")
 
 	http.HandleFunc("/scrape/portalzuk", func(w http.ResponseWriter, r *http.Request) {
 		data, err := services.ScrapePortalzuk()
@@ -32,6 +32,6 @@ func main() {
 		json.NewEncoder(w).Encode(data)
 	})
 
-	log.Println("Scraping service on :8001")
-	log.Fatal(http.ListenAndServe(":8001", nil))
+	log.Println("Scraping service on :8081")
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }

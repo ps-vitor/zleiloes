@@ -1,0 +1,18 @@
+# configs/scraping.yaml
+
+scrapers:
+  portalzuk:
+    base_url: "https://www.portalzuk.com.br"
+    endpoints:
+      leiloes: "/leiloes"
+      imoveis: "/leilao-de-imoveis"
+    rate_limit:
+      requests_per_minute: 30
+    retry_policy:
+      max_attempts: 3
+      delay_seconds: 5
+    user_agent: "Mozilla/5.0 (compatible; LeiloesSys/1.0; +https://github.com/ps-vitor/leiloes-sys)"
+
+scheduling:
+  cron_expression: "0 */6 * * *"  # A cada 6 horas
+  timeout_minutes: 30

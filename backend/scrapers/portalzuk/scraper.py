@@ -152,15 +152,27 @@ class   PortalzukScraper:
                 "Rotulo", "Valor (R$)", "Data", "Lote", "Endereco",
             ])
 
-            with open("portalzuk.csv", "w", newline="", encoding="utf-8") as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-                for d in dados:
-                    d.pop("link", None)  # Safely remove 'link' if it exists
-                writer.writerows(dados)
-
+            # with open("portalzuk.csv", "w", newline="", encoding="utf-8") as csvfile:
+                # writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                # writer.writeheader()
+                # for d in dados:
+                    # d.pop("link", None)  # Safely remove 'link' if it exists
+                # writer.writerows(dados)
+            return {
+                "properties": dados,
+                "metadata": {
+                "source": "portalzuk",
+                "scraped_at": datetime.now().isoformat(),
+                "count": len(dados)
+            }
+        }
         except Exception as e:
-            print(e)
-            traceback.print_exc()
-        finally:
-            print("\nDados exportados para 'portalzuk.csv'\n")
+            # print(e)
+            # traceback.print_exc()
+            return  {
+                "error":str(e),
+                "traceback":traceback.format_exc()
+            }
+        # finally:
+            # print("\nDados exportados para 'portalzuk.csv'\n")
+            # print(json.dumps(dados))

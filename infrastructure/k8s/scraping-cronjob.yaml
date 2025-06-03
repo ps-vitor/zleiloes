@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: scraping-job
+spec:
+  schedule: "0 */6 * * *" # Executa a cada 6 horas
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: scraping
+            image: your-registry/scraping-service:latest
+            envFrom:
+            - configMapRef:
+                name: backend-config
+            - secretRef:
+                name: backend-secrets
+          restartPolicy: OnFailure
+          backoffLimit: 2
