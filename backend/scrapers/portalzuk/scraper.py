@@ -1,4 +1,4 @@
-# ./backend/internal/scraping/collector/portalzuk/portalzuk_collector.py
+# ./backend/scrapers/portalzuk/scraper.py
 
 from    bs4 import  BeautifulSoup   
 import  requests,traceback,csv,time

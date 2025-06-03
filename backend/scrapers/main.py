@@ -1,4 +1,4 @@
-# backend/cmd/portalzuk/main.py
+# ./backend/scrapers/main.py
 
 import	time
 from    portalzuk.scraper import  PortalzukScraper 
