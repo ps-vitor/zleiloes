@@ -19,7 +19,7 @@ FROM alpine:3.18
 
 WORKDIR /app
 COPY --from=builder /backend /app/backend
-COPY backend/configs/config.yaml /app/configs/app.yaml
+COPY backend/configs /app/configs
 
 # Python para scrapers
 RUN apk add --no-cache python3 py3-pip

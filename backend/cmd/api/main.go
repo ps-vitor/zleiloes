@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	"github.com/ps-vitor/leiloes-sys/backend/internal/api/handlers"
-	"github.com/ps-vitor/leiloes-sys/backend/internal/config"
+	config "github.com/ps-vitor/leiloes-sys/backend/internal/configs"
 	"github.com/ps-vitor/leiloes-sys/backend/internal/repositories"
-	"github.com/ps-vitor/leiloes-sys/backend/internal/services/property"
+	services "github.com/ps-vitor/leiloes-sys/backend/internal/services/property"
 )
 
 func main() {

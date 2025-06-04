@@ -11,28 +11,24 @@ RUN python -m venv /venv && \
 FROM golang:1.24.3-alpine AS builder
 WORKDIR /app
 
-# Corrija o caminho dos arquivos de dependência
+# Copie go.mod e go.sum da raiz do projeto
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copie todo o código da pasta backend/
-COPY backend/ .
+# Copie todo o projeto (incluindo o backend, go.mod e go.sum)
+COPY . .
 
-# Faça o build do binário com o caminho correto
-RUN CGO_ENABLED=0 GOOS=linux go build -o /scraping-service ./cmd/scraping-service
+# Agora, o caminho relativo funciona como no seu dev local
+RUN CGO_ENABLED=0 GOOS=linux go build -o /scraping-service ./backend/cmd/scraping-service
 
 # Runtime
-FROM alpine:3.18
+FROM python:3.9-slim
 WORKDIR /app
 
-# Copia Python
 COPY --from=python-base /venv /venv
 COPY backend/scrapers /app/scrapers
-
-# Copia Go
 COPY --from=builder /scraping-service /app/
-COPY backend/config/config.yaml /app/config/
-
+COPY backend/configs/config.yaml /app/configs/
 ENV PATH="/venv/bin:$PATH"
 EXPOSE 8081
 CMD ["/app/scraping-service"]

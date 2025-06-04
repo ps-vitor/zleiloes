@@ -15,7 +15,7 @@ run:
 docker-build-api:
 	docker build	-f	infrastructure/docker/api.dockerfile -t api .
 docker-run-api:
-	docker run --rm	--dns	8.8.8.8	-p	8080:8080	api
+	docker run --rm	-p	8080:8080	api
 
 docker-build-scraping:
 	docker build	-f	infrastructure/docker/scraping.dockerfile -t scraping-service .

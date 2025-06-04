@@ -2,9 +2,9 @@
 
 app:
   name: "Leilões Sys"
-  env: "${APP_ENV|dev}"  # dev, staging, prod
-  debug: "${DEBUG|false}"
-  port: "${PORT|8080}"
+  env: "dev"         # Altere para "staging" ou "prod" conforme necessário
+  debug: false
+  port: 8080         # Valor inteiro, sem aspas!
   timezone: "America/Sao_Paulo"
 
 logging:
