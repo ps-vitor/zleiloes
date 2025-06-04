@@ -10,7 +10,6 @@ import (
 type Config struct {
 	App      AppConfig      `yaml:"app"`
 	Scraping ScrapingConfig `yaml:"scraping"`
-	Database DatabaseConfig `yaml:"database"`
 }
 
 type AppConfig struct {
@@ -26,11 +25,11 @@ type ScrapingConfig struct {
 }
 
 type PortalzukConfig struct {
-	BaseURL     string            `yaml:"base_url"`
-	Endpoints   map[string]string `yaml:"endpoints"`
-	RateLimit   RateLimitConfig   `yaml:"rate_limit"`
-	RetryPolicy RetryPolicyConfig `yaml:"retry_policy"`
-	UserAgent   string            `yaml:"user_agent"`
+	BaseURL   string            `yaml:"base_url"`
+	Endpoints map[string]string `yaml:"endpoints"`
+	// RateLimit   RateLimitConfig   `yaml:"rate_limit"`
+	// RetryPolicy RetryPolicyConfig `yaml:"retry_policy"`
+	UserAgent string `yaml:"user_agent"`
 }
 
 func LoadConfig() (*Config, error) {

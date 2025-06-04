@@ -1,6 +1,6 @@
-// backend/go.mod
+// go.mod
 
-module github.com/ps-vitor/leiloes-sys/backend
+module github.com/ps-vitor/leiloes-sys
 
 go 1.24.3
 

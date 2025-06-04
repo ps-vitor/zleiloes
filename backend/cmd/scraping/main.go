@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os/exec"
 
-	"github.com/ps-vitor/leiloes-sys/backend/internal/services"
+	services "github.com/ps-vitor/leiloes-sys/backend/internal/services/scraping"
 )
 
 func main() {

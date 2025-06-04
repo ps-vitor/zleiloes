@@ -1,12 +1,7 @@
-type Config struct {
-	Database struct {
-		Host string `yaml:"host"`
-		Port int    `yaml:"port"`
-		// ... other fields
-	} `yaml:"database"`
-	// ... other config sections
-}
+package domain
 
-func LoadConfig() (*Config, error) {
-	// implement config loading
+// Exemplo de struct para Property
+type Property struct {
+	ID   int
+	Name string
 }

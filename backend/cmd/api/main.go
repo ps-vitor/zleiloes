@@ -6,17 +6,16 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/ps-vitor/leiloes-sys/backend/config"
 	"github.com/ps-vitor/leiloes-sys/backend/internal/api/handlers"
-	"github.com/ps-vitor/leiloes-sys/backend/internal/config"
-	"github.com/ps-vitor/leiloes-sys/backend/internal/repositories"
-	"github.com/ps-vitor/leiloes-sys/backend/internal/services"
+	services "github.com/ps-vitor/leiloes-sys/backend/internal/services/scraping"
 )
 
 func main() {
 	cfg := config.Load()
 
 	// Setup dependencies
-	repo := repositories.NewPostgresPropertyRepository(cfg.Database)
+	repo := repositories.PostgresPropertyRepository(cfg.Database)
 	scraperSvc := services.NewScraperService(repo)
 	scrapingHandler := handlers.NewScrapingHandler(scraperSvc)
 
