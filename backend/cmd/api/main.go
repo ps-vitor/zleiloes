@@ -1,26 +1,39 @@
-// backend/cmd/api/main.go
 package main
 
 import (
 	"log"
 	"net/http"
+	"strconv"
 
-	"github.com/gorilla/mux"
-	"github.com/ps-vitor/leiloes-sys/backend/config"
 	"github.com/ps-vitor/leiloes-sys/backend/internal/api/handlers"
-	services "github.com/ps-vitor/leiloes-sys/backend/internal/services/scraping"
+	"github.com/ps-vitor/leiloes-sys/backend/internal/config"
+	"github.com/ps-vitor/leiloes-sys/backend/internal/repositories"
+	"github.com/ps-vitor/leiloes-sys/backend/internal/services/property"
 )
 
 func main() {
-	cfg := config.Load()
+	// Carregar configurações
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf("Erro ao carregar configurações: %v", err)
+	}
 
-	// Setup dependencies
-	repo := repositories.PostgresPropertyRepository(cfg.Database)
-	scraperSvc := services.NewScraperService(repo)
-	scrapingHandler := handlers.NewScrapingHandler(scraperSvc)
+	// Inicializar repositórios
+	propertyRepo := repositories.NewPropertyRepositoryInMemory() // Troque por implementação real se necessário
 
-	r := mux.NewRouter()
-	r.HandleFunc("/api/scrape", scrapingHandler.HandleScrape).Methods("GET")
-	log.Println("Server running on :8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	// Inicializar serviços
+	propertyService := services.NewPropertyService(propertyRepo)
+
+	// Inicializar handlers
+	apiHandler := handlers.NewAPIHandler(propertyService)
+
+	// Configurar rotas
+	mux := http.NewServeMux()
+	apiHandler.RegisterRoutes(mux)
+
+	addr := ":" + strconv.Itoa(cfg.App.Port)
+	log.Printf("Servidor iniciado em %s", addr)
+	if err := http.ListenAndServe(addr, mux); err != nil {
+		log.Fatalf("Erro ao iniciar servidor: %v", err)
+	}
 }

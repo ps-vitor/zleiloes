@@ -5,7 +5,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/ps-vitor/leiloes-sys/backend/internal/services"
+	"github.com/ps-vitor/leiloes-sys/backend/internal/services/scraping"
 )
 
 type ScrapingHandler struct {
