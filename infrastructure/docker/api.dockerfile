@@ -1,20 +1,25 @@
 # infrastructure/docker/api.dockerfile
 # Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24.3-alpine AS builder
 
 WORKDIR /app
-COPY backend/go.mod backend/go.sum ./
+
+# Copie go.mod e go.sum da raiz do projeto
+COPY go.mod go.sum ./
 RUN go mod download
 
-COPY backend/ .
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /backend ./cmd/api
+# Copie todo o código fonte do projeto (ajustado para contexto correto)
+COPY . .
+
+# Build do binário da API
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /backend ./backend/cmd/api
 
 # Runtime stage
 FROM alpine:3.18
 
 WORKDIR /app
 COPY --from=builder /backend /app/backend
-COPY backend/config/config.yaml /app/config/
+COPY backend/configs/config.yaml /app/configs/app.yaml
 
 # Python para scrapers
 RUN apk add --no-cache python3 py3-pip

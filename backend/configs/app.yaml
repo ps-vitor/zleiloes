@@ -1,0 +1,17 @@
+# configs/app.yaml
+
+app:
+  name: "Leilões Sys"
+  env: "${APP_ENV|dev}"  # dev, staging, prod
+  debug: "${DEBUG|false}"
+  port: "${PORT|8080}"
+  timezone: "America/Sao_Paulo"
+
+logging:
+  level: "info"
+  format: "json"
+  file_path: "/var/log/leiloesys.log"
+
+cache:
+  enabled: true
+  ttl_minutes: 30

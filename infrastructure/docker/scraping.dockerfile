@@ -8,11 +8,17 @@ RUN python -m venv /venv && \
     pip install --no-cache-dir -r requirements.txt
 
 # Go build
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24.3-alpine AS builder
 WORKDIR /app
-COPY backend/go.mod backend/go.sum ./
+
+# Corrija o caminho dos arquivos de dependência
+COPY go.mod go.sum ./
 RUN go mod download
+
+# Copie todo o código da pasta backend/
 COPY backend/ .
+
+# Faça o build do binário com o caminho correto
 RUN CGO_ENABLED=0 GOOS=linux go build -o /scraping-service ./cmd/scraping-service
 
 # Runtime
