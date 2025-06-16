@@ -1,120 +1,124 @@
 # ./backend/scrapers/mega/scraper.py
 
-from    bs4 import  BeautifulSoup   
-import  requests,traceback,csv,time
-from multiprocessing import Pool,cpu_count
-from    concurrent.futures  import  ThreadPoolExecutor,as_completed
-from    playwright.sync_api import  sync_playwright
-from    datetime    import  datetime
+from bs4 import BeautifulSoup
+import requests, traceback, csv
+from multiprocessing import cpu_count
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime
+from urllib.parse import urljoin
 
-class   MegaScraper:
+class MegaScraper:
     def __init__(self):
-        self.session=requests.Session()
+        self.session = requests.Session()
         self.session.headers.update({
-            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'  
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36'
         })
 
-    def scrapItensPages(self,url):
-        extra_data={}
+    def scrapItensPages(self, url):
         try:
-            if url is None:
-                print("[ERRO] URL está None! Não é possível fazer a requisição.")
-                return  extra_data
+            if not url:
+                print("[ERRO] URL está vazia!")
+                return {}
 
-            html = self.session.get(url,timeout=20)
-            soup = BeautifulSoup(html.text, "html.parser")
+            resp = self.session.get(url, timeout=20)
+            soup = BeautifulSoup(resp.text, "html.parser")
 
-            return  extra_data
+            def get_text(selector, cls):
+                el = soup.find(selector, class_=cls)
+                return el.get_text(strip=True) if el else ""
 
-        except Exception as e:
-            print(e)
+            valor = get_text("div", "value")
+            batch = get_text("div", "batch-type")
+            leilao = get_text("div", "auction-id")
+            local = get_text("div", "locality item")
+            processoDiv = soup.find("div", class_="process-number item")
+            processo = processoDiv.find("div", class_="value").get_text(strip=True) if processoDiv else ""
+            processoLink = processoDiv.find("a")["href"] if processoDiv and processoDiv.find("a") else None
+            data = get_text("span", "card-second-instance-date")
+
+            return {
+                "Valor (R$)": valor.replace("R$", "").replace(".", "").replace(",", ".").strip(),
+                "Lote": batch,
+                "Endereco": local,
+                "Data": data,
+                "Processo": processo,
+                "ProcessoLink": processoLink,
+                "Leilao": leilao,
+            }
+
+        except Exception:
             traceback.print_exc()
+            return {}
 
-
-    def scrapMainPage(self,url):
-        results=[]
-
+    def scrapMainPage(self, url):
+        results = []
         try:
-            html = self.session.get(url,timeout=20)
-            if html.status_code != 200:
-                print(f"Failed to fetch page: HTTP {html.status_code}")
-                return results
+            resp = self.session.get(url, timeout=20)
+            if resp.status_code != 200:
+                print(f"[ERRO] Falha ao acessar {url} - Status {resp.status_code}")
+                return []
 
-            soup = BeautifulSoup(html.text, "html.parser")
-            imoveis = soup.find_all("div", class_="col-sm-6 col-md-4 col-lg-3")
+            soup = BeautifulSoup(resp.text, "html.parser")
+            cards = soup.find_all("div", class_="col-sm-6 col-md-4 col-lg-3")
 
-            print(f"{len(imoveis)} imoveis encontrados")
-
-        except Exception as e:
-            print(e)
+            for card in cards:
+                price_el = card.find("div", class_="card-price")
+                link_el = card.find("a")
+                if price_el and link_el and link_el.get("href"):
+                    results.append({
+                        "Rotulo": price_el.get_text(strip=True),
+                        "link": urljoin(url, link_el["href"])
+                    })
+        except Exception:
             traceback.print_exc()
 
         return results
 
-
     def run(self):
         try:
-            url="https://www.megaleiloes.com.br/imoveis"
-            dados = self.scrapMainPage(url) 
+            base_url = "https://www.megaleiloes.com.br/imoveis"
+            dados = self.scrapMainPage(base_url)
 
-            # First get all the links from the dados
-            links = [d["link"] for d in dados if d["link"]]
-
-            # Check if there are any valid links
+            links = [d["link"] for d in dados if d.get("link")]
             if not links:
-                print("No valid links found")
+                print("Nenhum link válido encontrado.")
                 return
 
-            # Now use ThreadPoolExecutor with the links
-            with    ThreadPoolExecutor(max_workers=min(len(links),cpu_count()*2))as executor:
-                futures={executor.submit(self.scrapItensPages,link):link for link    in  links}
-                extra_infos=[]
-                for future  in  as_completed(futures):
+            extra_infos = []
+            with ThreadPoolExecutor(max_workers=min(len(links), cpu_count() * 2)) as executor:
+                futures = {executor.submit(self.scrapItensPages, link): link for link in links}
+                for future in as_completed(futures):
                     try:
-                        extra_info=future.result()
-                        extra_infos.append(extra_info)
-                    except  Exception   as  e:
-                        print(f"Erro ao obter dados de {futures[future]}:   {e}")
+                        extra_infos.append(future.result())
+                    except Exception:
+                        traceback.print_exc()
                         extra_infos.append({})
 
-            # Combine the data
-            for data, extra_info in zip(dados, extra_infos):
-                if extra_info:
-                    data.update(extra_info)
+            for base, extra in zip(dados, extra_infos):
+                base.update(extra)
 
-            # Prepare for CSV export
-            all_keys = set()
-            for d in dados:
-                all_keys.update(d.keys())
-            all_keys.discard("link")
+            all_keys = set(k for d in dados for k in d if k != "link")
+            fieldnames = ["Rotulo", "Valor (R$)", "Data", "Lote", "Endereco"] + sorted(all_keys - {"Rotulo", "Valor (R$)", "Data", "Lote", "Endereco"})
 
-            fieldnames = [
-                "Rotulo", "Valor (R$)", "Data", "Lote", "Endereco",
-            ] + sorted(k for k in all_keys if k not in [
-                "Rotulo", "Valor (R$)", "Data", "Lote", "Endereco",
-            ])
+            with open("mega.csv", "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                for d in dados:
+                    d.pop("link", None)
+                    writer.writerow(d)
 
-            # with open("portalzuk.csv", "w", newline="", encoding="utf-8") as csvfile:
-                # writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                # writer.writeheader()
-                # for d in dados:
-                    # d.pop("link", None)  # Safely remove 'link' if it exists
-                # writer.writerows(dados)
+            print("\nDados exportados para 'mega.csv'\n")
             return {
                 "properties": dados,
                 "metadata": {
-                "source": "portalzuk",
-                "scraped_at": datetime.now().isoformat(),
-                "count": len(dados)
+                    "source": "portalzuk",
+                    "scraped_at": datetime.now().isoformat(),
+                    "count": len(dados)
+                }
             }
-        }
+
         except Exception as e:
-            # print(e)
-            # traceback.print_exc()
-            return  {
-                "error":str(e),
-                "traceback":traceback.format_exc()
+            return {
+                "error": str(e),
+                "traceback": traceback.format_exc()
             }
-        # finally:
-            # print("\nDados exportados para 'portalzuk.csv'\n")
-            # print(json.dumps(dados))
