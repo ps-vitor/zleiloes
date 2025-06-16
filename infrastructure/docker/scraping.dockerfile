@@ -2,7 +2,7 @@
 # Python base
 FROM python:3.9-slim as python-base
 WORKDIR /app
-COPY backend/scrapers/portalzuk/requirements.txt .
+COPY backend/scrapers/requirements.txt .
 RUN python -m venv /venv && \
     . /venv/bin/activate && \
     pip install --no-cache-dir -r requirements.txt
