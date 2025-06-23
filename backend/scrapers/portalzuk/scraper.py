@@ -94,7 +94,6 @@ class   PortalzukScraper:
                             continue
                         
                         data = {
-                            
                             "Rotulo":valor_label.get_text(strip=True),
                             "Valor (R$)":valor_value.get_text(strip=True).replace("R$", "").replace(".","").replace(",",".").strip(),
                             "Data":valor_data.get_text(strip=True),
@@ -161,11 +160,11 @@ class   PortalzukScraper:
             return {
                 "properties": dados,
                 "metadata": {
-                "source": "portalzuk",
-                "scraped_at": datetime.now().isoformat(),
-                "count": len(dados)
+                    "source": "portalzuk",
+                    "scraped_at": datetime.now().isoformat(),
+                    "count": len(dados)
+                }
             }
-        }
         except Exception as e:
             return  {
                 "error":str(e),
