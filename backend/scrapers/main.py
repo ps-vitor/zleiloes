@@ -2,19 +2,19 @@
 
 import	time
 from    portalzuk.scraper import  PortalzukScraper 
-from    sodresantoro.scraper    import  SodresantoroScraper
+from    sodresantoro.scraper    import  SodreSantoroScraper
 from    mega.scraper    import  MegaScraper
 
 if  __name__   ==   "__main__":
     start=time.time()
-    # print("\nScrap do Portalzuk:\n")
-    # portalzukscraper =  PortalzukScraper()
-    # portalzukscraper.run()
-    # print("\nFim.\n")
-    # print("\nScrap do Sodre Santoro:\n")
-    # sodresantoroscraper=SodresantoroScraper()
-    # sodresantoroscraper.run()
-    # print("\nFim.\n")
+    print("\nScrap do Portalzuk:\n")
+    portalzukscraper =  PortalzukScraper()
+    portalzukscraper.run()
+    print("\nFim.\n")
+    print("\nScrap do Sodre Santoro:\n")
+    sodresantoroscraper = SodreSantoroScraper(delay=1.5)
+    sodresantoroscraper.run()
+    print("\nFim.\n")
     print("\nScrap do Mega:\n")
     megascraper=MegaScraper()
     megascraper.run()

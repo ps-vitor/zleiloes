@@ -1,0 +1,26 @@
+
+Scrap do Portalzuk:
+
+
+Dados exportados para 'portalzuk.csv'
+
+
+Fim.
+
+
+Scrap do Mega:
+
+
+Dados exportados para 'mega.csv'
+
+
+Fim
+
+Tempo total de execução: 13.74 segundos
+
+Scrap do Sodre Santoro:
+
+Extraídos 119 imóveis.
+
+Fim.
+
