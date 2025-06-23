@@ -12,7 +12,7 @@ if  __name__   ==   "__main__":
     portalzukscraper.run()
     print("\nFim.\n")
     print("\nScrap do Sodre Santoro:\n")
-    sodresantoroscraper = SodreSantoroScraper(delay=1.5)
+    sodresantoroscraper = SodreSantoroScraper(delay=4.5)
     sodresantoroscraper.run()
     print("\nFim.\n")
     print("\nScrap do Mega:\n")

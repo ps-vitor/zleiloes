@@ -21,25 +21,29 @@ class SodreSantoroScraper:
         time.sleep(self.delay)  # espera o JS carregar
 
         soup = BeautifulSoup(self.driver.page_source, "html.parser")
-        cards = soup.find_all('li')
+        cards = soup.find_all('div',class_="relative flex-none h-fit rounded-xl overflow-hidden bg-white border")
         if not cards:
             print("Nenhum card de imóvel encontrado.")
             self.driver.quit()
             return
 
         results = []
+        
         for card in cards:
-            title = card.find('h2')
-            price = card.find(lambda tag: tag.name in ['p','span'] and 'R$' in tag.text)
-            address = card.find('p', class_='text-xs')
-            link_tag = card.find('a', href=True)
-
+            leilao=card.find("span",class_="leading-5")
+            title = card.find('h2', class_="uppercase font-medium text-neutral-800 my-2 h-12 line-clamp-2")
+            price = card.find('p', class_="text-2xl text-blue-700 font-medium")
+            address = card.find('span', class_='text-sm line-clamp-1')
             results.append({
+                'leilao': leilao.get_text(strip=True),
                 'titulo': title.get_text(strip=True) if title else None,
                 'preco': price.get_text(strip=True) if price else None,
                 'endereco': address.get_text(strip=True) if address else None,
-                'link': link_tag['href'] if link_tag else None,
             })
+
+        for imovel in results:
+            print(imovel)
+
 
         self.driver.quit()
         df = pd.DataFrame(results)

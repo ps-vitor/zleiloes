@@ -8,6 +8,61 @@ Dados exportados para 'portalzuk.csv'
 Fim.
 
 
+Scrap do Sodre Santoro:
+
+{'leilao': 'Leilão 27152 - 001', 'titulo': 'prédio industrial (desocupado)  - aeródromo vale eldorado - bragança paulista - sp', 'preco': '1.500.000', 'endereco': 'prédio industrial'}
+{'leilao': 'Leilão 27158 - 001', 'titulo': 'imóvel residencial com 3 edificações - vila antonieta - são paulo - sp', 'preco': '1.237.062', 'endereco': None}
+{'leilao': 'Leilão 27163 - 001', 'titulo': 'apartamento duplex (desocupado)  - morumbi - são paulo - sp', 'preco': '750.000', 'endereco': 'apartamento duplex'}
+{'leilao': 'Leilão 27243 - 002', 'titulo': 'terreno - parque aquático lindóia i - lindóia - sp', 'preco': '43.434', 'endereco': None}
+{'leilao': 'Leilão 23756 - 047', 'titulo': 'prédio - centro - santos - sp', 'preco': '536.250', 'endereco': None}
+{'leilao': 'Leilão 23756 - 048', 'titulo': 'apartamento residencial - centro - mogi das cruzes - sp', 'preco': '295.875', 'endereco': None}
+{'leilao': 'Leilão 23756 - 052', 'titulo': 'loja comercial - aclimação - são paulo - sp', 'preco': '900.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 057', 'titulo': 'terreno - torre - joão pessoa - pb', 'preco': '7.498.852', 'endereco': None}
+{'leilao': 'Leilão 23756 - 061', 'titulo': 'apartamento - santana - porto alegre - rs', 'preco': '300.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 062', 'titulo': 'apartamento - santana - porto alegre - rs', 'preco': '300.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 076', 'titulo': 'loja de shopping - centro - niterói - rj', 'preco': '255.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 077', 'titulo': 'loja de shopping - centro - niterói - rj', 'preco': '289.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 078', 'titulo': 'sala comercial - bela vista - são paulo - sp', 'preco': '4.000.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 082', 'titulo': 'galpão comercial - jardim andaraí - são paulo - sp', 'preco': '2.900.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 093', 'titulo': 'vaga de garagem - bela vista - são paulo - sp', 'preco': '75.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 094', 'titulo': 'vaga de garagem - bela vista - são paulo - sp', 'preco': '75.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 095', 'titulo': 'vaga de garagem - bela vista - são paulo - sp', 'preco': '75.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 096', 'titulo': 'vaga de garagem - bela vista - são paulo - sp', 'preco': '75.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 097', 'titulo': 'vaga de garagem - bela vista - são paulo - sp', 'preco': '75.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 098', 'titulo': 'apartamento - boa viagem - recife - pe', 'preco': '472.500', 'endereco': None}
+{'leilao': 'Leilão 23756 - 099', 'titulo': 'apartamento - higienópolis - são paulo - sp', 'preco': '588.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 100', 'titulo': 'apartamento - pitangueiras - guarujá - sp', 'preco': '750.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 102', 'titulo': 'apartamento - boa viagem - recife - pe', 'preco': '250.000', 'endereco': None}
+{'leilao': 'Leilão 23756 - 103', 'titulo': 'apartamento - indianópolis - são paulo - sp', 'preco': '1.500.631', 'endereco': None}
+{'leilao': 'Leilão 27177 - 001', 'titulo': 'imóvel residencial - jardim cambui - santo andré - sp', 'preco': '493.863', 'endereco': None}
+{'leilao': 'Leilão 27258 - 001', 'titulo': 'lote de terreno - jardim miriam - são paulo - sp', 'preco': '660.500', 'endereco': None}
+{'leilao': 'Leilão 27199 - 001', 'titulo': 'imóvel rural (desocupado)  - vila germana - caçapava - sp', 'preco': '6.000.000', 'endereco': 'imóvel rural'}
+{'leilao': 'Leilão 27200 - 001', 'titulo': 'prédio - indianópolis - são paulo - sp', 'preco': '2.435.194', 'endereco': None}
+{'leilao': 'Leilão 27201 - 001', 'titulo': 'direitos sobre lote de terreno - jd. fazenda rincao - arujá - sp', 'preco': '804.396', 'endereco': None}
+{'leilao': 'Leilão 27280 - 001', 'titulo': 'terreno urbano - granja caiapia - cotia - sp', 'preco': '260.661', 'endereco': None}
+{'leilao': 'Leilão 27234 - 001', 'titulo': 'terreno urbano (desocupado)  - country club - valinhos - sp', 'preco': '1.600.000', 'endereco': 'terreno urbano'}
+{'leilao': 'Leilão 27283 - 001', 'titulo': 'casa tipo sobrado - morumbi - são paulo - sp', 'preco': '1.850.000', 'endereco': 'casa tipo sobrado'}
+{'leilao': 'Leilão 27230 - 001', 'titulo': 'apartamento - mirandópolis - são paulo - sp', 'preco': '629.378', 'endereco': None}
+{'leilao': 'Leilão 27268 - 001', 'titulo': 'sala comercial (desocupado)  - pacaembu - são paulo - sp', 'preco': '320.000', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27236 - 001', 'titulo': 'imóvel comercial - triângulo - pindamonhangaba - sp', 'preco': '29.651.662', 'endereco': None}
+{'leilao': 'Leilão 27237 - 001', 'titulo': 'imóvel residencial tipo sobrado - convívio do santo - porto feliz - sp', 'preco': '253.050', 'endereco': None}
+{'leilao': 'Leilão 27281 - 001', 'titulo': 'sala comercial (desocupado)  - centro - rio de janeiro - rj', 'preco': '482.400', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27281 - 002', 'titulo': 'sala comercial (desocupado)  - centro - rio de janeiror - rj', 'preco': '482.400', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27281 - 003', 'titulo': 'sala comercial (desocupado)  - centro - rio de janeiro - rj', 'preco': '482.400', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27281 - 004', 'titulo': 'sobreloja (desocupado)  - centro - rio de janeiro - rj', 'preco': '200.000', 'endereco': 'sobreloja'}
+{'leilao': 'Leilão 27281 - 005', 'titulo': 'sala comercial (desocupado)  - centro - rio de janeiro - rj', 'preco': '144.000', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27281 - 006', 'titulo': 'sala comercial - centro - rio de janeiro - rj', 'preco': '164.800', 'endereco': 'sala comercial'}
+{'leilao': 'Leilão 27281 - 007', 'titulo': 'salas comerciais (desocupado)  - centro - rio de janeiro - rj', 'preco': '360.000', 'endereco': 'salas comerciais'}
+{'leilao': 'Leilão 27289 - 001', 'titulo': 'apartamento - mirandópolis - são paulo - sp', 'preco': '396.618', 'endereco': None}
+{'leilao': 'Leilão 27289 - 002', 'titulo': 'apartamento - mirandópolis - são paulo - sp', 'preco': '346.914', 'endereco': None}
+{'leilao': 'Leilão 27289 - 003', 'titulo': 'apartamento - mirandópolis - são paulo - sp', 'preco': '450.379', 'endereco': None}
+{'leilao': 'Leilão 27289 - 004', 'titulo': 'apartamento - mirandópolis - são paulo - sp', 'preco': '460.523', 'endereco': None}
+{'leilao': 'Leilão 27033 - 001', 'titulo': 'casa (desocupado)  - siriúba - ilha bela - sp', 'preco': '6.000.000', 'endereco': 'casa'}
+Extraídos 48 imóveis.
+
+Fim.
+
+
 Scrap do Mega:
 
 
@@ -16,11 +71,4 @@ Dados exportados para 'mega.csv'
 
 Fim
 
-Tempo total de execução: 13.74 segundos
-
-Scrap do Sodre Santoro:
-
-Extraídos 119 imóveis.
-
-Fim.
-
+Tempo total de execução: 20.17 segundos
