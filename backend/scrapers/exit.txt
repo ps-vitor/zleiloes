@@ -4,7 +4,7 @@ Scrap do Portalzuk:
 
 Dados exportados para 'portalzuk.csv'
 
-Tempo total de execução: 6.38 segundos
+Tempo total de execução: 5.42 segundos
 
 Fim.
 
@@ -14,7 +14,7 @@ Scrap do Sodre Santoro:
 
 Dados exportados para 'sodresantoro.csv'
 
-Tempo total de execução: 17.06 segundos
+Tempo total de execução: 11.56 segundos
 
 Fim.
 
@@ -24,8 +24,8 @@ Scrap do Mega:
 
 Dados exportados para 'mega.csv'
 
-Tempo total de execução: 9.65 segundos
+Tempo total de execução: 17.87 segundos
 
 Fim
 
-Tempo total de execução: 33.08 segundos
+Tempo total de execução: 34.85 segundos

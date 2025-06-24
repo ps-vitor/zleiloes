@@ -19,7 +19,7 @@ class   PortalzukScraper:
                 print("[ERRO] URL está None! Não é possível fazer a requisição.")
                 return  extra_data
 
-            html = self.session.get(url,timeout=20)
+            html = self.session.get(url,timeout=2000000)
             soup = BeautifulSoup(html.text, "html.parser")
 
             itens_div = soup.find_all("div",class_="property-featured-items")
@@ -66,7 +66,7 @@ class   PortalzukScraper:
         results=[]
 
         try:
-            html  =   self.session.get(url,timeout=20)
+            html  =   self.session.get(url,timeout=2000000)
             soup    =   BeautifulSoup(html.text, "html.parser")
 
             section=soup.find(class_="s-list-properties")

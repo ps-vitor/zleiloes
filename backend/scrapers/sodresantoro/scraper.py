@@ -17,6 +17,20 @@ class SodreSantoroScraper:
         self.delay = delay
         self.session = requests.Session()
 
+    """
+    Requeridos:
+    Rotulo,Valor (R$),Data,Lote,Endereco,Andar,
+    Descrição do imóvel,Direito de Preferencia,
+    Direitos do Compromissario Comprador,Link do processo,
+    Matricula do imovel,Metragem construída,Metragem terreno,
+    Metragem total,Metragem útil,Observacoes,Quartos,Situacao,
+    Vagas,Visitacao
+
+    Lidos (até então):
+    data,preco,titulo,Lote,Local,Codigo,Leilao,ProcessoLink,
+    Vara,TipoDeAcao,Exequente,Executada,Matricula
+    """
+
     def scrapItensPages(self, url):
         extra_data = {}
         try:
@@ -86,8 +100,8 @@ class SodreSantoroScraper:
                 links.append(link)
 
                 item = {
-                    'data': data.get_text(strip=True) if data else None,
                     'preco': price.get_text(strip=True) if price else None,
+                    'data': data.get_text(strip=True) if data else None,
                     'titulo': title.get_text(strip=True) if title else None,
                     'link': link
                 }
@@ -101,8 +115,9 @@ class SodreSantoroScraper:
 
     def run(self):
         try:
-            url = "https://www.sodresantoro.com.br/imoveis/lotes?page=1"
-            dados, links = self.scrapMainPage(url)
+            urls = ["https://www.sodresantoro.com.br/imoveis/lotes?page=1","https://www.sodresantoro.com.br/imoveis/lotes?page=2"]
+            for url in  urls:
+                dados, links = self.scrapMainPage(url)
             self.driver.quit()
             if not dados:
                 print("Nenhum imóvel encontrado.")
