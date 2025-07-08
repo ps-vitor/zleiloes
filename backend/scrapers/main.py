@@ -15,7 +15,7 @@ if  __name__   ==   "__main__":
     end0=time.time()
     print(f"Tempo total de execução: {end0-start0:.2f} segundos")
     print("\nFim.\n")
-    
+    """
     print("\nScrap do Sodre Santoro:\n")
     start1=time.time()
     sodresantoroscraper = SodreSantoroScraper(delay=4.5)
@@ -31,6 +31,6 @@ if  __name__   ==   "__main__":
     end2=time.time()
     print(f"Tempo total de execução: {end2-start2:.2f} segundos")
     print("\nFim\n")
-    
+    """
     end=time.time()
     print(f"Tempo total de execução: {end-start:.2f} segundos")

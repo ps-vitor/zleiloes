@@ -48,6 +48,8 @@ class SodreSantoroScraper:
                 local = itens.find("div", id="aditionalInfoLot_lot_address")
                 codigo = itens.find("div", id="aditionalInfoLot_internal_code")
 
+                formaDePagamento=itens.find("div",id="payments_options")
+
                 processo = itens.find("div", id="aditionalInfoLot_tj_number_process")
                 processoLink = processo.find("a")["href"] if processo and processo.find("a") else None
 
@@ -55,6 +57,8 @@ class SodreSantoroScraper:
                 tipoDeAcao = itens.find("div", id="aditionalInfoLot_tj_action")
                 exequente = itens.find("div", id="aditionalInfoLot_tj_n_exequente")
                 executada = itens.find("div", id="aditionalInfoLot_tj_n_executed")
+
+                descicao=itens.find("div",id="detail_info_lot_description")
 
                 matricula = None
                 for div in itens.find_all("div", class_="is-flex-widescreen is-flex-tablet is-align-items-center"):

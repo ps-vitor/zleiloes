@@ -1,31 +1,12 @@
 
 Scrap do Portalzuk:
 
+[ERRO] Falha ao fechar modal. Status: 419
 
-Dados exportados para 'portalzuk.csv'
+✅ Dados exportados para 'portalzuk.csv' (32 registros)
 
-Tempo total de execução: 5.42 segundos
-
-Fim.
-
-
-Scrap do Sodre Santoro:
-
-
-Dados exportados para 'sodresantoro.csv'
-
-Tempo total de execução: 11.56 segundos
+Tempo total de execução: 8.14 segundos
 
 Fim.
 
-
-Scrap do Mega:
-
-
-Dados exportados para 'mega.csv'
-
-Tempo total de execução: 17.87 segundos
-
-Fim
-
-Tempo total de execução: 34.85 segundos
+Tempo total de execução: 8.14 segundos
