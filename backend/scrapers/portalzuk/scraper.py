@@ -64,6 +64,9 @@ class PortalzukScraper:
         except:
             pass
 
+    def get_property_details(self, url):
+        return self.scrapItensPages(url)
+
     def scrapItensPages(self, url):
         extra_data = {}
         try:
@@ -217,34 +220,19 @@ class PortalzukScraper:
         return properties
 
     def enrich_with_details(self, properties):
-        dados = self.scrapMainPage("https://www.portalzuk.com.br/leilao-de-imoveis/") 
-        # First get all the links from the dados
-        links = [d["link"] for d in dados if d["link"]]
-        # Check if there are any valid links
-        if not links:
-            print("No valid links found")
-            return
-        # Now use ThreadPoolExecutor with the links
-        with    ThreadPoolExecutor(max_workers=min(len(links),cpu_count()*2))as executor:
-            futures={executor.submit(self.scrapItensPages,link):link for link    in  links}
-            extra_infos=[]
-            for future  in  as_completed(futures):
+        print("Enriquecendo imóveis com dados individuais...")
+        with ThreadPoolExecutor(max_workers=cpu_count()) as executor:
+            future_to_url = {executor.submit(self.get_property_details, url): url for url in properties.keys()}
+
+            for future in as_completed(future_to_url):
+                url = future_to_url[future]
                 try:
-                    extra_info=future.result()
-                    extra_infos.append(extra_info)
-                except  Exception   as  e:
-                    print(f"Erro ao obter dados de {futures[future]}:   {e}")
-                    extra_infos.append({})
-        # Combine the data
-        for data, extra_info in zip(dados, extra_infos):
-            if extra_info:
-                data.update(extra_info)
-        # Prepare for CSV export
-        all_keys = set()
-        for d in dados:
-            all_keys.update(d.keys())
-        all_keys.discard("link")
-        
+                    details = future.result()
+                    properties[url].update(details)
+                except Exception as e:
+                    print(f"[ERRO] Falha ao processar {url}: {e}")
+        return properties
+
     def export_to_csv(self, properties, filename="portalzuk.csv"):
         try:
             if not properties:
