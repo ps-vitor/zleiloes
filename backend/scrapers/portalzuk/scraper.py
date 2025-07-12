@@ -5,15 +5,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from bs4 import BeautifulSoup
 import csv
-import os
 import time
 import random
-from datetime import datetime
 from multiprocessing import cpu_count
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from urllib.parse import urljoin
+from urllib.parse import urlparse, urljoin
 import traceback
 import requests
+
 
 class PortalzukScraper:
     def __init__(self):
@@ -32,16 +31,8 @@ class PortalzukScraper:
         self.driver = webdriver.Chrome(options=self.options)
         self.base_url = "https://www.portalzuk.com.br/leilao-de-imoveis"
         self.session = requests.Session()
-
-        self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-            "source": """
-            Object.defineProperty(navigator, 'webdriver', {
-                get: () => undefined
-            });
-            window.chrome = {
-                runtime: {},
-            };
-            """
+        self.session.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
         })
 
     def close_popups(self):
@@ -64,88 +55,95 @@ class PortalzukScraper:
         except:
             pass
 
-    def get_property_details(self, url):
-        return self.scrapItensPages(url)
+    def is_valid_url(self, url):
+        if not url:
+            return False
+        try:
+            result = urlparse(url)
+            return all([result.scheme, result.netloc])
+        except:
+            return False
 
     def scrapItensPages(self, url):
         extra_data = {}
         try:
-            if url is None:
-                print("[ERRO] URL está None!")
+            if not self.is_valid_url(url):
+                print(f"[ERRO] URL inválida: {url}")
                 return extra_data
 
-            html = self.session.get(url, timeout=20)
-            soup = BeautifulSoup(html.text, "html.parser")
-
-            itens_div = soup.find_all("div", class_="property-featured-items")
-            for itens in itens_div:
-                all_itens = itens.find_all("div", class_="property-featured-item")
-                for iten in all_itens:
-                    label = iten.find("span", class_="property-featured-item-label")
-                    value = iten.find("span", class_="property-featured-item-value")
-                    if label and value:
-                        extra_data[label.get_text(strip=True)] = value.get_text(strip=True)
-
-            content = soup.find_all("div", class_="content")
-            for c in content:
-                try:
-                    status_tag = c.find("span", class_="property-status-title")
-                    if status_tag:
-                        extra_data["Situacao"] = status_tag.get_text(strip=True)
-
-                    matricula_tag = c.find("p", {"class": "text_subtitle", "id": "itens_matricula"})
-                    if matricula_tag:
-                        extra_data["Matricula do imovel"] = matricula_tag.get_text(strip=True)
-
-                    obs_tag = c.find("div", {"class": "property-info-text div-text-observacoes"})
-                    if obs_tag:
-                        extra_data["Observacoes"] = obs_tag.get_text(strip=True)
-
-                    link_tag = c.find("a", class_="glossary-link")
-                    if link_tag and "href" in link_tag.attrs:
-                        extra_data["Link do processo"] = link_tag["href"]
-
-                    visita_tag = c.find("div", class_="property-info-text")
-                    if visita_tag:
-                        extra_data["Visitacao"] = visita_tag.get_text(strip=True)
-
-                    f_pagamento_h3_tag = c.find("h3", class_="property-info-title")
-                    if f_pagamento_h3_tag:
-                        f_pagamento_h3 = f_pagamento_h3_tag.get_text(strip=True)
-                        f_pagamento_ul = c.find_all(class_="property-payments-items")
-                        for f in f_pagamento_ul:
-                            item_text = f.find("p", class_="property-payments-item-text")
-                            if item_text:
-                                extra_data[f_pagamento_h3] = item_text.get_text(strip=True)
-
-                    direitos_tag = c.find("p", class_="property-status-text")
-                    if direitos_tag:
-                        extra_data["Direitos do Compromissario Comprador"] = direitos_tag.get_text(strip=True)
-
-                    preferencia_tag = c.find("p", class_="text_subtitle")
-                    if preferencia_tag:
-                        extra_data["Direito de Preferencia"] = preferencia_tag.get_text(strip=True)
-
-                except Exception as e:
-                    print(f"Erro ao extrair conteúdo principal: {str(e)}")
-                    continue
-
+            print(f"Scraping: {url}")
+            response = self.session.get(url, timeout=30)
+            response.raise_for_status()
+            
+            soup = BeautifulSoup(response.text, "html.parser")
+            
+            # Dados básicos
+            basic_info = {}
+            features = soup.find_all("div", class_="property-featured-item")
+            for feature in features:
+                label = feature.find("span", class_="property-featured-item-label")
+                value = feature.find("span", class_="property-featured-item-value")
+                if label and value:
+                    basic_info[label.get_text(strip=True)] = value.get_text(strip=True)
+            
+            # Dados adicionais
+            additional_info = {}
+            
+            # Status
+            status = soup.find("span", class_="property-status-title")
+            if status:
+                additional_info["Status"] = status.get_text(strip=True)
+            
+            # Matrícula
+            matricula = soup.find("p", {"id": "itens_matricula"})
+            if matricula:
+                additional_info["Matrícula"] = matricula.get_text(strip=True)
+            
+            # Observações
+            observacoes = soup.find("div", class_="div-text-observacoes")
+            if observacoes:
+                additional_info["Observações"] = observacoes.get_text(strip=True)
+            
+            # Link do processo
+            processo = soup.find("a", class_="glossary-link")
+            if processo and processo.has_attr("href"):
+                additional_info["Link do Processo"] = processo["href"]
+            
+            # Visitação
+            visita = soup.find("div", class_="property-info-text")
+            if visita:
+                additional_info["Visitação"] = visita.get_text(strip=True)
+            
+            # Formas de pagamento
+            pagamentos = soup.find("h3", class_="property-info-title")
+            if pagamentos and "Formas de Pagamento" in pagamentos.get_text():
+                items = soup.find_all("li", class_="property-payments-item")
+                pagamento_info = []
+                for item in items:
+                    text = item.find("p", class_="property-payments-item-text")
+                    if text:
+                        pagamento_info.append(text.get_text(strip=True))
+                if pagamento_info:
+                    additional_info["Formas de Pagamento"] = " | ".join(pagamento_info)
+            
+            # Juntando todos os dados
+            extra_data = {**basic_info, **additional_info}
             return extra_data
 
         except Exception as e:
-            print(f"Erro geral em scrapItensPages: {str(e)}")
+            print(f"Erro ao processar {url}: {str(e)}")
             traceback.print_exc()
             return extra_data
-
+    
     def load_all_properties(self):
-        print("Acessando a página e carregando todos os imóveis...")
+        print("Carregando todos os imóveis...")
         self.driver.get(self.base_url)
         time.sleep(3)
         self.close_popups()
 
         current_count = len(self.driver.find_elements(By.CSS_SELECTOR, 'div.card-property'))
         max_attempts = 35
-        print(f"Imóveis iniciais carregados: {current_count}")
+        print(f"Imóveis carregados inicialmente: {current_count}")
 
         while current_count < 989 and max_attempts > 0:
             try:
@@ -155,6 +153,7 @@ class PortalzukScraper:
                 self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", load_more_button)
                 time.sleep(1)
                 self.driver.execute_script("arguments[0].click();", load_more_button)
+                
                 WebDriverWait(self.driver, 15).until(
                     lambda d: len(d.find_elements(By.CSS_SELECTOR, 'div.card-property')) > current_count)
 
@@ -165,111 +164,165 @@ class PortalzukScraper:
 
                 current_count = new_count
                 max_attempts -= 1
-                print(f"Total de imóveis carregados: {current_count}")
-                time.sleep(random.uniform(1, 2))
+                print(f"Imóveis carregados: {current_count}")
+                time.sleep(random.uniform(1, 3))
             except Exception as e:
                 print(f"Erro ao carregar mais imóveis: {str(e)}")
                 break
 
         return self.driver.page_source
 
-    def extract_property_data(self, html):
-        soup = BeautifulSoup(html, 'html.parser')
-        properties = {}
-        cards = soup.find_all(class_="card-property")
-        print(f"Total de imóveis encontrados: {len(cards)}")
+    def scrapMainPage(self, html):
+        properties = []
+        try:
+            soup = BeautifulSoup(html, "html.parser")
+            cards = soup.find_all("div", class_="card-property")
 
-        for card in cards:
-            try:
-                address_tag = card.find(class_="card-property-address")
-                lote_tag = card.find(class_="card-property-price-lote")
-                image_wrapper = card.find("div", class_="card-property-image-wrapper")
-                link_tag = image_wrapper.find("a") if image_wrapper else None
-                link = urljoin(self.base_url, link_tag["href"]) if link_tag else None
-
-                if not link or link in properties:
+            for card in cards:
+                try:
+                    # Link da propriedade
+                    link_tag = card.find("a", href=True)
+                    link = link_tag["href"] if link_tag else None
+                    if link and not link.startswith("http"):
+                        link = urljoin(self.base_url, link)
+                    
+                    # Informações básicas
+                    lote = card.find(class_="card-property-price-lote")
+                    address = card.find(class_="card-property-address")
+                    
+                    # Preços (pode ter múltiplos)
+                    prices = []
+                    price_blocks = card.find_all("ul", class_="card-property-prices")
+                    for block in price_blocks:
+                        items = block.find_all("li", class_="card-property-price")
+                        for item in items:
+                            label = item.find(class_="card-property-price-label")
+                            value = item.find(class_="card-property-price-value")
+                            date = item.find(class_="card-property-price-data")
+                            
+                            if label and value and date:
+                                prices.append({
+                                    "Tipo": label.get_text(strip=True),
+                                    "Valor": value.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip(),
+                                    "Data": date.get_text(strip=True)
+                                })
+                    
+                    # Criar entrada única para a propriedade com todos os preços
+                    if link and prices:
+                        property_data = {
+                            "Lote": lote.get_text(strip=True) if lote else "",
+                            "Endereço": address.get_text(separator=" ", strip=True) if address else "",
+                            "Link": link,
+                            "Preços": prices  # Lista de todos os preços
+                        }
+                        properties.append(property_data)
+                
+                except Exception as e:
+                    print(f"Erro ao processar card: {str(e)}")
                     continue
 
-                property_data = {
-                    "Lote": lote_tag.get_text(strip=True) if lote_tag else None,
-                    "Endereco": address_tag.get_text(separator=" ", strip=True) if address_tag else None,
-                    "link": link,
-                    "Precos": []
-                }
-
-                for li in card.find_all("li", class_="card-property-price"):
-                    label = li.find(class_="card-property-price-label")
-                    value = li.find(class_="card-property-price-value")
-                    date = li.find(class_="card-property-price-data")
-
-                    if label and value and date:
-                        price_data = {
-                            "Rotulo": label.get_text(strip=True),
-                            "Valor (R$)": value.get_text(strip=True)
-                                .replace("R$", "").replace(".", "").replace(",", ".").strip(),
-                            "Data": date.get_text(strip=True)
-                        }
-                        property_data["Precos"].append(price_data)
-
-                properties[link] = property_data
-
-            except Exception as e:
-                print(f"Erro ao processar card: {str(e)}")
-                continue
+        except Exception as e:
+            print(f"[ERRO] scrapMainPage: {str(e)}")
+            traceback.print_exc()
 
         return properties
 
     def enrich_with_details(self, properties):
-        print("Enriquecendo imóveis com dados individuais...")
-        with ThreadPoolExecutor(max_workers=cpu_count()) as executor:
-            future_to_url = {executor.submit(self.get_property_details, url): url for url in properties.keys()}
-
-            for future in as_completed(future_to_url):
-                url = future_to_url[future]
+        print(f"Enriquecendo {len(properties)} propriedades com detalhes...")
+        
+        # Filtra apenas propriedades com links válidos
+        valid_properties = [p for p in properties if self.is_valid_url(p.get("Link", ""))]
+        print(f"Propriedades com links válidos: {len(valid_properties)}")
+        
+        with ThreadPoolExecutor(max_workers=min(10, cpu_count())) as executor:
+            futures = []
+            for prop in valid_properties:
+                futures.append(executor.submit(self.scrapItensPages, prop["Link"]))
+            
+            for i, future in enumerate(as_completed(futures)):
                 try:
                     details = future.result()
-                    properties[url].update(details)
+                    if details:
+                        valid_properties[i].update(details)
                 except Exception as e:
-                    print(f"[ERRO] Falha ao processar {url}: {e}")
-        return properties
+                    print(f"Erro ao enriquecer propriedade {i}: {str(e)}")
+        
+        return valid_properties
+
+    def prepare_for_export(self, properties):
+        flat_properties = []
+        for prop in properties:
+            # Para cada preço, cria uma entrada separada no CSV
+            for price in prop.get("Preços", []):
+                flat_prop = {
+                    "Lote": prop.get("Lote", ""),
+                    "Endereço": prop.get("Endereço", ""),
+                    "Link": prop.get("Link", ""),
+                    "Tipo de Preço": price.get("Tipo", ""),
+                    "Valor (R$)": price.get("Valor", ""),
+                    "Data": price.get("Data", "")
+                }
+                
+                # Adiciona os detalhes extras
+                for key, value in prop.items():
+                    if key not in ["Lote", "Endereço", "Link", "Preços"]:
+                        flat_prop[key] = value
+                
+                flat_properties.append(flat_prop)
+        
+        return flat_properties
 
     def export_to_csv(self, properties, filename="portalzuk.csv"):
+        if not properties:
+            print("Nenhum dado para exportar")
+            return False
+
+        # Prepara os dados para exportação
+        flat_data = self.prepare_for_export(properties)
+        
+        # Obtém todos os campos possíveis
+        fieldnames = set()
+        for row in flat_data:
+            fieldnames.update(row.keys())
+        
+        # Ordena os campos para consistência
+        fieldnames = sorted(fieldnames)
+        
         try:
-            if not properties:
-                print("Nenhum dado para exportar")
-                return False
-
-            rows = []
-            for link, data in properties.items():
-                base_data = {
-                    'Lote': data.get('Lote'),
-                    'Endereco': data.get('Endereco'),
-                    'link': link,
-                    **{k: v for k, v in data.items() if k not in ['Lote', 'Endereco', 'link', 'Precos']}
-                }
-
-                if not data['Precos']:
-                    rows.append(base_data)
-                else:
-                    for price in data['Precos']:
-                        rows.append({**base_data, **price})
-
-            fieldnames = sorted(set(k for row in rows for k in row))
-            with open(filename, mode='w', newline='', encoding='utf-8') as csvfile:
+            with open(filename, mode='w', newline='', encoding='utf-8-sig') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
-                writer.writerows(rows)
-
-            print(f"Exportado para {filename}")
+                writer.writerows(flat_data)
+            
+            print(f"Dados exportados com sucesso para {filename}")
+            print(f"Total de registros: {len(flat_data)}")
             return True
-
         except Exception as e:
-            print(f"[ERRO] Falha ao exportar CSV: {str(e)}")
+            print(f"Erro ao exportar CSV: {str(e)}")
+            traceback.print_exc()
             return False
 
     def run(self):
-        html = self.load_all_properties()
-        base_data = self.extract_property_data(html)
-        enriched_data = self.enrich_with_details(base_data)
-        self.export_to_csv(enriched_data)
-        self.driver.quit()
+        try:
+            print("Iniciando scraping...")
+            
+            # Passo 1: Carregar todas as propriedades
+            html = self.load_all_properties()
+            
+            # Passo 2: Extrair dados básicos
+            properties = self.scrapMainPage(html)
+            print(f"Propriedades encontradas: {len(properties)}")
+            
+            # Passo 3: Enriquecer com detalhes
+            enriched_properties = self.enrich_with_details(properties)
+            
+            # Passo 4: Exportar para CSV
+            self.export_to_csv(enriched_properties)
+            
+            print("Processo concluído com sucesso!")
+            
+        except Exception as e:
+            print(f"Erro durante a execução: {str(e)}")
+            traceback.print_exc()
+        finally:
+            self.driver.quit()
