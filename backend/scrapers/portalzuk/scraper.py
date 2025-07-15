@@ -309,15 +309,7 @@ class PortalzukScraper:
                         for idx, url_img in enumerate(image_urls, start=1): 
                             extra_data[f"Foto_{idx}"] = url_img
                         extra_data["Total_Fotos"] = len(image_urls)
-
-                        # leiloeiro
-                        leiloeiro_figure=soup.find_all("figure",class_="box-action-bank")
-                        for links    in  leiloeiro_figure:
-                            link_leiloeiro_tag = links.find("a", href=True)
-                            link = link_tag["href"] if link_tag else None
-                            if link and not link.startswith("http"):
-                                link = urljoin(self.base_url, link)
-
+                        
                         return extra_data
                     else:
                         print(f"[ERRO] BeautifulSoup não conseguiu parsear após retentativa: {url}")
