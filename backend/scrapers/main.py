@@ -13,7 +13,7 @@ if  __name__   ==   "__main__":
     portalzukscraper =  PortalzukScraper()
     portalzukscraper.run()
     end0=time.time()
-    print(f"Tempo total de execução: {end0-start0:.2f} segundos")
+    # print(f"Tempo total de execução: {end0-start0:.2f} segundos")
     print("\nFim.\n")
     """
     print("\nScrap do Sodre Santoro:\n")
@@ -33,4 +33,9 @@ if  __name__   ==   "__main__":
     print("\nFim\n")
     """
     end=time.time()
-    print(f"Tempo total de execução: {end-start:.2f} segundos")
+    tempo_total=end-start
+    if  tempo_total>60:
+        tempo=tempo_total/60
+        print(f"Tempo total de execução: {tempo:.2f} minutos")
+    else:
+        print(f"Tempo total de execução: {tempo_total:.2f} segundos")
