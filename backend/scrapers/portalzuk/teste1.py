@@ -699,7 +699,7 @@ class PortalzukScraper:
             parsed_url = urlparse(target_url)
             filename_suffix = parsed_url.path.replace('/', '_').replace('-', '_').strip('_')
             if not filename_suffix or filename_suffix == 'leilao_de_imoveis':
-                output_filename = "portalzuk.csv"
+                output_filename = "portalzuk_default1.csv"
             else:
                 output_filename = f"portalzuk_{filename_suffix.replace(':', '_').replace('?', '_').replace('=', '_').replace('&', '_').replace('%', '_')}.csv"
 
