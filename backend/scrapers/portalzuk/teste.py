@@ -48,16 +48,21 @@ class PortalzukScraper:
 
         # Ajustes nos intervalos de tempo para maior eficiência
         self.last_request_time = 0
-        self.min_request_interval = 3.0 # Reduzido para 0.3s como base
-        self.max_request_interval_addition = 4.0 # Adição máxima para atraso aleatório, totalizando 0.3s a 1.3s
-        self.max_workers = 12 # Aumentando o número de threads para requisições paralelas (experimente com 8 ou 16 também)
+        # Reduzido para 0.3s como base
+        self.min_request_interval = 0.3
+        # Adição máxima para atraso aleatório, totalizando 0.3s a 1.3s
+        self.max_request_interval_addition = 1.0
+        # Aumentando o número de threads para requisições paralelas (experimente com 8 ou 16 também)
+        self.max_workers = 12
 
     def _create_requests_session(self):
         """Cria e configura uma nova sessão requests com retry e User-Agent rotativo."""
         session = requests.Session()
         retry_strategy = Retry(
-            total=5, # Reduzido o número de retries para evitar esperas muito longas em falhas persistentes
-            backoff_factor=1.5, # Backoff ligeiramente menor
+            # Reduzido o número de retries para evitar esperas muito longas em falhas persistentes
+            total=3,
+            # Backoff ligeiramente menor
+            backoff_factor=0.5,
             status_forcelist=[403, 429, 500, 502, 503, 504],
             allowed_methods=["HEAD", "GET", "OPTIONS"]
         )
@@ -68,7 +73,8 @@ class PortalzukScraper:
         session.headers.update({
             'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
             'Referer': 'https://www.portalzuk.com.br/',
-            'User-Agent': random.choice(self.user_agents) # Rotaciona User-Agent para cada nova sessão
+            # Rotaciona User-Agent para cada nova sessão
+            'User-Agent': random.choice(self.user_agents)
         })
         return session
 
@@ -95,7 +101,8 @@ class PortalzukScraper:
         """Tenta fechar popups que podem atrapalhar a navegação."""
         # Tentativa de fechar dropdown de cidade se aparecer
         try:
-            city_dropdown = WebDriverWait(self.driver, 2).until( # Reduzido timeout
+            # Reduzido timeout
+            city_dropdown = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'span.select2-selection__rendered'))
             )
             self.driver.execute_script("arguments[0].style.display = 'none';", city_dropdown)
@@ -122,16 +129,17 @@ class PortalzukScraper:
         try:
             soup = BeautifulSoup(html_content, "html.parser")
             image_urls = []
-            image_tags = soup.select('.swiper-wrapper img')
+            # Seleciona imagens dentro de figure.property-gallery-image para ser mais específico
+            image_tags = soup.select('figure.property-gallery-image img')
             for img in image_tags:
-                if 'src' in img.attrs:
-                    image_links.append(img['src'])
-            return image_links
-        except requests.exceptions.RequestException as e:
-            print(f"Erro ao acessar a URL: {e}")
-            return []
+                # Prioriza 'src' mas considera 'data-src' se 'src' não estiver presente
+                src = img.get('src') or img.get('data-src')
+                if src:
+                    image_urls.append(src)
+            return image_urls
         except Exception as e:
-            print(f"Ocorreu um erro: {e}")
+            print(f"Ocorreu um erro ao extrair URLs de imagem: {e}")
+            traceback.print_exc()
             return []
     
     def _scrap_nested_page(self, url):
@@ -147,17 +155,21 @@ class PortalzukScraper:
             nested_data["leiloeiro"] = "URL inválida para página aninhada"
             return nested_data
 
-        # self.random_delay() # O delay será gerenciado pelo ThreadPoolExecutor com a sessão requests
+        # O delay será gerenciado pelo ThreadPoolExecutor com a sessão requests
         try:
-            response = self.session.get(url, timeout=20) # Reduzido timeout
+            # Reduzido timeout
+            response = self.session.get(url, timeout=15)
             response.raise_for_status() 
             
             soup = BeautifulSoup(response.text, "html.parser")
             
+            # Ajuste no seletor para leiloeiro (mais robusto)
             leiloeiro_label = soup.find("h1", class_="whitelabel-title")
-            leiloeiro=leiloeiro_label.get_text(strip=True)
-            nested_data["leiloeiro"] =  leiloeiro.replace("Leilão de imóveis ","")if leiloeiro_label else "leiloeiro não encontrado"
-            max_content_length = 5000 
+            if leiloeiro_label:
+                leiloeiro_text = leiloeiro_label.get_text(strip=True)
+                nested_data["leiloeiro"] = leiloeiro_text.replace("Leilão de imóveis ", "").strip()
+            else:
+                nested_data["leiloeiro"] = "leiloeiro não encontrado"
 
             return nested_data
 
@@ -166,11 +178,16 @@ class PortalzukScraper:
                 print(f"[BLOQUEADO] Erro 403 (Forbidden) para URL aninhada {url}: Tentando com nova sessão...")
                 self.session = self._create_requests_session() 
                 try:
-                    response = self.session.get(url, timeout=20) # Re-tentativa com nova sessão e timeout reduzido
+                    # Re-tentativa com nova sessão e timeout reduzido
+                    response = self.session.get(url, timeout=15)
                     response.raise_for_status()
                     soup = BeautifulSoup(response.text, "html.parser")
                     leiloeiro_label = soup.find("h1", class_="whitelabel-title")
-                    nested_data["leiloeiro"] = leiloeiro_label.get_text(strip=True) if leiloeiro_label else "leiloeiro não encontrado (re-tentativa)"
+                    if leiloeiro_label:
+                        leiloeiro_text = leiloeiro_label.get_text(strip=True)
+                        nested_data["leiloeiro"] = leiloeiro_text.replace("Leilão de imóveis ", "").strip()
+                    else:
+                        nested_data["leiloeiro"] = "leiloeiro não encontrado (re-tentativa)"
                     return nested_data
                 except requests.exceptions.RequestException as retry_e:
                     print(f"Erro de requisição mesmo após recriar sessão para URL aninhada {url}: {retry_e}")
@@ -199,7 +216,7 @@ class PortalzukScraper:
             return extra_data 
 
         try:
-            response = self.session.get(url, timeout=30) 
+            response = self.session.get(url, timeout=20) # Timeout ajustado
             response.raise_for_status() 
 
             soup = BeautifulSoup(response.text, "html.parser")
@@ -216,7 +233,6 @@ class PortalzukScraper:
                 if label and value:
                     extra_data[label.get_text(strip=True)] = value.get_text(strip=True)
             
-
             matricula = soup.find("p", {"id": "itens_matricula"})
             if matricula:
                 extra_data["Matrícula"] = matricula.get_text(strip=True)
@@ -225,33 +241,39 @@ class PortalzukScraper:
             if observacoes_geral:
                 extra_data["Observações Gerais"] = observacoes_geral.get_text(strip=True)
             
+            # Correção para o link do processo judicial
+            process_link_found = False
             box_action_bank_figure = soup.find("figure", class_="box-action-bank")
             if box_action_bank_figure:
                 process_link_tag = box_action_bank_figure.find("a", href=True)
                 if process_link_tag and self.is_valid_url(process_link_tag['href']):
                     extra_data["Link do Processo Judicial"] = process_link_tag['href']
-            else: 
+                    process_link_found = True
+            
+            if not process_link_found: # Verifica se não foi encontrado no padrão anterior
                 processo = soup.find("a", class_="glossary-link")
                 if processo and processo.has_attr("href") and self.is_valid_url(processo['href']):
-                    extra_data["Link do Processo"] = processo["href"]
+                    extra_data["Link do Processo Judicial"] = processo["href"] # Padroniza para "Link do Processo Judicial"
             
-            visitacao_h3=soup.find("h3",class_="property-info-title")
-            visitacao_text=soup.find("div",class_="property-info-text")
-            if  "Visitação" in  visitacao_h3.get_text(strip=True):
-                extra_data["visitacao"] = visitation_text.get_text(strip=True)
+            # Correção e ajuste para Visitação
+            visitacao_h3 = soup.find("h3", class_="property-info-title", string=lambda text: text and "Visitação" in text)
+            if visitacao_h3:
+                # Pega o próximo div irmão que contém o texto da visitação
+                visitacao_text_div = visitacao_h3.find_next_sibling("div", class_="property-info-text")
+                if visitacao_text_div:
+                    extra_data["Visitação"] = visitacao_text_div.get_text(strip=True)
 
-            pagamento=soup.find("p",class_="property-payments-item-text")
-            extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)
+            pagamento = soup.find("p", class_="property-payments-item-text")
+            if pagamento:
+                extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)
 
             glossary_tags = soup.find_all("div", class_="glossary-content")
             for tag in  glossary_tags:
-                pref_tag=tag.find("p",class_="text_subtitle")
-                pref=pref_tag.get_text(strip=True)
-                if  "DIREITO DE PREFERÊNCIA"    in  pref:
+                pref_tag = tag.find("p", class_="text_subtitle")
+                if pref_tag and "DIREITO DE PREFERÊNCIA" in pref_tag.get_text(strip=True):
                     extra_data["Direito de Preferência"] = pref_tag.get_text(strip=True)
 
-
-            # --- MODIFICAÇÃO PARA EXTRAIR "Descrição do imóvel" com seletor específico ---
+            # Correção para "Descrição do imóvel"
             description_element_title=soup.find("h3",class_="property-info-title")
             description_element_text = soup.find("p",class_="property-hide-show")
             if  "Descrição do imóvel"   in  description_element_title.get_text(strip=True):
@@ -260,22 +282,25 @@ class PortalzukScraper:
             comments_div = soup.find("div", class_="property-info property-info-comments")
             if comments_div:
                 texto_comments = comments_div.find("p", class_="property-hide-show")
+                if texto_comments:
+                    extra_data["Comentários"] = texto_comments.get_text(strip=True)
             
             status_elements = soup.find_all("div", class_="property-status")
             for status_div in status_elements:
-                title_div = status_div.find("span", class_="property-status-title")
-                text_div = status_div.find("p", class_="property-status-text")
-                if title_div and text_div:
-                    title = title_div.get_text(strip=True)
-                    text = text_div.get_text(strip=True)
+                title_span = status_div.find("span", class_="property-status-title")
+                text_p = status_div.find("p", class_="property-status-text")
+                if title_span and text_p:
+                    title = title_span.get_text(strip=True)
+                    text = text_p.get_text(strip=True)
                     
                     if "Imóvel ocupado" in title or "Imóvel desocupado" in title:
                         extra_data["ocupado"] = text # Correção aqui
                     elif "Direitos do Compromissário Comprador" in title:
                         extra_data["Direitos do Compromissário"] = text
             
+            # Isso já faz o que você quer: coloca cada link de imagem em uma coluna diferente
             image_urls = self.extract_image_urls(response.text)
-            for idx, url_img in enumerate(image_urls, start=1):
+            for idx, url_img in enumerate(image_urls, start=1): 
                 extra_data[f"Foto_{idx}"] = url_img
             extra_data["Total_Fotos"] = len(image_urls)
             # --- Fim da extração de dados ---
@@ -287,11 +312,11 @@ class PortalzukScraper:
                 print(f"[BLOQUEADO] Erro 403 (Forbidden) para {url}: O site pode ter detectado o scraper. Tentando com nova sessão...")
                 self.session = self._create_requests_session()
                 try:
-                    response = self.session.get(url, timeout=30) 
+                    response = self.session.get(url, timeout=20) # Re-tentativa com timeout ajustado
                     response.raise_for_status()
                     soup = BeautifulSoup(response.text, "html.parser")
                     if soup:
-                        # Re-extrai todos os dados com a nova sessão
+                        # Re-extrai todos os dados com a nova sessão (duplicação intencional para re-tentativa)
                         features = soup.find_all("div", class_="property-featured-item")
                         for feature in features:
                             label = feature.find("span", class_="property-featured-item-label")
@@ -303,54 +328,62 @@ class PortalzukScraper:
                         if matricula: extra_data["Matrícula"] = matricula.get_text(strip=True)
                         observacoes_geral = soup.find("div", class_="div-text-observacoes")
                         if observacoes_geral: extra_data["Observações Gerais"] = observacoes_geral.get_text(strip=True)
+                        
+                        # Re-tentativa para link do processo judicial
+                        process_link_found = False
                         box_action_bank_figure = soup.find("figure", class_="box-action-bank")
                         if box_action_bank_figure:
                             process_link_tag = box_action_bank_figure.find("a", href=True)
                             if process_link_tag and self.is_valid_url(process_link_tag['href']):
                                 extra_data["Link do Processo Judicial"] = process_link_tag['href']
-                        else: 
+                                process_link_found = True
+                        if not process_link_found:
                             processo = soup.find("a", class_="glossary-link")
                             if processo and processo.has_attr("href") and self.is_valid_url(processo['href']):
-                                extra_data["Link do Processo"] = processo["href"]
+                                extra_data["Link do Processo Judicial"] = processo["href"]
                         
-                        # --- MODIFICAÇÃO PARA "Visitação" na re-tentativa ---
-                        visitacao_h3=soup.find("h3",class_="property-info-title")
-                        visitacao_text=soup.find("div",class_="property-info-text")
-                        if  "Visitação" in  visitacao_h3.get_text(strip=True):
-                            extra_data["visitacao"] = visitation_text.get_text(strip=True)
+                        # Re-tentativa para "Visitação"
+                        visitacao_h3 = soup.find("h3", class_="property-info-title", string=lambda text: text and "Visitação" in text)
+                        if visitacao_h3:
+                            visitacao_text_div = visitacao_h3.find_next_sibling("div", class_="property-info-text")
+                            if visitacao_text_div:
+                                extra_data["Visitação"] = visitacao_text_div.get_text(strip=True)
 
                         pagamento=soup.find("p",class_="property-payments-item-text")
-                        extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)                        
+                        if pagamento: extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)                        
                         
                         glossary_tags = soup.find_all("div", class_="glossary-content")
                         for tag in  glossary_tags:
                             pref_tag=tag.find("p",class_="text_subtitle")
-                            pref=pref_tag.get_text(strip=True)
-                            if  "DIREITO DE PREFERÊNCIA"    in  pref:
+                            if pref_tag and "DIREITO DE PREFERÊNCIA" in pref_tag.get_text(strip=True):
                                 extra_data["Direito de Preferência"] = pref_tag.get_text(strip=True)
                         
-                        # --- MODIFICAÇÃO PARA "Descrição do imóvel" na re-tentativa ---
-                        description_element = soup.select_one('div.description-content p')
-                        if description_element:
-                            extra_data["Descrição do imóvel"] = description_element.get_text(strip=True)
-                        else:
-                            extra_data["Descrição do imóvel"] = "N/A (re-tentativa)"
+                        # Re-tentativa para "Descrição do imóvel"
+                        description_element_title=soup.find("h3",class_="property-info-title")
+                        description_element_text = soup.find("p",class_="property-hide-show")
+                        if  "Descrição do imóvel"   in  description_element_title.get_text(strip=True):
+                            extra_data["Descrição do imóvel"] = description_element_text.get_text(strip=True)
 
                         comments_div = soup.find("div", class_="property-info property-info-comments")
+                        if comments_div:
+                            texto_comments = comments_div.find("p", class_="property-hide-show")
+                            if texto_comments:
+                                extra_data["Comentários"] = texto_comments.get_text(strip=True)
+
                         status_elements = soup.find_all("div", class_="property-status")
                         for status_div in status_elements:
-                            title_div = status_div.find("span", class_="property-status-title")
-                            text_div = status_div.find("p", class_="property-status-text")
-                            if title_div and text_div:
-                                title = title_div.get_text(strip=True)
-                                text = text_div.get_text(strip=True)
+                            title_span = status_div.find("span", class_="property-status-title")
+                            text_p = status_div.find("p", class_="property-status-text")
+                            if title_span and text_p:
+                                title = title_span.get_text(strip=True)
+                                text = text_p.get_text(strip=True)
                                 if "Imóvel ocupado" in title or "Imóvel desocupado" in title:
-                                    extra_data["ocupado"] = title # Correção aqui
+                                    extra_data["ocupado"] = text # Correção aqui
                                 elif "Direitos do Compromissário Comprador" in title:
                                     extra_data["Direitos do Compromissário"] = text
                                 
                         image_urls = self.extract_image_urls(response.text)
-                        for idx, url_img in enumerate(image_urls, start=1):
+                        for idx, url_img in enumerate(image_urls, start=1): 
                             extra_data[f"Foto_{idx}"] = url_img
                         extra_data["Total_Fotos"] = len(image_urls)
                         return extra_data
@@ -391,8 +424,10 @@ class PortalzukScraper:
         
         last_count = initial_count
         attempts_without_new_properties = 0
-        max_attempts_without_new = 5 # Reduzido para 5 tentativas sem novos imóveis
-        max_total_attempts = 50 # Reduzido limite absoluto
+        # Reduzido para 5 tentativas sem novos imóveis
+        max_attempts_without_new = 5
+        # Reduzido limite absoluto
+        max_total_attempts = 30
         current_total_attempts = 0
 
         while True:
@@ -402,7 +437,8 @@ class PortalzukScraper:
                 break
 
             try:
-                load_more_button = WebDriverWait(self.driver, 10).until( # Reduzido timeout para 10s
+                # Reduzido timeout para 10s
+                load_more_button = WebDriverWait(self.driver, 7).until(
                     EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "Carregar mais")]'))
                 )
                 
@@ -413,7 +449,7 @@ class PortalzukScraper:
                 self.driver.execute_script("arguments[0].click();", load_more_button)
                 
                 # Espera por um novo elemento ou até que o contador de tentativas esgote
-                WebDriverWait(self.driver, 20).until( # Reduzido timeout para 20s
+                WebDriverWait(self.driver, 15).until(
                     lambda d: len(d.find_elements(By.CSS_SELECTOR, 'div.card-property')) > last_count
                 )
                 
@@ -430,7 +466,7 @@ class PortalzukScraper:
                         print(f"Nenhum novo imóvel carregado após {max_attempts_without_new} tentativas. Assumindo que todos os imóveis foram carregados ou o botão parou de funcionar.")
                         break
 
-                time.sleep(random.uniform(1.0, 2.0)) # Pausa menor e variável
+                time.sleep(random.uniform(0.5, 1.5)) # Pausa menor e variável
 
             except (NoSuchElementException, TimeoutException):
                 print("Botão 'Carregar mais' não encontrado ou não está mais clicável. Todos os imóveis podem ter sido carregados.")
@@ -480,7 +516,8 @@ class PortalzukScraper:
                         "tipo_imovel": tipo_imovel.get_text(strip=True) if tipo_imovel else "N/A",
                         "endereco": address.get_text(separator=" ", strip=True) if address else "N/A",
                         "Link": link if link else "N/A",
-                        "Preços": prices if prices else [{"Tipo": "N/A", "Valor": "N/A", "Data": "N/A"}] # Garante ao menos um preço
+                        # Garante ao menos um preço
+                        "Preços": prices if prices else [{"Tipo": "N/A", "Valor": "N/A", "Data": "N/A"}]
                     }
                     properties.append(property_data)
                 
@@ -544,7 +581,7 @@ class PortalzukScraper:
         
         tasks_for_process_pages = []
         for prop in properties:
-            process_link = prop.get("Link do Processo Judicial") or prop.get("Link do Processo")
+            process_link = prop.get("Link do Processo Judicial") # Use apenas a chave padronizada
             if process_link and self.is_valid_url(process_link):
                 tasks_for_process_pages.append((prop, process_link))
 
@@ -630,16 +667,21 @@ class PortalzukScraper:
         
         preferred_order = [
             "tipo_imovel", "rotulo", "endereco", "Link", "Valor (R$)", 
-            "Data", "Matrícula", "ocupado", "leiloeiro", "Descrição do imóvel",
+            "Data", "Matrícula", "Ocupação", "leiloeiro", "Descrição do imóvel",
             "Formas de Pagamento", "Direito de Preferência", 
-            "Observações Gerais", "Direitos do Compromissário"
+            "Observações Gerais", "Comentários", "Direitos do Compromissário",
+            "Link do Processo Judicial", # Adicionado para garantir visibilidade
+            "Visitação" # Adicionado para garantir visibilidade
         ]
         
-        photo_fields = sorted([f for f in fieldnames if f.startswith("Foto_")])
+        # Coleta todas as chaves "Foto_X" e as ordena para garantir que apareçam em ordem
+        photo_fields = sorted([f for f in fieldnames if f.startswith("Foto_")], 
+                              key=lambda x: int(x.split('_')[1]))
         if photo_fields:
             preferred_order.extend(photo_fields)
             preferred_order.append("Total_Fotos")
 
+        # Adiciona quaisquer outros campos que não foram explicitamente listados
         other_fieldnames = sorted([f for f in fieldnames if f not in preferred_order])
         final_fieldnames = preferred_order + other_fieldnames
         
@@ -665,14 +707,16 @@ class PortalzukScraper:
             start_time = time.time()
             
             target_url = start_url if start_url else self.base_url
+            
+            # Use load_all_properties para garantir que todos os imóveis sejam carregados
             # html = self.load_all_properties(target_url)
             # properties = self.scrapMainPage(html)
+
 
             # rodar sem load_all_properties
             self.driver.get(target_url)
             html=self.driver.page_source
             properties=self.scrapMainPage(html)
-
 
             print(f"Propriedades encontradas na página principal: {len(properties)}")
             
@@ -690,7 +734,8 @@ class PortalzukScraper:
             if not filename_suffix or filename_suffix == 'leilao_de_imoveis':
                 output_filename = "portalzuk.csv"
             else:
-                output_filename = f"portalzuk_{filename_suffix.replace(':', '_').replace('?', '_').replace('=', '_').replace('&', '_').replace('%', '_')}.csv"
+                # Tratamento mais robusto para caracteres inválidos em nome de arquivo
+                output_filename = f"portalzuk_{''.join(c if c.isalnum() else '_' for c in filename_suffix)}.csv"
 
             self.export_to_csv(final_properties, filename=output_filename)
             
