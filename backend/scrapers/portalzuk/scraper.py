@@ -4,6 +4,7 @@ import time
 import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urljoin, urlparse
+from cachetools import TTLCache
 
 import requests
 from bs4 import BeautifulSoup
@@ -14,10 +15,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
-
+from    .circuitBreaker  import  CircuitBreaker
 
 class PortalzukScraper:
     def __init__(self):
+        # Lista de User-Agents para rotação
         self.user_agents = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -28,6 +30,7 @@ class PortalzukScraper:
             "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:109.0) Gecko/20100101 Firefox/110.0",
         ]
         
+        # Configurações do ChromeDriver
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--headless=new')
         self.options.add_argument('--disable-gpu')
@@ -37,54 +40,67 @@ class PortalzukScraper:
         self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
         self.options.add_experimental_option('useAutomationExtension', False)
         
-        # Set initial User-Agent for Selenium
+        # Configura User-Agent inicial
         self.current_user_agent = random.choice(self.user_agents)
         self.options.add_argument(f'user-agent={self.current_user_agent}')
 
         self.driver = webdriver.Chrome(options=self.options)
         self.base_url = "https://www.portalzuk.com.br/leilao-de-imoveis"
         
+        # Inicializa circuit breaker
+        self.circuit_breaker = CircuitBreaker(max_failures=3, reset_timeout=120)
+        
+        # Configurações de intervalo entre requisições
+        self.last_request_time = 1
+        self.min_request_interval = 5.0
+        self.max_request_interval_addition = 10.0
+        self.max_workers = 4
+        
+        # Configura cache
+        self.cache = TTLCache(maxsize=1000, ttl=3600)  # Cache de 1 hora
+        
         self.session = self._create_requests_session()
 
-        # Ajustes nos intervalos de tempo para maior eficiência
-        self.last_request_time = 1
-        # Reduzido para 0.3s como base
-        self.min_request_interval = 2.0
-        # Adição máxima para atraso aleatório, totalizando 0.3s a 1.3s
-        self.max_request_interval_addition = 3.0
-        # Aumentando o número de threads para requisições paralelas (experimente com 8 ou 16 também)
-        self.max_workers = 12
-
     def _create_requests_session(self):
-        """Cria e configura uma nova sessão requests com retry e User-Agent rotativo."""
+        """Cria e configura uma nova sessão requests com retry e headers rotativos"""
         session = requests.Session()
+        
+        # Configuração de retry com backoff exponencial
         retry_strategy = Retry(
-            # Reduzido o número de retries para evitar esperas muito longas em falhas persistentes
-            total=3,
-            # Backoff ligeiramente menor
-            backoff_factor=0.5,
+            total=5,
+            backoff_factor=2,
             status_forcelist=[403, 429, 500, 502, 503, 504],
-            allowed_methods=["HEAD", "GET", "OPTIONS"]
+            allowed_methods=["HEAD", "GET", "OPTIONS"],
+            respect_retry_after_header=True
         )
         adapter = HTTPAdapter(max_retries=retry_strategy)
         session.mount("https://", adapter)
         session.mount("http://", adapter)
 
+        # Headers atualizados
         session.headers.update({
             'Accept-Language': 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7',
             'Referer': 'https://www.portalzuk.com.br/',
-            # Rotaciona User-Agent para cada nova sessão
-            'User-Agent': random.choice(self.user_agents)
+            'User-Agent': random.choice(self.user_agents),
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive'
         })
         return session
 
     def random_delay(self):
-        """Adiciona atraso aleatório e mais variável entre requisições para evitar ser bloqueado."""
+        """Adiciona atraso aleatório entre requisições"""
         time_since_last = time.time() - self.last_request_time
-        # Aumenta a variabilidade e o tempo mínimo de espera
-        sleep_time = random.uniform(self.min_request_interval, self.min_request_interval + self.max_request_interval_addition)
+        sleep_time = random.uniform(
+            self.min_request_interval, 
+            self.min_request_interval + self.max_request_interval_addition
+        )
+        
         if time_since_last < sleep_time:
             time.sleep(sleep_time - time_since_last)
+        
+        additional_delay = random.uniform(0.5, 2.0)
+        time.sleep(additional_delay)
+        
         self.last_request_time = time.time()
 
     def is_valid_url(self, url):
@@ -99,25 +115,22 @@ class PortalzukScraper:
 
     def close_popups(self):
         """Tenta fechar popups que podem atrapalhar a navegação."""
-        # Tentativa de fechar dropdown de cidade se aparecer
         try:
-            # Reduzido timeout
             city_dropdown = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'span.select2-selection__rendered'))
             )
             self.driver.execute_script("arguments[0].style.display = 'none';", city_dropdown)
             print("Popup de cidade ocultado.")
         except (NoSuchElementException, TimeoutException):
-            pass # Popup de cidade não encontrado ou não apareceu
+            pass
 
-        # Tentativa de fechar botões genéricos de fechar popups
         try:
             close_buttons = self.driver.find_elements(By.CSS_SELECTOR, 'button.close, .modal-close, [aria-label="Close"]')
             for button in close_buttons:
                 try:
                     if button.is_displayed() and button.is_enabled():
                         self.driver.execute_script("arguments[0].click();", button)
-                        time.sleep(0.2) # Pequena pausa após clicar para o popup fechar
+                        time.sleep(0.2)
                         print("Botão de fechar popup clicado.")
                 except WebDriverException: 
                     continue
@@ -125,29 +138,35 @@ class PortalzukScraper:
             pass
 
     def extract_image_urls(self, html_content):
-        """Extrai URLs de imagens do conteúdo HTML."""
+        """Extrai URLs de imagens do conteúdo HTML com cache manual."""
+        cache_key = f"image_urls_{hash(html_content)}"
+        
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+        
         try:
             soup = BeautifulSoup(html_content, "html.parser")
             image_urls = []
-            # Seleciona imagens dentro de figure.property-gallery-image para ser mais específico
             image_tags = soup.select('figure.property-gallery-image img')
             for img in image_tags:
-                # Prioriza 'src' mas considera 'data-src' se 'src' não estiver presente
                 src = img.get('src') or img.get('data-src')
                 if src:
                     image_urls.append(src)
+            
+            self.cache[cache_key] = image_urls
             return image_urls
         except Exception as e:
             print(f"Ocorreu um erro ao extrair URLs de imagem: {e}")
             traceback.print_exc()
             return []
-    
+
     def _scrap_nested_page(self, url):
-        """
-        Scrapeia uma URL aninhada (e.g., página de processo/banco).
-        Retorna um dicionário contendo dados específicos (leiloeiro) e o HTML bruto (limitado).
-        Garante um dicionário de retorno mesmo em caso de erro para não perder o registro pai.
-        """
+        """Scrapeia uma URL aninhada com cache manual."""
+        cache_key = f"nested_page_{url}"
+        
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+        
         nested_data = {
             "leiloeiro": None,
         }
@@ -155,15 +174,14 @@ class PortalzukScraper:
             nested_data["leiloeiro"] = "URL inválida para página aninhada"
             return nested_data
 
-        # O delay será gerenciado pelo ThreadPoolExecutor com a sessão requests
         try:
-            # Reduzido timeout
+            self.random_delay()
+            
             response = self.session.get(url, timeout=15)
             response.raise_for_status() 
             
             soup = BeautifulSoup(response.text, "html.parser")
             
-            # Ajuste no seletor para leiloeiro (mais robusto)
             leiloeiro_label = soup.find("h1", class_="whitelabel-title")
             if leiloeiro_label:
                 leiloeiro_text = leiloeiro_label.get_text(strip=True)
@@ -171,14 +189,21 @@ class PortalzukScraper:
             else:
                 nested_data["leiloeiro"] = "leiloeiro não encontrado"
 
+            self.cache[cache_key] = nested_data
             return nested_data
 
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
-                print(f"[BLOQUEADO] Erro 403 (Forbidden) para URL aninhada {url}: Tentando com nova sessão...")
-                self.session = self._create_requests_session() 
+            if e.response.status_code == 429:
+                retry_after = e.response.headers.get('Retry-After', 30)
+                print(f"Erro 429 - Esperando {retry_after} segundos antes de tentar novamente...")
+                time.sleep(int(retry_after))
+                self.circuit_breaker.record_failure()
+                self.session = self._create_requests_session()
+                return self._scrap_nested_page(url)
+            elif e.response.status_code == 403:
+                print(f"[BLOQUEADO] Erro 403 para URL aninhada {url}: Tentando com nova sessão...")
+                self.session = self._create_requests_session()
                 try:
-                    # Re-tentativa com nova sessão e timeout reduzido
                     response = self.session.get(url, timeout=15)
                     response.raise_for_status()
                     soup = BeautifulSoup(response.text, "html.parser")
@@ -188,6 +213,7 @@ class PortalzukScraper:
                         nested_data["leiloeiro"] = leiloeiro_text.replace("Leilão de imóveis ", "").strip()
                     else:
                         nested_data["leiloeiro"] = "leiloeiro não encontrado (re-tentativa)"
+                    self.cache[cache_key] = nested_data
                     return nested_data
                 except requests.exceptions.RequestException as retry_e:
                     print(f"Erro de requisição mesmo após recriar sessão para URL aninhada {url}: {retry_e}")
@@ -215,7 +241,9 @@ class PortalzukScraper:
             return extra_data 
 
         try:
-            response = self.session.get(url, timeout=20) # Timeout ajustado
+            self.random_delay()
+            
+            response = self.session.get(url, timeout=20)
             response.raise_for_status() 
 
             soup = BeautifulSoup(response.text, "html.parser")
@@ -223,7 +251,6 @@ class PortalzukScraper:
                 print(f"[ERRO] BeautifulSoup não conseguiu parsear: {url}")
                 return extra_data
             
-            # --- Início da extração de dados ---
             features = soup.find_all("div", class_="property-featured-item")
             for feature in features:
                 label = feature.find("span", class_="property-featured-item-label")
@@ -239,7 +266,6 @@ class PortalzukScraper:
             if observacoes_geral:
                 extra_data["Observações"] = observacoes_geral.get_text(strip=True)
             
-            # Correção para o link do processo judicial
             process_link_found = False
             box_action_bank_figure = soup.find("figure", class_="box-action-bank")
             if box_action_bank_figure:
@@ -248,15 +274,13 @@ class PortalzukScraper:
                     extra_data["Link do Processo Judicial"] = process_link_tag['href']
                     process_link_found = True
             
-            if not process_link_found: # Verifica se não foi encontrado no padrão anterior
+            if not process_link_found:
                 processo = soup.find("a", class_="glossary-link")
                 if processo and processo.has_attr("href") and self.is_valid_url(processo['href']):
-                    extra_data["Link do Processo Judicial"] = processo["href"] # Padroniza para "Link do Processo Judicial"
+                    extra_data["Link do Processo Judicial"] = processo["href"]
             
-            # Correção e ajuste para Visitação
             visitacao_h3 = soup.find("h3", class_="property-info-title", string=lambda text: text and "Visitação" in text)
             if visitacao_h3:
-                # Pega o próximo div irmão que contém o texto da visitação
                 visitacao_text_div = visitacao_h3.find_next_sibling("div", class_="property-info-text")
                 if visitacao_text_div:
                     extra_data["Visitação"] = visitacao_text_div.get_text(strip=True)
@@ -266,18 +290,16 @@ class PortalzukScraper:
                 extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)
 
             glossary_tags = soup.find_all("div", class_="glossary-content")
-            for tag in  glossary_tags:
+            for tag in glossary_tags:
                 pref_tag = tag.find("p", class_="text_subtitle")
                 if pref_tag and "DIREITO DE PREFERÊNCIA" in pref_tag.get_text(strip=True):
                     extra_data["Direito de Preferência"] = pref_tag.get_text(strip=True)
 
-            # Correção para "Descrição do imóvel"
-            description_element_title=soup.find("h3",class_="property-info-title")
-            description_element_text = soup.find("p",class_="property-hide-show")
-            if  "Descrição do imóvel"   in  description_element_title.get_text(strip=True):
+            description_element_title = soup.find("h3", class_="property-info-title")
+            description_element_text = soup.find("p", class_="property-hide-show")
+            if description_element_title and "Descrição do imóvel" in description_element_title.get_text(strip=True):
                 extra_data["Descrição do imóvel"] = description_element_text.get_text(strip=True)
 
-            
             status_elements = soup.find_all("div", class_="property-status")
             for status_div in status_elements:
                 title_span = status_div.find("span", class_="property-status-title")
@@ -287,103 +309,41 @@ class PortalzukScraper:
                     text = text_p.get_text(strip=True)
                     
                     if "Imóvel ocupado" in title or "Imóvel desocupado" in title:
-                        extra_data["ocupado"] = text # Correção aqui
+                        extra_data["ocupado"] = text
                     elif "Direitos do Compromissário Comprador" in title:
                         extra_data["Direitos do Compromissário"] = text
             
-            # Isso já faz o que você quer: coloca cada link de imagem em uma coluna diferente
             image_urls = self.extract_image_urls(response.text)
             for idx, url_img in enumerate(image_urls, start=1): 
                 extra_data[f"Foto_{idx}"] = url_img
             extra_data["Total_Fotos"] = len(image_urls)
-            # --- Fim da extração de dados ---
+
+            documents_div = soup.find("div", class_="property-documents-items")
+            if documents_div:
+                for link in documents_div.find_all('a', class_="property-documents-item"):
+                    # Remove espaços extras da classe para evitar problemas
+                    label = link.find('span', class_="property-documents-item-label")
+                    if label and label.get_text(strip=True).lower() == "edital de venda":
+                        href_edital = link.get('href')
+                        if href_edital and href_edital.strip():
+                            # Adiciona verificação de URL válida
+                            if self.is_valid_url(href_edital):
+                                extra_data["Edital de venda"] = href_edital
+                            else:
+                                print(f"URL do edital inválida: {href_edital}")
+                            break  # Encontrou o edital, pode parar de procurar
+
 
             return extra_data 
 
         except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
-                print(f"[BLOQUEADO] Erro 403 (Forbidden) para {url}: O site pode ter detectado o scraper. Tentando com nova sessão...")
+            if e.response.status_code in [403, 429]:
+                print(f"[BLOQUEADO] Erro {e.response.status_code} para {url}: Tentando com nova sessão...")
+                self.circuit_breaker.record_failure()
                 self.session = self._create_requests_session()
-                try:
-                    response = self.session.get(url, timeout=20) # Re-tentativa com timeout ajustado
-                    response.raise_for_status()
-                    soup = BeautifulSoup(response.text, "html.parser")
-                    if soup:
-                        # Re-extrai todos os dados com a nova sessão (duplicação intencional para re-tentativa)
-                        features = soup.find_all("div", class_="property-featured-item")
-                        for feature in features:
-                            label = feature.find("span", class_="property-featured-item-label")
-                            value = feature.find("span", class_="property-featured-item-value")
-                            if label and value:
-                                extra_data[label.get_text(strip=True)] = value.get_text(strip=True)
-                        
-                        matricula = soup.find("p", {"id": "itens_matricula"})
-                        if matricula: extra_data["Matrícula"] = matricula.get_text(strip=True)
-                        observacoes_geral = soup.find("div", class_="div-text-observacoes")
-                        if observacoes_geral:
-                            extra_data["Observações"] = observacoes_geral.get_text(strip=True)
-            
-                        # Re-tentativa para link do processo judicial
-                        process_link_found = False
-                        box_action_bank_figure = soup.find("figure", class_="box-action-bank")
-                        if box_action_bank_figure:
-                            process_link_tag = box_action_bank_figure.find("a", href=True)
-                            if process_link_tag and self.is_valid_url(process_link_tag['href']):
-                                extra_data["Link do Processo Judicial"] = process_link_tag['href']
-                                process_link_found = True
-                        if not process_link_found:
-                            processo = soup.find("a", class_="glossary-link")
-                            if processo and processo.has_attr("href") and self.is_valid_url(processo['href']):
-                                extra_data["Link do Processo Judicial"] = processo["href"]
-                        
-                        # Re-tentativa para "Visitação"
-                        visitacao_h3 = soup.find("h3", class_="property-info-title", string=lambda text: text and "Visitação" in text)
-                        if visitacao_h3:
-                            visitacao_text_div = visitacao_h3.find_next_sibling("div", class_="property-info-text")
-                            if visitacao_text_div:
-                                extra_data["Visitação"] = visitacao_text_div.get_text(strip=True)
-
-                        pagamento=soup.find("p",class_="property-payments-item-text")
-                        if pagamento: extra_data["Formas de Pagamento"] = pagamento.get_text(strip=True)                        
-                        
-                        glossary_tags = soup.find_all("div", class_="glossary-content")
-                        for tag in  glossary_tags:
-                            pref_tag=tag.find("p",class_="text_subtitle")
-                            if pref_tag and "DIREITO DE PREFERÊNCIA" in pref_tag.get_text(strip=True):
-                                extra_data["Direito de Preferência"] = pref_tag.get_text(strip=True)
-                        
-                        # Re-tentativa para "Descrição do imóvel"
-                        description_element_title=soup.find("h3",class_="property-info-title")
-                        description_element_text = soup.find("p",class_="property-hide-show")
-                        if  "Descrição do imóvel"   in  description_element_title.get_text(strip=True):
-                            extra_data["Descrição do imóvel"] = description_element_text.get_text(strip=True)
-
-
-                        status_elements = soup.find_all("div", class_="property-status")
-                        for status_div in status_elements:
-                            title_span = status_div.find("span", class_="property-status-title")
-                            text_p = status_div.find("p", class_="property-status-text")
-                            if title_span and text_p:
-                                title = title_span.get_text(strip=True)
-                                text = text_p.get_text(strip=True)
-                                if "Imóvel ocupado" in title or "Imóvel desocupado" in title:
-                                    extra_data["ocupado"] = text # Correção aqui
-                                elif "Direitos do Compromissário Comprador" in title:
-                                    extra_data["Direitos do Compromissário"] = text
-                                
-                        image_urls = self.extract_image_urls(response.text)
-                        for idx, url_img in enumerate(image_urls, start=1): 
-                            extra_data[f"Foto_{idx}"] = url_img
-                        extra_data["Total_Fotos"] = len(image_urls)
-                        return extra_data
-                    else:
-                        print(f"[ERRO] BeautifulSoup não conseguiu parsear após retentativa: {url}")
-                        return extra_data
-                except requests.exceptions.RequestException as retry_e:
-                    print(f"Erro de requisição mesmo após recriar sessão para {url}: {retry_e}")
-                    return extra_data
+                return self.scrapItensPages(url)
             else:
-                print(f"Erro de requisição para {url}: {e}")
+                print(f"Erro HTTP {e.response.status_code} para {url}: {e}")
                 return extra_data
         except requests.exceptions.RequestException as e:
             print(f"Erro de requisição para {url}: {e}")
@@ -393,9 +353,8 @@ class PortalzukScraper:
             traceback.print_exc()
             return extra_data
 
-
     def load_all_properties(self, url):
-        """Navega para a página principal e carrega todas as propriedades clicando em 'Carregar mais'."""
+        """Carrega todas as propriedades clicando em 'Carregar mais'."""
         print(f"Carregando todos os imóveis da URL: {url}...")
         self.driver.get(url)
         WebDriverWait(self.driver, 10).until(
@@ -408,9 +367,7 @@ class PortalzukScraper:
         
         last_count = initial_count
         attempts_without_new_properties = 0
-        # Reduzido para 5 tentativas sem novos imóveis
         max_attempts_without_new = 5
-        # Reduzido limite absoluto
         max_total_attempts = 30
         current_total_attempts = 0
 
@@ -421,18 +378,15 @@ class PortalzukScraper:
                 break
 
             try:
-                # Reduzido timeout para 10s
                 load_more_button = WebDriverWait(self.driver, 7).until(
                     EC.element_to_be_clickable((By.XPATH, '//button[contains(text(), "Carregar mais")]'))
                 )
                 
                 self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", load_more_button)
-                time.sleep(1.0) # Pausa menor após o scroll
+                time.sleep(1.0)
                 
-                # Tenta clicar com JS, que é mais robusto
                 self.driver.execute_script("arguments[0].click();", load_more_button)
                 
-                # Espera por um novo elemento ou até que o contador de tentativas esgote
                 WebDriverWait(self.driver, 15).until(
                     lambda d: len(d.find_elements(By.CSS_SELECTOR, 'div.card-property')) > last_count
                 )
@@ -447,10 +401,10 @@ class PortalzukScraper:
                     attempts_without_new_properties += 1
                     print(f"Nenhum novo imóvel carregado nesta tentativa. Tentativas sem sucesso: {attempts_without_new_properties}")
                     if attempts_without_new_properties >= max_attempts_without_new:
-                        print(f"Nenhum novo imóvel carregado após {max_attempts_without_new} tentativas. Assumindo que todos os imóveis foram carregados ou o botão parou de funcionar.")
+                        print(f"Nenhum novo imóvel carregado após {max_attempts_without_new} tentativas. Assumindo que todos os imóveis foram carregados.")
                         break
 
-                time.sleep(random.uniform(1.5, 2.5)) # Pausa menor e variável
+                time.sleep(random.uniform(1.5, 2.5))
 
             except (NoSuchElementException, TimeoutException):
                 print("Botão 'Carregar mais' não encontrado ou não está mais clicável. Todos os imóveis podem ter sido carregados.")
@@ -495,19 +449,16 @@ class PortalzukScraper:
                                     "Data": date.get_text(strip=True)
                                 })
                     
-                    # Garante que a propriedade é adicionada mesmo se faltar tipo_imovel ou endereco
                     property_data = {
                         "tipo_imovel": tipo_imovel.get_text(strip=True) if tipo_imovel else "N/A",
                         "endereco": address.get_text(separator=" ", strip=True) if address else "N/A",
                         "Link": link if link else "N/A",
-                        # Garante ao menos um preço
                         "Preços": prices if prices else [{"Tipo": "N/A", "Valor": "N/A", "Data": "N/A"}]
                     }
                     properties.append(property_data)
                 
                 except Exception as e:
                     print(f"[ERRO] Erro ao processar card na página principal: {str(e)}")
-                    # Não impede o processamento dos demais cards
                     continue
 
         except Exception as e:
@@ -519,7 +470,6 @@ class PortalzukScraper:
     def enrich_with_details(self, properties):
         """
         Enriquece a lista de propriedades com dados detalhados usando paralelismo.
-        Não descarta propriedades mesmo que a extração de detalhes falhe.
         """
         print(f"Enriquecendo {len(properties)} propriedades com detalhes...")
 
@@ -543,29 +493,25 @@ class PortalzukScraper:
                         enriched_properties[original_index].update(details)
                     else:
                         print(f"[AVISO] Nenhuma detalhe extraído para {current_property_link}. Mantendo dados parciais.")
-                        # Não há necessidade de adicionar uma chave de erro se 'details' já retornou vazio.
-                        # Os dados originais do imóvel já estão em enriched_properties[original_index]
                 except Exception as e:
                     print(f"[ERRO] Falha ao enriquecer propriedade no índice {original_index} ({current_property_link}): {str(e)}")
                     traceback.print_exc()
                     enriched_properties[original_index]["ErroEnriquecimentoDetalhes"] = str(e)
                 
-                if processed_count % 50 == 0 or processed_count == len(future_to_index):
+                if processed_count % 10 == 0 or processed_count == len(future_to_index):
                     print(f"Progresso de enriquecimento de detalhes: {processed_count}/{len(future_to_index)} propriedades processadas.")
         
         return enriched_properties 
 
     def enrich_with_process_details(self, properties):
         """
-        Para cada propriedade, se houver um link de processo (judicial ou geral),
-        scrapeia o conteúdo dessa URL e adiciona aos detalhes da propriedade.
-        Aplica paralelismo para maior eficiência e garante que nenhum dado seja perdido.
+        Para cada propriedade, se houver um link de processo, scrapeia o conteúdo.
         """
-        print(f"Buscando detalhes de páginas de processo para {len(properties)} propriedades usando paralelismo...")
+        print(f"Buscando detalhes de páginas de processo para {len(properties)} propriedades...")
         
         tasks_for_process_pages = []
         for prop in properties:
-            process_link = prop.get("Link do Processo Judicial") # Use apenas a chave padronizada
+            process_link = prop.get("Link do Processo Judicial")
             if process_link and self.is_valid_url(process_link):
                 tasks_for_process_pages.append((prop, process_link))
 
@@ -592,10 +538,9 @@ class PortalzukScraper:
                     traceback.print_exc()
                     prop_data["ErroProcessoAninhado"] = str(e)
                 
-                if processed_count % 50 == 0 or processed_count == len(tasks_for_process_pages):
+                if processed_count % 10 == 0 or processed_count == len(tasks_for_process_pages):
                     print(f"Progresso de enriquecimento de links de processo: {processed_count}/{len(tasks_for_process_pages)} links processados.")
         return properties
-
 
     def prepare_for_export(self, properties):
         """Prepara os dados para exportação CSV, achatando os preços em linhas separadas."""
@@ -654,18 +599,15 @@ class PortalzukScraper:
             "Data", "Matrícula", "leiloeiro", "Descrição do imóvel",
             "Formas de Pagamento", "Direito de Preferência", 
             "Observações", "Direitos do Compromissário",
-            "Link do Processo Judicial", # Adicionado para garantir visibilidade
-            "Visitação" # Adicionado para garantir visibilidade
+            "Link do Processo Judicial", "Visitação"
         ]
         
-        # Coleta todas as chaves "Foto_X" e as ordena para garantir que apareçam em ordem
         photo_fields = sorted([f for f in fieldnames if f.startswith("Foto_")], 
                               key=lambda x: int(x.split('_')[1]))
         if photo_fields:
             preferred_order.extend(photo_fields)
             preferred_order.append("Total_Fotos")
 
-        # Adiciona quaisquer outros campos que não foram explicitamente listados
         other_fieldnames = sorted([f for f in fieldnames if f not in preferred_order])
         final_fieldnames = preferred_order + other_fieldnames
         
@@ -686,7 +628,7 @@ class PortalzukScraper:
     def run(self, start_url=None):
         """Executa o processo de scraping completo."""
         try:
-            print("Iniciando scraping...")
+            print("Iniciando scraping com proteções contra bloqueio...")
             
             start_time = time.time()
             
@@ -702,23 +644,25 @@ class PortalzukScraper:
             # html=self.driver.page_source
             # properties=self.scrapMainPage(html)
 
+
             print(f"Propriedades encontradas na página principal: {len(properties)}")
             
             if not properties:
                 print("Nenhuma propriedade encontrada na página principal para enriquecer. Encerrando.")
                 return
 
+            # Enriquecimento com delays e paralelismo controlado
             enriched_properties = self.enrich_with_details(properties)
             print(f"Propriedades enriquecidas com detalhes da página do imóvel: {len(enriched_properties)}")
 
             final_properties = self.enrich_with_process_details(enriched_properties)
             
+            # Gera nome do arquivo baseado na URL
             parsed_url = urlparse(target_url)
             filename_suffix = parsed_url.path.replace('/', '_').replace('-', '_').strip('_')
             if not filename_suffix or filename_suffix == 'leilao_de_imoveis':
                 output_filename = "portalzuk.csv"
             else:
-                # Tratamento mais robusto para caracteres inválidos em nome de arquivo
                 output_filename = f"portalzuk_{''.join(c if c.isalnum() else '_' for c in filename_suffix)}.csv"
 
             self.export_to_csv(final_properties, filename=output_filename)
@@ -733,5 +677,5 @@ class PortalzukScraper:
             if self.driver:
                 self.driver.quit()
 
-scraper = PortalzukScraper()
-scraper.run()
+# scraper = PortalzukScraper()
+# scraper.run()
