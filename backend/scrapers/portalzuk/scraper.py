@@ -452,7 +452,7 @@ class PortalzukScraper:
                     property_data = {
                         "tipo_imovel": tipo_imovel.get_text(strip=True) if tipo_imovel else "N/A",
                         "endereco": address.get_text(separator=" ", strip=True) if address else "N/A",
-                        "Link": link if link else "N/A",
+                        "Link": link if link else traceback.print_exc(),
                         "Preços": prices if prices else [{"Tipo": "N/A", "Valor": "N/A", "Data": "N/A"}]
                     }
                     properties.append(property_data)

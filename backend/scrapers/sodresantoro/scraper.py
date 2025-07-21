@@ -41,44 +41,13 @@ class SodreSantoroScraper:
             html = self.session.get(url, timeout=20)
             soup = BeautifulSoup(html.text, "html.parser")
 
-            itens_div = soup.find_all("div", class_="ss-main-content-body")
-            for itens in itens_div:
-                leilao = itens.find("div", id="aditionalInfoLot_auction")
-                lote = itens.find("div", id="aditionalInfoLot_lot_number")
-                local = itens.find("div", id="aditionalInfoLot_lot_address")
-                codigo = itens.find("div", id="aditionalInfoLot_internal_code")
+            descricao=soup.find("div",id="detail_info_lot_description")
+            pagamento=soup.find("div",id="payments_options")
 
-                formaDePagamento=itens.find("div",id="payments_options")
-
-                processo = itens.find("div", id="aditionalInfoLot_tj_number_process")
-                processoLink = processo.find("a")["href"] if processo and processo.find("a") else None
-
-                vara = itens.find("div", id="aditionalInfoLot_tj_vara")
-                tipoDeAcao = itens.find("div", id="aditionalInfoLot_tj_action")
-                exequente = itens.find("div", id="aditionalInfoLot_tj_n_exequente")
-                executada = itens.find("div", id="aditionalInfoLot_tj_n_executed")
-
-                descicao=itens.find("div",id="detail_info_lot_description")
-
-                matricula = None
-                for div in itens.find_all("div", class_="is-flex-widescreen is-flex-tablet is-align-items-center"):
-                    for a in div.find_all("a"):
-                        if "Matrícula" in a.text:
-                            matricula = a["href"]
-                            break
-
-                extra_data.update({
-                    "Leilao": leilao.get_text(strip=True) if leilao else None,
-                    "Lote": lote.get_text(strip=True) if lote else None,
-                    "Local": local.get_text(strip=True) if local else None,
-                    "Codigo": codigo.get_text(strip=True) if codigo else None,
-                    "ProcessoLink": processoLink,
-                    "Vara": vara.get_text(strip=True) if vara else None,
-                    "TipoDeAcao": tipoDeAcao.get_text(strip=True) if tipoDeAcao else None,
-                    "Exequente": exequente.get_text(strip=True) if exequente else None,
-                    "Executada": executada.get_text(strip=True) if executada else None,
-                    "Matricula": matricula,
-                })
+            extra_data.update({
+                "descricao":descricao.get_text(strip=True)  if  descricao   else    "n/a",
+                "forma de pagamento":pagamento.get_text(strip=True) if  pagamento   else    "n/a"
+            })
 
             return extra_data
 
@@ -148,8 +117,7 @@ class SodreSantoroScraper:
             all_keys.discard("link")
 
             fieldnames = [
-                "data", "preco", "titulo", "Lote", "Local", "Codigo", "Leilao", "ProcessoLink",
-                "Vara", "TipoDeAcao", "Exequente", "Executada", "Matricula"
+                "data", "preco", "titulo", "Lote"
             ]
 
             with open("sodresantoro.csv", "w", newline="", encoding="utf-8") as csvfile:
