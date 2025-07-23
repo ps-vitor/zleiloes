@@ -8,11 +8,10 @@ from    mega.scraper    import  MegaScraper
 if  __name__   ==   "__main__":
     start=time.time()
     
-    # print("\nScrap do Portalzuk:\n")
-    # start0=time.time()
-    # portalzukscraper =  PortalzukScraper()
-    # portalzukscraper.run()
-    # print("\nFim.\n")
+    print("\nScrap do Portalzuk:\n")
+    portalzukscraper =  PortalzukScraper()
+    portalzukscraper.run()
+    print("\nFim.\n")
     
     print("\nScrap do Sodre Santoro:\n")
     sodresantoroscraper = SodreSantoroScraper(delay=4.5)

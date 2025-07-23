@@ -1,7 +1,7 @@
-import  time
+# circuit_breaker.py
+import time
 
 class CircuitBreaker:
-    """Implementação de Circuit Breaker para evitar sobrecarga do servidor"""
     def __init__(self, max_failures=5, reset_timeout=60):
         self.max_failures = max_failures
         self.reset_timeout = reset_timeout

@@ -85,3 +85,27 @@ class   PortalbayitScraper:
 
         except  Exception   as  e:
             traceback.print_exc()
+
+
+    def extract_image_urls(self, html_content):
+        """Extrai URLs de imagens do conteúdo HTML com cache manual."""
+        cache_key = f"image_urls_{hash(html_content)}"
+        
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+        
+        try:
+            soup = BeautifulSoup(html_content, "html.parser")
+            image_urls = []
+            image_tags = soup.select('figure.property-gallery-image img')
+            for img in image_tags:
+                src = img.get('src') or img.get('data-src')
+                if src:
+                    image_urls.append(src)
+            
+            self.cache[cache_key] = image_urls
+            return image_urls
+        except Exception as e:
+            print(f"Ocorreu um erro ao extrair URLs de imagem: {e}")
+            traceback.print_exc()
+            return []
