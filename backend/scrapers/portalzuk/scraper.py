@@ -15,7 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
-from    .circuitBreaker  import  CircuitBreaker
+from    .circuit_breaker  import  CircuitBreaker
 
 class PortalzukScraper:
     def __init__(self):
@@ -635,14 +635,14 @@ class PortalzukScraper:
             target_url = start_url if start_url else self.base_url
             
             # Use load_all_properties para garantir que todos os imóveis sejam carregados
-            html = self.load_all_properties(target_url)
-            properties = self.scrapMainPage(html)
+            # html = self.load_all_properties(target_url)
+            # properties = self.scrapMainPage(html)
 
 
             # rodar sem load_all_properties
-            # self.driver.get(target_url)
-            # html=self.driver.page_source
-            # properties=self.scrapMainPage(html)
+            self.driver.get(target_url)
+            html=self.driver.page_source
+            properties=self.scrapMainPage(html)
 
 
             print(f"Propriedades encontradas na página principal: {len(properties)}")

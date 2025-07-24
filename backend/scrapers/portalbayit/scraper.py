@@ -1,23 +1,10 @@
-import csv
-import random
-import time
-import traceback
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from urllib.parse import urljoin, urlparse
-from cachetools import TTLCache
-
-import requests
-from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from urllib3.util.retry import Retry
-from requests.adapters import HTTPAdapter
-from    ..portalzuk.circuitBreaker   import CircuitBreaker
+import time
+from bs4 import BeautifulSoup
 
-class   PortalbayitScraper:
+class PortalBayit:
     def __init__(self):
         # Lista de User-Agents para rotação
         self.user_agents = [
@@ -40,72 +27,72 @@ class   PortalbayitScraper:
         self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
         self.options.add_experimental_option('useAutomationExtension', False)
         
-        # Configura User-Agent inicial
-        self.current_user_agent = random.choice(self.user_agents)
-        self.options.add_argument(f'user-agent={self.current_user_agent}')
-
+        # Initialize the driver
         self.driver = webdriver.Chrome(options=self.options)
-        self.base_url = "https://www.portalbayit.com.br/busca/#Engine=Start&Pagina=1&Busca=&Mapa=&Ordem=10&PaginaIndex=1"
-        
-        # Inicializa circuit breaker
-        self.circuit_breaker = CircuitBreaker(max_failures=3, reset_timeout=120)
-        
-        # Configurações de intervalo entre requisições
-        self.last_request_time = 1
-        self.min_request_interval = 5.0
-        self.max_request_interval_addition = 10.0
-        self.max_workers = 4
-        
-        # Configura cache
-        self.cache = TTLCache(maxsize=1000, ttl=3600)  # Cache de 1 hora
-        
-        self.session = self._create_requests_session()
 
-    def scrapItensPage(self,url):
-        """Scrapa detalhes de uma página de item específica."""
-        extra_data = {} 
-        if not self.is_valid_url(url):
-            print(f"[AVISO] URL inválida para scrapItensPages: {url}")
-            return extra_data 
+    def get_pages(self,url):
+        self.driver.get(url)
+        soup = BeautifulSoup(self.driver.page_source, "html.parser")
+        nav_el  =   soup.find_all("nav",class_="dg-paginacao")
+        buscas=[]
+        for a   in  nav_el:
+            href=a.get('href')
+            if  href:
+                buscas.append(href)
+        return  len(buscas)
 
-        try:
-            self.random_delay()
-            
-            response = self.session.get(url, timeout=20)
-            response.raise_for_status() 
+    def get_links(self, url):
+        self.driver.get(url)
+        time.sleep(3)
+    
+        last_height = self.driver.execute_script("return document.body.scrollHeight")
+    
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(3)  # aguarda carregar novos itens
+    
+            new_height = self.driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
+    
+        soup = BeautifulSoup(self.driver.page_source, "html.parser")
+        row_leiloes = soup.find_all("a", class_="dg-leiloes-img")
+    
+        links_propriedades = set()
+        for item in row_leiloes:
+            href = item.get('href')
+            if href:
+                links_propriedades.add(href)
+    
+        return list(links_propriedades)
 
-            soup = BeautifulSoup(response.text, "html.parser")
-            if not soup: 
-                print(f"[ERRO] BeautifulSoup não conseguiu parsear: {url}")
-                return extra_data
-            
-            div_descricao=soup.find_all("div",class_="dg-lote-descricao-txt")
-            for p    in  div_descricao:
-                p_element=p.find
+    def change_btw_pagesindexes(self,qtd_pagina,qtd_index):
+        urls=set()
+        for i   in  range   (1,qtd_index):
+            for j   in  range(1,qtd_pagina):
+                url=f"https://www.portalbayit.com.br/busca/#Engine=Start&Pagina={j}&Busca=&Mapa=&Ordem=10&PaginaIndex={i}"
+                if  url:
+                    urls.add(url)
+        for _   in  urls:
+            print(_)
+        return  list(urls)
 
-        except  Exception   as  e:
-            traceback.print_exc()
+    def retorna_links(self):
+        url="https://www.portalbayit.com.br/busca/#Engine=Start&Pagina=1&Busca=&Mapa=&Ordem=10&PaginaIndex=1"
+        buscas_len=self.get_pages(url)
+        links = self.get_links(url)
+        urls=self.change_btw_pagesindexes(buscas_len,3)
+        print(f"Found {len(links)} links:")
+        for link in links:
+            print(link)
+        return links
 
+    def __del__(self):
+        # Close the driver when the object is destroyed
+        if hasattr(self, 'driver'):
+            self.driver.quit()
 
-    def extract_image_urls(self, html_content):
-        """Extrai URLs de imagens do conteúdo HTML com cache manual."""
-        cache_key = f"image_urls_{hash(html_content)}"
-        
-        if cache_key in self.cache:
-            return self.cache[cache_key]
-        
-        try:
-            soup = BeautifulSoup(html_content, "html.parser")
-            image_urls = []
-            image_tags = soup.select('figure.property-gallery-image img')
-            for img in image_tags:
-                src = img.get('src') or img.get('data-src')
-                if src:
-                    image_urls.append(src)
-            
-            self.cache[cache_key] = image_urls
-            return image_urls
-        except Exception as e:
-            print(f"Ocorreu um erro ao extrair URLs de imagem: {e}")
-            traceback.print_exc()
-            return []
+if __name__ == "__main__":
+    portalbayit = PortalBayit()
+    portalbayit.retorna_links()
