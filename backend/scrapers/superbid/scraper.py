@@ -30,18 +30,44 @@ class SuperbidScraper:
 
         self.driver = webdriver.Chrome(options=self.options)
 
-    
-
-    def get_homelinks(self):
+    def get_pages(self):
         self.driver.get(self.url)
         time.sleep(3)
 
-        soup = BeautifulSoup(self.driver.page_source, "html.parser")
-        a_tags = soup.find_all("a", id=lambda x: x and x.startswith("offer-card-"))
-        for a in a_tags:
-            href = a.get("href")
-            full_url = self.url_base + href
-            print(full_url)
+        soup=BeautifulSoup(self.driver.page_source, "html.parser")
+        urls=set()
+        pages_el=soup.find_all("a",class_="sc-71689b74-2")
+        for a   in  pages_el:
+            if  a    and a.has_attr("href"):
+                urls.add(a["href"])
+        return  urls
+
+    def ordena_get_pages(self,lista):
+        def extrair_numero(i):
+            try:
+                parte=i.split("pageNumber=")
+                if  len(parte)>1:
+                    return  int(parte[1].split("&")[0])
+            except  ValueError:
+                pass
+            return  0
+        return  sorted(lista,key=extrair_numero)
+
+    def get_homelinks(self):
+        urls = self.get_pages()
+        urls_ordenada=self.ordena_get_pages(urls)
+        for url in urls_ordenada:
+            self.driver.get(self.url_base + url)
+            print(f"\nscrap da pagina {url}\n")
+            time.sleep(3)
+
+            soup = BeautifulSoup(self.driver.page_source, "html.parser")
+            a_tags = soup.find_all("a", id=lambda x: x and x.startswith("offer-card-"))
+            for a in a_tags:
+                href = a.get("href")
+                full_url = self.url_base + href
+                print(full_url)
+
 
 
 if __name__ == "__main__":
