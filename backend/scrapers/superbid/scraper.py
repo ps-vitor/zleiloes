@@ -1,21 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 from bs4 import BeautifulSoup
 
 class SuperbidScraper:
     def __init__(self):
-        self.user_agents = [
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/109.0",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15",
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/119.0.0.0",
-            "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:109.0) Gecko/20100101 Firefox/110.0",
-        ]
-
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--headless=new')
         self.options.add_argument('--disable-gpu')
@@ -25,52 +17,82 @@ class SuperbidScraper:
         self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
         self.options.add_experimental_option('useAutomationExtension', False)
 
-        self.url="https://www.superbid.net/categorias/imoveis?searchType=opened"
-        self.url_base="https://www.superbid.net"
-
+        self.url = "https://www.superbid.net/categorias/imoveis?searchType=opened"
+        self.url_base = "https://www.superbid.net"
         self.driver = webdriver.Chrome(options=self.options)
-
-    def get_pages(self):
-        self.driver.get(self.url)
-        time.sleep(3)
-
-        soup=BeautifulSoup(self.driver.page_source, "html.parser")
-        urls=set()
-        pages_el=soup.find_all("a",class_="sc-71689b74-2")
-        for a   in  pages_el:
-            if  a    and a.has_attr("href"):
-                urls.add(a["href"])
-        return  urls
-
-    def ordena_get_pages(self,lista):
-        def extrair_numero(i):
-            try:
-                parte=i.split("pageNumber=")
-                if  len(parte)>1:
-                    return  int(parte[1].split("&")[0])
-            except  ValueError:
-                pass
-            return  0
-        return  sorted(lista,key=extrair_numero)
+        self.wait = WebDriverWait(self.driver, 15)
+        self.unique_links = set()  # Armazena links únicos
 
     def get_homelinks(self):
-        urls = self.get_pages()
-        urls_ordenada=self.ordena_get_pages(urls)
-        for url in urls_ordenada:
-            self.driver.get(self.url_base + url)
-            print(f"\nscrap da pagina {url}\n")
-            time.sleep(3)
+        self.driver.get(self.url)
+        time.sleep(5)  # Espera inicial maior para carregar tudo
+        
+        while True:
+            # Processa a página atual
+            self.process_current_page()
+            
+            # Tenta avançar para a próxima página
+            if not self.go_to_next_page():
+                break  # Sai do loop se não conseguir avançar
+            
+            time.sleep(3)  # Espera entre páginas
 
+        # Após processar todas as páginas, imprime os links únicos
+        print("\n=== LINKS ÚNICOS ENCONTRADOS ===")
+        for link in self.unique_links:
+            print(link)
+        print(f"\nTotal de links únicos: {len(self.unique_links)}")
+
+    def process_current_page(self):
+        try:
+            # Espera os elementos carregarem
+            self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "a[id^='offer-card-']")))
+            
+            # Obtém todos os links de ofertas
             soup = BeautifulSoup(self.driver.page_source, "html.parser")
             a_tags = soup.find_all("a", id=lambda x: x and x.startswith("offer-card-"))
+            
             for a in a_tags:
                 href = a.get("href")
-                full_url = self.url_base + href
-                print(full_url)
+                if href:
+                    full_url = self.url_base + href
+                    self.unique_links.add(full_url)  # Adiciona ao conjunto (evita duplicatas)
+                    
+        except Exception as e:
+            print(f"Erro ao processar página: {e}")
 
+    def go_to_next_page(self):
+        try:
+            pagination = self.wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.sc-71689b74-0.iqPXXn"))
+            )
+            
+            next_button = pagination.find_element(By.XPATH, ".//button[contains(text(), 'Próximo')]")
+            
+            if "disabled" in next_button.get_attribute("class"):
+                print("Chegou à última página")
+                return False
+                
+            self.driver.execute_script("arguments[0].scrollIntoView();", next_button)
+            self.driver.execute_script("arguments[0].click();", next_button)
+            
+            self.wait.until(EC.staleness_of(next_button))
+            time.sleep(2) 
+            
+            return True
+            
+        except Exception as e:
+            print("Erro ao tentar avançar para próxima página")
+            return False
 
+    def close(self):
+        self.driver.quit()
 
 if __name__ == "__main__":
     superbid = SuperbidScraper()
-    links = superbid.get_homelinks()
-    
+    try:
+        superbid.get_homelinks()
+    except Exception as e:
+        print(f"Erro no processo principal: {e}")
+    finally:
+        superbid.close()
