@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 import time
 from bs4 import BeautifulSoup
 
-class PortalBayit:
+class PortalBayitScraper:
     def __init__(self):
         self.user_agents = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -137,7 +137,7 @@ class PortalBayit:
             self.driver.quit()
 
 if __name__ == "__main__":
-    portalbayit = PortalBayit()
+    portalbayit = PortalBayitScraper()
     links = portalbayit.retorna_links()
     # Optionally save links to a file
     with open("portalbayit_links.txt", "w") as f:
