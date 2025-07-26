@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
+import time,traceback
 from bs4 import BeautifulSoup
 
 class MegaleiloesScraper:
@@ -86,6 +86,39 @@ class MegaleiloesScraper:
         except Exception as e:
             print("Erro ao tentar avançar para próxima página:", e)
             return False
+    
+    def get_property_info(self,url):
+        data={}
+        if not self.is_valid_url(url):
+            print(f"[AVISO] URL inválida para scrapItensPages: {url}")
+            return extra_data
+
+        try:
+            soup = BeautifulSoup(self.driver.page_source, "html.parser")
+            
+            valor_inicial=soup.find("div",class_="value")
+            extra_data["valor"]=valor_inicial.get_text(strip=True)
+
+            localizacao=soup.find("div",class_="locality-item")
+            extra_data["endereco"]=localizacao.get_text(strip=True)
+
+            tipo_leilao=soup.find("div",class_="batch-type")
+            extra_data["tipo_leilao"]=tipo_leilao.get_text(strip=True)
+            
+            leiloeiro=soup.find("div",class_="author item")
+            extra_data["leiloeiro"]=leiloeiro.get_text(strip=True)
+
+            processo_div=soup.find("div",class_="process-number item")
+            extra_data["link do processo"]=processo_div["href"]
+
+            return  extra_data
+        except  Exception   as  e:
+            print(f"erro: {eg}")
+            traceback.print_exc()
+            return  extra_data
+        finally:
+            return  extra_data
+            pass
 
     def close(self):
         self.driver.quit()
