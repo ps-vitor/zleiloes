@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import csv
 import unicodedata
 import  traceback,re
+from cachetools import TTLCache
 
 class PortalBayitScraper:
     def __init__(self):
@@ -30,6 +31,7 @@ class PortalBayitScraper:
 
         self.driver = webdriver.Chrome(options=self.options)
         self.all_properties_data = [] # Inicialize aqui
+        self.cache = TTLCache(maxsize=1000, ttl=3600)
 
     def get_pages(self, url):
         self.driver.get(url)
@@ -141,6 +143,46 @@ class PortalBayitScraper:
     def is_valid_url(self, url):
         return url and (url.startswith("http://") or url.startswith("https://"))
 
+    def extract_portalbayit_image_urls(self, html_content):
+        """Extrai URLs de imagens do conteúdo HTML específico do PortalBayit com cache."""
+        cache_key = f"portalbayit_image_urls_{hash(html_content)}"
+
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
+        try:
+            soup = BeautifulSoup(html_content, "html.parser")
+            image_urls = []
+
+            # Find all image containers (using the specific class from PortalBayit)
+            image_containers = soup.select('div.slick-track a.dg-lote-img-item')
+
+            for container in image_containers:
+                # Get the high-resolution image URL (1300x1300)
+                hi_res_url = container.get('href')
+                if hi_res_url and hi_res_url not in image_urls:
+                    image_urls.append(hi_res_url)
+
+                # Get the full-size image URL (770x620)
+                full_size_url = container.get('imgfull')
+                if full_size_url and full_size_url not in image_urls:
+                    image_urls.append(full_size_url)
+
+                # Get the thumbnail URL (605x487)
+                img_tag = container.find('img')
+                if img_tag:
+                    thumb_url = img_tag.get('src')
+                    if thumb_url and thumb_url not in image_urls:
+                        image_urls.append(thumb_url)
+
+            self.cache[cache_key] = image_urls
+            return image_urls
+
+        except Exception as e:
+            print(f"Erro ao extrair URLs de imagem do PortalBayit: {e}")
+            traceback.print_exc()
+            return []
+
     def get_property_info(self, url):
         data = {
             "url": url,
@@ -149,9 +191,10 @@ class PortalBayitScraper:
             "endereco": None,
             "metragem_util": None,
             "metragem_total": None,
-            "bem": None,          # Novo campo
+            "descricao": None,          # Novo campo
             "matricula": None,    # Novo campo
             "observacoes": None,  # Novo campo
+            "imagens":[]
         }
 
         if not self.is_valid_url(url):
@@ -171,14 +214,25 @@ class PortalBayitScraper:
                     break
                 last_height = new_height
 
+            html_content = self.driver.page_source
+            image_urls = self.extract_portalbayit_image_urls(html_content)
+            #define o maximo de imagens
+            MAX_IMAGES=3
+            limited_image_urls=image_urls[:MAX_IMAGES]
+            data["imagens"]=limited_image_urls
+
+            for idx,img_url in  enumerate(limited_image_urls,start=1):
+                data[f"imagem_{idx}"]=img_url
+            data["total_imagens"]=len(limited_image_urls)
+
             soup = BeautifulSoup(self.driver.page_source, "html.parser")
 
             # Dados básicos
             if (avaliacao := soup.find("strong", class_="ValorAvaliacao")):
-                data["avaliacao"] = avaliacao.get_text(strip=True)
+                data["avaliacao"] = avaliacao.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip()
 
             if (lance_min := soup.find("strong", class_="BoxLanceValor")):
-                data["lance_minimo"] = lance_min.get_text(strip=True)
+                data["lance_minimo"] = lance_min.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip(),
 
             if (endereco := soup.find("div", class_="dg-lote-local-endereco")):
                 data["endereco"] = endereco.get_text(strip=True)
@@ -201,24 +255,56 @@ class PortalBayitScraper:
             descricao_div = soup.find("div", class_="dg-lote-descricao-txt")
             if descricao_div:
                 descricao_text = descricao_div.get_text(separator="\n", strip=True)
+                data["descricao_imovel"] = descricao_text
 
-                # Extrair BEM
-                bem_match = re.search(r'BEM:\s*(.*?)(?=\n|MATRÍCULA|$)', descricao_text, re.DOTALL)
-                if bem_match:
-                    data["bem"] = bem_match.group(1).strip()
+                # Extração inteligente dos campos variáveis
+                lines = [line.strip() for line in descricao_text.split('\n') if line.strip()]
 
-                # Extrair MATRÍCULA
-                matricula_match = re.search(r'MATRÍCULA n°\s*(.*?)(?=\n|OBS|$)', descricao_text, re.DOTALL)
-                if matricula_match:
-                    data["matricula"] = matricula_match.group(1).strip()
+                # Padrões flexíveis para identificar os campos
+                patterns = {
+                    'descricao': [
+                        r'BEM:\s*(.*)', 
+                        r'IMOVEL:\s*(.*)', 
+                        r'LOTE \d+\)\s*(.*)',
+                        r'DESCRIÇÃO DO IMÓVEL:\s*(.*)'
+                    ],
+                    'matricula': [
+                        r'MATRÍCULA\s*(n?[°ºo]?\s*[\d\.\-]+\s*.*?(?:\n|$))',  # Modificado
+                        r'Matrícula\s*(n?[°ºo]?\s*[\d\.\-]+\s*.*?(?:\n|$))',  # Modificado
+                        r'Registro\s*(n?[°ºo]?\s*[\d\.\-]+\s*.*?(?:\n|$))'    # Modificado
+                    ],
+                    'observacoes': [
+                        r'OBS\s*\d+:\s*(.*)', 
+                        r'Obs\s*\d+:\s*(.*)',
+                        r'OBSERVAÇÃO:\s*(.*)'
+                    ],
+                    'onus': [
+                        r'Ônus:\s*(.*)', 
+                        r'ÔNUS:\s*(.*)',
+                        r'OCUPAÇÃO:\s*(.*)'
+                    ]
+                }
 
-                # Extrair todas as OBSERVAÇÕES
-                observacoes = []
-                for obs_match in re.finditer(r'OBS \d+:\s*(.*?)(?=\nOBS \d+:|$)', descricao_text, re.DOTALL):
-                    observacoes.append(obs_match.group(1).strip())
+                for field, regex_list in patterns.items():
+                    for line in lines:
+                        for regex in regex_list:
+                            match = re.search(regex, line, re.IGNORECASE)
+                            if match:
+                                if field == 'observacoes':
+                                    if data[field] is None:
+                                        data[field] = []
+                                    data[field].append(match.group(1).strip())
+                                else:
+                                    data[field] = match.group(1).strip()
+                                break
+                        else:
+                            continue
+                        break
+                    
+                # Formata observações como texto separado por quebras de linha
+                if isinstance(data.get('observacoes'), list):
+                    data['observacoes'] = '\n'.join(data['observacoes'])
 
-                if observacoes:
-                    data["observacoes"] = "\n".join(observacoes)
 
             # Processo link (mantido da versão anterior)
             info_div = soup.find_all("div", class_="dg-lote-descricao-info")
@@ -227,6 +313,19 @@ class PortalBayitScraper:
                 if processo_link:
                     data["processo_link"] = processo_link["href"]
 
+            docs_div = soup.find_all("div", class_="dg-lote-documentos-wrapper")
+            for div in docs_div:
+                items = div.find_all("li", class_="dg-lote-documentos-downloads__item")
+                for item in items:
+                    item_text = item.get_text(strip=True)
+                    # Pegar o link de download (segundo link)
+                    download_link = item.find_all("a", href=True)[1]["href"]
+
+                    if "Dívida Ativa" in item_text:
+                        data["divida_ativa"] = download_link
+                    if "Edital do Leilão" in item_text:
+                        data["edital_do_leilao"] = download_link
+
         except Exception as e:
             print("Erro: {str(e)}")
             traceback.print_exc()
@@ -234,34 +333,64 @@ class PortalBayitScraper:
         return data
 
     def save_to_csv(self, filename="portalbayit_data.csv"):
-        """Versão corrigida da função de exportação para CSV"""
+        """Versão corrigida que identifica todos os campos dinâmicos antes de exportar"""
         if not hasattr(self, 'all_properties_data') or not self.all_properties_data:
             print("Nenhum dado disponível para exportar!")
             return False
-
+    
         try:
-            # Obter todas as chaves únicas de todos os registros
-            fieldnames = set()
+            # Primeiro identificamos todos os campos possíveis
+            all_fieldnames = set()
+            
+            # Campos fixos que sabemos que existem
+            base_fields = [
+                'url', 'avaliacao', 'lance_minimo', 'endereco', 
+                'metragem_util', 'metragem_total', 'descricao',
+                'matricula', 'observacoes', 'total_imagens',
+                'processo_link', 'imagens', 'imagens_full'
+            ]
+            
+            # Adiciona os campos base
+            all_fieldnames.update(base_fields)
+            
+            # Adiciona todos os campos dinâmicos de imagem encontrados
             for prop in self.all_properties_data:
-                if isinstance(prop, dict):
-                    fieldnames.update(prop.keys())
-
-            # Ordenar as colunas para melhor organização
-            main_fields = ['url', 'endereco']
-            other_fields = sorted(f for f in fieldnames if f not in main_fields)
-            ordered_fieldnames = main_fields + other_fields
-
-            # Escrever no arquivo CSV
+                all_fieldnames.update(prop.keys())
+            
+            # Ordena os campos para melhor organização no CSV
+            # Primeiro os campos fixos, depois os dinâmicos de imagem ordenados numericamente
+            fixed_fields = [f for f in base_fields if f in all_fieldnames]
+            
+            # Extrai e ordena os campos de imagem (imagem_1, imagem_2, etc.)
+            image_fields = sorted(
+                [f for f in all_fieldnames if re.match(r'imagem_\d+', f)],
+                key=lambda x: int(x.split('_')[1])
+            )
+            
+            # Campos adicionais que não são de imagem
+            other_fields = sorted(
+                [f for f in all_fieldnames if f not in fixed_fields and f not in image_fields]
+            )
+            
+            # Junta todos os campos na ordem desejada
+            ordered_fieldnames = fixed_fields + other_fields + image_fields
+            
             with open(filename, mode='w', newline='', encoding='utf-8-sig') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=ordered_fieldnames)
                 writer.writeheader()
-                writer.writerows(self.all_properties_data)
+                
+                for prop in self.all_properties_data:
+                    # Se existir a lista 'imagens', podemos removê-la pois já temos os campos individuais
+                    prop.pop('imagens', None)
+                    prop.pop('imagens_full', None)
+                    writer.writerow(prop)
             
             print(f"Dados exportados com sucesso para {filename}")
             return True
-
+    
         except Exception as e:
             print(f"Erro ao exportar para CSV: {str(e)}")
+            traceback.print_exc()
             return False
 
     def __del__(self):

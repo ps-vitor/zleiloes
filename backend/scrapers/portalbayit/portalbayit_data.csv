@@ -1,58 +1,496 @@
-﻿url,endereco,avaliacao,bem,lance_minimo,matricula,metragem_total,metragem_util,observacoes,processo_link
-https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/298/,"Rua Cristiano Viana,  1216 a 1246 - Vila Madalena - São Paulo - SP","R$ 920.000,00",,"R$ 499.000,00",,"56,47m²","53,93m²",,
-https://www.portalbayit.com.br/lote/apartamento-no-rio-de-janeiro-rj/15/,"Rua Magno Martins,  240 - Freguesia (Ilha do Governador) - Rio de Janeiro - RJ","R$ 285.000,00",,"R$ 85.500,00",,,,,
-https://www.portalbayit.com.br/lote/casa-sao-carlos-sp/236/,"Rua Rheda Widenbruck,  60 - Residencial Samambaia - São Carlos - SP","R$ 300.000,00",,"R$ 180.000,00",,,,,
-https://www.portalbayit.com.br/lote/conjunto-comercial-sao-paulo-sp/244/,"Rua Lincoln Albuquerque,  259 - Perdizes - São Paulo - SP","R$ 997.000,00",,"R$ 548.350,00",,"194,59m²","105,11m²",,
-https://www.portalbayit.com.br/lote/conjunto-comercial-porto-alegre-rs/232/,"Avenida Assis Brasil,  1791 - Passo da Areia - Porto Alegre - RS","R$ 341.400,00",,"R$ 175.000,00",,"164,28m²","113,80m²",,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/286/,"Rua Doutor Wanderson Amorim dos Santos,  Residencial Dunamis - São José dos Campos - SP","R$ 180.000,00",,"R$ 90.000,00",,,,,
-https://www.portalbayit.com.br/lote/casa-itaiopolis-sc/229/,"Rua Cel. Antônio Correa,  2743 - Bom Jesus - Itaiópolis - SC","R$ 290.000,00",,"R$ 174.000,00",,,,,
-https://www.portalbayit.com.br/lote/gleba-de-terras-cunha-sp/272/,,"R$ 368.269,30",,"R$ 368.269,30",,,,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=4F0000LUE0000&processo.foro=159&processo.numero=1000714-19.2021.8.26.0159
-https://www.portalbayit.com.br/lote/casa-em-rio-branco-ac/6/,"Rua Venezuela,  704 - Cadeia Velha - Rio Branco - AC","R$ 415.000,00",,"R$ 124.500,00",,,,,
-https://www.portalbayit.com.br/lote/casa-sao-goncalo-rj/224/,"Avenida Doutor Eugênio Borges,  1693 - Arsenal - São Gonçalo - RJ","R$ 590.000,00",,"R$ 354.000,00",,,,,
-https://www.portalbayit.com.br/lote/apartamento-vila-madalena-sp/136/,"Rua Harmonia,  722 - Sumarezinho - São Paulo - SP","R$ 1.116.497,59",,"R$ 1.116.497,59",,"134,98m²",,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=0B001894C0000&processo.foro=11&processo.numero=1000507-08.2023.8.26.0011
-https://www.portalbayit.com.br/lote/casa-ourinhos-sp/225/,"Rua Celso Francisco Barbosa,  101 - Jardim Anchieta - Ourinhos - SP","R$ 365.000,00",,"R$ 200.750,00",,,,,
-https://www.portalbayit.com.br/lote/apartamento-bauru-sp/119/,"Rua Sargento Leôncio Ferreira dos Santos,  1-31 - Parque Roosevelt - Bauru - SP","R$ 163.081,48",,"R$ 114.157,03",124.865 do 2º Cartório de Registro de Imóveis da Comarca de Bauru/SP.,"62,00m²",,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=1Z000H6S10000&processo.foro=71&processo.numero=1006986-65.2022.8.26.0071
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/291/,"Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP","R$ 136.600,00",,"R$ 68.300,00",,,,,
-https://www.portalbayit.com.br/lote/casa-irapuru-sp/80/,"Rua Petronilo Soares,  234 - Irapuru - SP","R$ 169.744,79","Uma casa e seu respectivo terreno situada na Rua Petronilo Soares, 234 centro, Irapuru-SP, CEP: 17880-000,","R$ 169.744,79",5.724 do 1° Cartório de Registro de Imóveis da Comarca de Pacaembu/SP.,,,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=FE0007JE10000&processo.foro=554&processo.numero=0010445-40.2018.8.26.0554
-https://www.portalbayit.com.br/lote/terreno-ferraz-de-vasconcelos-sp/279/,"Avenida Luiz Antônio de Paiva,  239 - Jardim Ipanema - Ferraz de Vasconcelos - SP","R$ 141.300,00",,"R$ 70.650,00",,,,,
-https://www.portalbayit.com.br/lote/casa-teresopolis-rj/242/,"Rua Pastor José Virgílio De Miranda,  258 - Jardim Europa - Teresópolis - RJ","R$ 1.200.000,00",,"R$ 600.000,00",,,,,
-https://www.portalbayit.com.br/lote/apartamento-bauru-sp/133/,"Rua Manoel Rodrigues Maduro,  3-25 - Núcleo Habitacional Vereador Edson Francisco da Silva - Bauru - SP","R$ 123.269,81",,"R$ 86.288,86",107.910 do 2º Cartório de Registro de Imóveis da Comarca de Bauru/SP.,"57,00m²",,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=1Z000AL6Q0000&processo.foro=71&processo.numero=1023146-10.2018.8.26.0071
-https://www.portalbayit.com.br/lote/casa-em-novo-hamburgo-rs/21/,"Rua La Salle,  150 - Canudos - Novo Hamburgo - RS","R$ 320.009,00",,"R$ 96.002,70",,,,,
-https://www.portalbayit.com.br/lote/casa-taubate-sp/134/,,"R$ 333.959,39",,"R$ 200.375,63",,,,,
-https://www.portalbayit.com.br/lote/sala-comercial-barueri-sp/231/,"Alameda Araguaia,  2044 - Alphaville Industrial - Barueri - SP","R$ 450.000,00",,"R$ 270.000,00",,"99,66m²","55,09m²",,
-https://www.portalbayit.com.br/lote/apartamento-sao-paulo-sp/239/,"Rua Gabriele D'Annunzio,  73 - Campo Belo - São Paulo - SP","R$ 4.500.000,00",,"R$ 2.700.000,00",,,,,
-https://www.portalbayit.com.br/lote/casa-em-cuiaba-mt/7/,"Rua Mangabeira,  87 - Jardim Gramado - Cuiabá - MT","R$ 257.280,00",,"R$ 77.184,00",,,,,
-https://www.portalbayit.com.br/lote/terreno-cajamar-sp/278/,"Rua Fartura,  Colina Maria Luíza (Jordanésia) - Cajamar - SP","R$ 208.300,00",,"R$ 104.150,00",,,,,
-https://www.portalbayit.com.br/lote/casa-campo-grande-ms/241/,"Rua Rui Barbosa,  4.244 - Vila São Sebastião - Campo Grande - MS","R$ 639.000,00",,"R$ 383.400,00",,,,,
-https://www.portalbayit.com.br/lote/conjunto-comercial-bela-vistas-sp/74/,"Alameda Santos,  1470 - Cerqueira César - São Paulo - SP","R$ 565.750,03","CONJUNTO Nº 809, LOCALIZADO NO 11º PAVIMENTO OU 8º ANDAR, DO ""EDIFÍCIO VICTORIA PARK"", SITUADO À ALAMEDA SANTOS Nº 1.470, NO 17º SUBDISTRITO - BELA VISTA, contendo a área útil de 31,85m2, área comum de 14,20m2, e a área total de 46,05m2, correspondendo-lhe no terreno a fração ideal de 0,449.860%. Descrição do Imóvel: Imóvel comercial que foi dividido em três cômodos.","R$ 282.875,01",58.830  do 4° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.,"0,46m²","31,85m²","Débitos condominiais
+﻿url,avaliacao,lance_minimo,endereco,metragem_util,metragem_total,descricao,matricula,observacoes,total_imagens,processo_link,imagens,imagens_full,descricao_imovel,divida_ativa,edital_do_leilao,onus,imagem_1,imagem_2,imagem_3
+https://www.portalbayit.com.br/lote/terreno-itapevi-sp/275/,125700.00,"('62850.00',)","Rua Fabrícia Mangetti Ribeiro,  Jardim Vale do Sol II - Itapevi - SP",,,,2.751,,3,,,,"Terreno em Itapevi/SP
+Localizado na Rua Fabri´cia Mangetti Ribeiro – Lote nº 19 da Quadra Z – Residencial Vale do Sol II – Vale do Sol – Itapevi/SP.
+Área total: 155,00 m²
+Matrícula nº 2.751 – CRI de Itapevi/SP",,https://www.portalbayit.com.br/download/9fe72c8e-0480-45ac-a86e-9ad952bffdd2.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/3cadee2b-299c-4a35-9d6d-bd73fbea64d6.JPG,https://www.portalbayit.com.br/imagens-center/770x620/3cadee2b-299c-4a35-9d6d-bd73fbea64d6.JPG,https://www.portalbayit.com.br/imagens-complete/605x487/3cadee2b-299c-4a35-9d6d-bd73fbea64d6.JPG
+https://www.portalbayit.com.br/lote/terreno-cajamar-sp/278/,208300.00,"('104150.00',)","Rua Fartura,  Colina Maria Luíza (Jordanésia) - Cajamar - SP",,,,106.897,,3,,,,"Terreno em Cajamar/SP
+Localizado na Rua Fartura – Lote nº 14 da Quadra G – Parque Residencial Jordanésia – Taboão – Cajamar/SP.
+Área total: 303,95 m²
+Matrícula nº 106.897 – 2º CRI de São José de Jundiaí/SP",,https://www.portalbayit.com.br/download/739c88f5-2f2c-4a62-a956-83e684f02cbf.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/51d836c3-e930-4324-b924-e9b1e5ac7cc7.jpg,https://www.portalbayit.com.br/imagens-center/770x620/51d836c3-e930-4324-b924-e9b1e5ac7cc7.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/51d836c3-e930-4324-b924-e9b1e5ac7cc7.jpg
+https://www.portalbayit.com.br/lote/casa-em-rio-branco-ac/6/,415000.00,"('124500.00',)","Rua Venezuela,  704 - Cadeia Velha - Rio Branco - AC",,,"Uma área de terra urbana destacada de outra porção maior, situada no ""Conjunto Habitasa"", 1º Distrito desta Capital, com área de 360,00m2 ou seja medindo 12,00m de frente ou largura por 30,00m de fundos ou comprimento, limitando-se pela frente com a Rua Venezuela; pelo lado direito com Francisco Rodrigues de Lima; pelo lado esquerdo, com João Gomes Vasconcelos; e pelos fundos com terreno de Waldomiro Pereira de Moura.",1.663,,3,,,,"LOTE 01) IMOVEL: Uma área de terra urbana destacada de outra porção maior, situada no ""Conjunto Habitasa"", 1º Distrito desta Capital, com área de 360,00m2 ou seja medindo 12,00m de frente ou largura por 30,00m de fundos ou comprimento, limitando-se pela frente com a Rua Venezuela; pelo lado direito com Francisco Rodrigues de Lima; pelo lado esquerdo, com João Gomes Vasconcelos; e pelos fundos com terreno de Waldomiro Pereira de Moura.
+Matrícula nº 1.663 do 1º Cartório de Registro de Imóveis de Rio Branco-AC .
+Avaliação : R$ 415.000,00 (quatrocentos e quinze mil reais)
+Ônus: OCUPADO.",,https://www.portalbayit.com.br/download/fc557851-255e-4127-b0c9-f561eacffda2.pdf,OCUPADO.,https://www.portalbayit.com.br/imagens/1300x1300/8fdbba02-fd4d-4bf9-af24-e6bb02330fde.png,https://www.portalbayit.com.br/imagens-center/770x620/8fdbba02-fd4d-4bf9-af24-e6bb02330fde.png,https://www.portalbayit.com.br/imagens-complete/605x487/8fdbba02-fd4d-4bf9-af24-e6bb02330fde.png
+https://www.portalbayit.com.br/lote/conjunto-comercial-bela-vistas-sp/74/,565750.03,"('282875.01',)","Alameda Santos,  1470 - Cerqueira César - São Paulo - SP","31,85m²","0,46m²",,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=2S001LZGK0000&processo.foro=100&processo.numero=0040025-80.2022.8.26.0100&gateway=true,,,"BEM:
+CONJUNTO Nº 809, LOCALIZADO NO 11º PAVIMENTO OU 8º ANDAR, DO ""EDIFÍCIO VICTORIA PARK"", SITUADO À ALAMEDA SANTOS Nº 1.470, NO 17º SUBDISTRITO - BELA VISTA, contendo a área útil de 31,85m2, área comum de 14,20m2, e a área total de 46,05m2, correspondendo-lhe no terreno a fração ideal de 0,449.860%. Descrição do Imóvel: Imóvel comercial que foi dividido em três cômodos.
+MATRÍCULA n°
+58.830  do 4° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.
+CONTRIBUINTE nº
+009.045.0479-4.
+OBS 1:
+Débitos condominiais
 no valor de R$91.121,32 (noventa e um mil, cento e vinte e um reais e trinta e dois centavos), cuja demanda tramita perante a 29ª Vara Cível do Foro Central da Comarca da Capital/SP, processo nº 1088386-14.2022.8.26.0100.
+OBS 2:
 Débito de IPTU
-: R$ 15.117,30, conforme consulta junto ao site da prefeitura municipal de são paulo até 03/12/2024.",https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=2S001LZGK0000&processo.foro=100&processo.numero=0040025-80.2022.8.26.0100&gateway=true
-https://www.portalbayit.com.br/lote/terreno-ferraz-de-vasconcelos-sp/280/,"Rua Maria Justina Maciel,  Jardim Santa Izabel - Ferraz de Vasconcelos - SP","R$ 185.300,00",,"R$ 92.650,00",,,,,
-https://www.portalbayit.com.br/lote/terreno-itapevi-sp/275/,"Rua Fabrícia Mangetti Ribeiro,  Jardim Vale do Sol II - Itapevi - SP","R$ 125.700,00",,"R$ 62.850,00",,,,,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/287/,"Avenida Abel Bento da Silva,  Residencial Dunamis - São José dos Campos - SP","R$ 225.000,00",,"R$ 112.500,00",,,,,
-https://www.portalbayit.com.br/lote/cobertura-duplex-caucaia-ce/235/,"Rua do Garrote,  10 - Tabuba - Caucaia - CE","R$ 800.000,00",,"R$ 480.000,00",,"200,53m²",,,
-https://www.portalbayit.com.br/lote/casa-bauru-sp/233/,"Rua Agenor Martins Vieira,  2-93 - Residencial Nova Bauru - Bauru - SP","R$ 340.000,00",,"R$ 200.000,00",,,,,
-https://www.portalbayit.com.br/lote/imovel-comercial-sao-paulo-sp/238/,"Rua Doutor José Higino,  464 - Vila Oratório - São Paulo - SP","R$ 1.200.000,00",,"R$ 720.000,00",,,,,
-https://www.portalbayit.com.br/lote/casa-sao-leopoldo-rs/228/,"Avenida John Kennedy,  2781 - Jardim América - Porto Alegre - RS","R$ 255.000,00",,"R$ 153.000,00",,,,,
-https://www.portalbayit.com.br/lote/apartamento-sao-paulo-sp/269/,"Avenida Dezenove de Janeiro,  567 - Vila Carrão - São Paulo - SP","R$ 610.000,00",,"R$ 490.000,00",,"110,95m²",,,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/288/,"Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP","R$ 224.600,00",,"R$ 112.300,00",,,,,
-https://www.portalbayit.com.br/lote/casa-jundiai-sp/274/,"Rua Noêmia de Queiroz Teles da Fonseca,  97 - Vila Mafalda - Jundiaí - SP","R$ 893.006,26",,"R$ 893.006,26",,"160,87m²",,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=8L0006OEF0000&processo.foro=309&processo.numero=1020842-37.2017.8.26.0309
-https://www.portalbayit.com.br/lote/apartamento-sao-vicente-sp/237/,"Rua Dom Lara,  464 - Vila Valença - São Vicente - SP","R$ 207.900,00",,"R$ 124.740,00",,"68,18m²",,,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/294/,"Rua Rosa Nagata Massuda,  Residencial Dunamis - São José dos Campos - SP","R$ 144.000,00",,"R$ 72.000,00",,,,,
-https://www.portalbayit.com.br/lote/predio-bras-sp/98/,"Rua Gomes Cardim,  532 - Brás - São Paulo - SP","R$ 79.272.079,99",,"R$ 79.272.079,99",24.438 do 3° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.,,,,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=HD00043420000&processo.foro=625&processo.numero=0010760-83.2017.8.26.0625&gateway=true
-https://www.portalbayit.com.br/lote/terreno-rural-ortigueira-pr/121/,,"R$ 767.369,60",,"R$ 575.527,20","3.089 do Cartório de Registro de Imóveis Alvaro Sady de Brito, Ortigueira/PR.",,,,
-https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/297/,"Rua Cristiano Viana,  1216 a 1246 - Vila Madalena - São Paulo - SP","R$ 1.700.000,00",,"R$ 850.000,00",,"105,61m²","100,82m²",,
-https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/301/,"Rua Senador César Lacerda Vergueiro,  304 - Sumarezinho - São Paulo - SP","R$ 2.200.000,00",,"R$ 1.250.000,00",,"146,04m²","141,83m²",,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/296/,"Rua Rosa Nagata Massuda,  Residencial Dunamis - São José dos Campos - SP","R$ 242.100,00",,"R$ 121.050,00",,,,,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/282/,"Rua José dos Santos Souza,  Residencial Dunamis - São José dos Campos - SP","R$ 160.900,00",,"R$ 80.450,00",,,,,
-https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/299/,"Rua Senador Milton Campos,  195 - Brooklin - São Paulo - SP","R$ 2.900.000,00",,"R$ 1.740.000,00",,"446,04m²","242,70m²",,
-https://www.portalbayit.com.br/lote/casa-sao-paulo-sp/306/,"Rua José de Oliveira China,  230 - Jardim Dona Sinhá - São Paulo - SP","R$ 1.000.000,00",,"R$ 1.000.000,00",,"408,00m²",,,
-https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/300/,"Rua Doutor Neto de Araújo,  257 - Vila Mariana - São Paulo - SP","R$ 3.800.000,00",,"R$ 1.900.000,00",,"324,46m²","258,51m²",,
-https://www.portalbayit.com.br/lote/casa-campina-grande-pb/226/,"Rua Fernando Barbosa de Melo,  227 - Catolé - Campina Grande - PB","R$ 882.000,00",,"R$ 485.100,00",,,,,
-https://www.portalbayit.com.br/lote/sala-comercial-barueri-sp/230/,"Alameda Araguaia,  2044 - Alphaville Industrial - Barueri - SP","R$ 450.000,00",,"R$ 270.000,00",,"91,66m²","49,32m²",,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/290/,"Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP","R$ 136.600,00",,"R$ 68.300,00",,,,,
-https://www.portalbayit.com.br/lote/casa-em-paulista-pe/10/,"Rua Paulista,  198 - Janga - Paulista - PE","R$ 217.397,00",,"R$ 65.219,10",,,,,
-https://www.portalbayit.com.br/lote/casa-itapetinga-sp/240/,"Rua Zariffe Yared,  35 - Vila Belo Horizonte - Itapetininga - SP","R$ 500.000,00",,"R$ 300.000,00",,,,,
-https://www.portalbayit.com.br/lote/apartamento-belo-horizonte-mg/234/,"Rua Lila Borja,  39 - Heliópolis - Belo Horizonte - MG","R$ 266.453,31",,"R$ 159.871,99",,"64,95m²",,,
-https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/281/,"Rua Jose Aparecido Ferreira,  Residencial Dunamis - São José dos Campos - SP","R$ 193.600,00",,"R$ 96.800,00",,,,,
+: R$ 15.117,30, conforme consulta junto ao site da prefeitura municipal de são paulo até 03/12/2024.",https://www.portalbayit.com.br/download/f3c60f33-0450-4e7b-a4a9-eda6ce159e24.pdf,https://www.portalbayit.com.br/download/7c503fb5-05f3-4607-94e4-7e0e83983458.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/c2a1f620-a991-430d-8ebd-1983cc8e7471.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/c2a1f620-a991-430d-8ebd-1983cc8e7471.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/c2a1f620-a991-430d-8ebd-1983cc8e7471.jpeg
+https://www.portalbayit.com.br/lote/cobertura-duplex-caucaia-ce/235/,800000.00,"('480000.00',)","Rua do Garrote,  10 - Tabuba - Caucaia - CE",,"200,53m²",,,,3,,,,"Cobertura Duplex  em Caucaia/CE
+– Oportunidade de Investimento
+Cobertura duplex espaçosa, com excelente distribuição de ambientes e área externa ideal para lazer e conforto. Imóvel localizado em condomínio com estrutura completa e portaria 24h.
+Localizado na Rua do Garrote, 10, Apartamento 303 - Tabuba, Caucaia/CE.
+Destaques do Imóvel:
+2 Suítes
+Sala de Estar
+Cozinha
+Área de Serviço
+Banheiro Social
+Varanda Gourmet com Banheira de Hidromassagem
+2 Vagas de Garagem
+Área privativa de 151,67m²
+Lazer e Conveniência no Condomínio:
+Piscina
+Deck com Churrasqueira
+Academia
+Área de Convivência
+Portaria 24h
+Oportunidade ideal para investidores ou para quem busca moradia com conforto, privacidade e alto potencial de valorização.",,https://www.portalbayit.com.br/download/49e5ef48-6e7e-4fe4-ad29-4a4ab52498dc.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/2888afe3-6140-4166-a1ae-7989e25aa519.jpg,https://www.portalbayit.com.br/imagens-center/770x620/2888afe3-6140-4166-a1ae-7989e25aa519.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/2888afe3-6140-4166-a1ae-7989e25aa519.jpg
+https://www.portalbayit.com.br/lote/conjunto-comercial-porto-alegre-rs/232/,341400.00,"('175000.00',)","Avenida Assis Brasil,  1791 - Passo da Areia - Porto Alegre - RS","113,80m²","164,28m²",,,,3,,,,"Conjunto Comercial – Porto Alegre/RS
+Localizado na Avenida Assis Brasil, nº 1791 – Conjunto nº 206 – Edifício Jari – Porto Alegre/RS.
+Destaques do Imóvel:
+4 Salas
+3 Banheiros
+Circulação
+Área total: 164,28 m²
+Área privativa: 113,81 m²",,https://www.portalbayit.com.br/download/69ef0b57-ea05-42a1-909f-e29c8567713a.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/a10d485c-aeac-4cdd-a51e-c75ae5725229.png,https://www.portalbayit.com.br/imagens-center/770x620/a10d485c-aeac-4cdd-a51e-c75ae5725229.png,https://www.portalbayit.com.br/imagens-complete/605x487/a10d485c-aeac-4cdd-a51e-c75ae5725229.png
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/288/,224600.00,"('112300.00',)","Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP",,,,17.500,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Doroteia Pereira de Carvalho Rosa – Lote nº 21 da Quadra K – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 321,33 m²
+Matrícula nº 17.500 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/6e06dd69-85e8-49ca-a083-fc44f337674f.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/10691327-162e-4a4d-a750-fd409fcc69ed.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/10691327-162e-4a4d-a750-fd409fcc69ed.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/10691327-162e-4a4d-a750-fd409fcc69ed.jpeg
+https://www.portalbayit.com.br/lote/apartamento-sao-vicente-sp/237/,207900.00,"('124740.00',)","Rua Dom Lara,  464 - Vila Valença - São Vicente - SP",,"68,18m²",,,,3,,,,"Apartamento em São Vicente/SP
+Localizado na Rua Don Lara, nº 912 – Apto 04 – Vila Valença – São Vicente/SP.
+Destaques do Imóvel:
+2 Dormitórios
+Sala
+Cozinha
+Banheiro
+Lavanderia
+Área total: 68,18 m²
+Área privativa: 58,10 m²",,https://www.portalbayit.com.br/download/8b55c185-f477-4763-9e8d-ce828e3ed6bd.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/81791184-91ae-470a-9666-d55a4624e54e.jpg,https://www.portalbayit.com.br/imagens-center/770x620/81791184-91ae-470a-9666-d55a4624e54e.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/81791184-91ae-470a-9666-d55a4624e54e.jpg
+https://www.portalbayit.com.br/lote/conjunto-comercial-sao-paulo-sp/244/,997000.00,"('548350.00',)","Rua Lincoln Albuquerque,  259 - Perdizes - São Paulo - SP","105,11m²","194,59m²",,,,3,,,,"Salas Comerciais Unificadas em Perdizes – São Paulo/SP
+Conjunto de
+duas salas comerciais unificadas
+, situadas no 12º andar do Edifício Lincoln Offices – Rua Lincoln Albuquerque, nº 259, unidades 121 e 122 – Perdizes – São Paulo/SP.
+Destaques do Imóvel:
+Área total:
+194,59m²
+Área privativa coberta:
+105,11m²
+Área comum:
+89,48m²
+2 vagas de garagem
+(indeterminadas, cobertas ou descobertas)
+Andar alto, com vista privilegiada
+Espaço unificado, amplo e versátil para diferentes layouts comerciais
+Características do Edifício:
+Prédio corporativo moderno
+Portaria e controle de acesso
+Localização estratégica em uma das regiões mais valorizadas de Perdizes
+Fácil acesso a transporte público, comércios, restaurantes e serviços
+Oportunidade única para quem busca um espaço comercial amplo, funcional e com grande potencial de valorização em uma região consolidada da capital paulista.",,https://www.portalbayit.com.br/download/1d4b5caf-3820-4973-ac3d-82da1a479f61.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/b1e1ac0d-69c8-4ce9-8d14-2c3b12fdac77.jpg,https://www.portalbayit.com.br/imagens-center/770x620/b1e1ac0d-69c8-4ce9-8d14-2c3b12fdac77.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/b1e1ac0d-69c8-4ce9-8d14-2c3b12fdac77.jpg
+https://www.portalbayit.com.br/lote/apartamento-vila-madalena-sp/136/,1116497.59,"('1116497.59',)","Rua Harmonia,  722 - Sumarezinho - São Paulo - SP",,"134,98m²",,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=0B001894C0000&processo.foro=11&processo.numero=1000507-08.2023.8.26.0011,,,"O APARTAMENTO nº 162 localizado no 16º andar do “EDÍFICIO CASA DE NAVARRA”, à Rua HARMONIA, nº 722, no 39º subdistrito, Vila Madalena, com a área útil própria de 100,20m2, área comum de 34,782 m2 e área total de 134,982 m2, correspondendo-lhe a fração ideal de 1,2309% no terreno descrito na matrícula 51.446 deste Cartório, na qual sob nº 5 foi registrada a especificação de condomínio do referido edifício”.
+MATRÍCULA:
+57.993, do 10º Cartório de Registro de Imóveis de São Paulo Capital;
+b)
+“UMA VAGA indeterminada na garagem localizada nos 1º e 2º subsolos e parte do andar térreo do “EDIFÍCIO CASA DE NAVARRA, à Rua HARMONIA nº 722, no 39º subdistrito, Vila Madalena, com a área útil própria de 10m2, área comum de 20,972 m2 e área total de 30,972 m2, cabendo-lhe a fração ideal de 0,1632% no terreno descrito na matrícula 51.446 deste Cartório, na qual sob o nº 5 foi registrada a especificação de condomínio do referido edifício”.
+MATRÍCULA:
+57.994, do 10º Cartório de Registro de Imóveis de São Paulo Capital;
+c)
+“UMA VAGA indeterminada na garagem localizada nos 1º e 2º subsolos e parte do andar térreo do “EDIFÍCIO CASA DE NAVARRA, à Rua HARMONIA nº 722, no 39º subdistrito, Vila Madalena, com a área útil própria de 10m2, área comum de 20,972 m2 e área total de 30,972 m2, cabendo-lhe a fração ideal de 0,1632% no terreno descrito na matrícula 51.446 deste Cartório, na qual sob o nº 5 foi registrada a especificação de condomínio do referido edifício”.
+MATRÍCULA:
+57.995, do 10º Cartório de Registro de Imóveis de São Paulo Capital;
+CONTRIBUINTE:
+081.136.0344-1",,https://www.portalbayit.com.br/download/0ad32c66-d45d-47bf-aa9e-bff0d3ead3ee.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/7bb3723b-6261-4b6d-9e83-2abf05e4f662.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/7bb3723b-6261-4b6d-9e83-2abf05e4f662.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/7bb3723b-6261-4b6d-9e83-2abf05e4f662.jpeg
+https://www.portalbayit.com.br/lote/apartamento-sao-paulo-sp/239/,4500000.00,"('2700000.00',)","Rua Gabriele D'Annunzio,  73 - Campo Belo - São Paulo - SP",,,,,,3,,,,"Apartamento Alto Padrão no Campo Belo – Exclusividade e Sofisticação em Cada Detalhe
+Apartamento no Camarotte Campo Belo, com acabamento de alto padrão, excelente distribuição e amplo espaço privativo. Ideal para quem valoriza conforto, privacidade e localização estratégica em uma das regiões mais nobres de São Paulo.
+Localizado na Rua Gabriele D'Annunzio, 73, Apartamento 52, 5° andar - Campo Belo, São Paulo/SP.
+Destaques do Imóvel:
+3 Dormitórios, todos Suítes
+6 Banheiros
+Sala de Estar e Sala de Jantar integradas
+Cozinha ampla e funcional
+Sacada espaçosa com vista aberta
+Área privativa total: 290,35m²
+(253,35m² cobertos + 37,00m² descobertos)
+5 Vagas de garagem e 1 Depósito
+Infraestrutura do Condomínio:
+Academia
+Espaço Gourmet
+Salão de Festas
+Playground
+Churrasqueira
+Quadra Poliesportiva
+Gerador de energia
+Garagem coberta
+Portaria e segurança
+Permite animais
+Diferenciais da Localização:
+Região valorizada e residencial
+Próximo a escolas, comércios e serviços
+Fácil acesso às principais vias da cidade
+Oportunidade única para morar com alto padrão de qualidade ou investir em um imóvel.
+C
+ondomínio pela empresa Cyrela Brazil Realty.",,https://www.portalbayit.com.br/download/2b1b66bd-a42c-4cec-b16f-968454c8341c.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/009d5e61-68d5-4852-a42d-5ba5c57e4e4e.jpg,https://www.portalbayit.com.br/imagens-center/770x620/009d5e61-68d5-4852-a42d-5ba5c57e4e4e.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/009d5e61-68d5-4852-a42d-5ba5c57e4e4e.jpg
+https://www.portalbayit.com.br/lote/terreno-ferraz-de-vasconcelos-sp/280/,185300.00,"('92650.00',)","Rua Maria Justina Maciel,  Jardim Santa Izabel - Ferraz de Vasconcelos - SP",,,,74.821,,3,,,,"Terreno em Ferraz de Vasconcelos/SP
+Localizado na Rua Maria Justina Maciel, s/n – Lote nº 16 da Quadra B – Jardim Santa Isabel
+Área total: 188,58 m²
+Matrícula nº 74.821 – CRI de Poá/SP",,https://www.portalbayit.com.br/download/1ea44547-ee21-4603-9f13-8efc9d8d77b8.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/428ae714-0ac6-4291-86ef-8b902bea7e3e.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/428ae714-0ac6-4291-86ef-8b902bea7e3e.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/428ae714-0ac6-4291-86ef-8b902bea7e3e.jpeg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/295/,177400.00,"('88700.00',)","Avenida Abel Bento da Silva,  Residencial Dunamis - São José dos Campos - SP",,,,17.523,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Avenida Abel Bento da Silva, s/n – Lote nº 36 da Quadra P – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 259,63m²
+Matrícula nº 17.523 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/7e3d8866-9c24-4852-9045-31a2e34b4a6d.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/0cffe3a7-cdd3-414d-bd4a-514c494f6d92.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/0cffe3a7-cdd3-414d-bd4a-514c494f6d92.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/0cffe3a7-cdd3-414d-bd4a-514c494f6d92.jpeg
+https://www.portalbayit.com.br/lote/casa-em-cuiaba-mt/7/,257280.00,"('77184.00',)","Rua Mangabeira,  87 - Jardim Gramado - Cuiabá - MT",,,"Imovel residencial edificado em lote de terreno urbano designado sob nº 13-C, da quadra nº13, localizado no loteamento Jardim Gramado, distrito do Coxipó, da Ponte, Cuiabá-MT, com 330,00mts2, apresentando as seguintes edida e confrontações: frente 10,00 metros para a rua 12, lado direito com/30,00 metros para o lote 13-D, lado esquerdo com 30,00 metros para o lote I: B, fundos 10,00 metros com a prop.SR. LUCIO GOMES, Havido por compra de GUIZA! DI JUNIOR ASSESSORIA IMOBILIÁRIA LTDA, conforme escritura pública de compra e venda, lavrada às fls 65V/72, do livro 254-A, em 31.03.86, no Cartório do 2º Oficio desta Capital-MT.DIVISÃO INTERNA: Sala, 02 dormitórios, banheiro e cozinha, totalizando 39,58mts2(totalizando de área construída Casa tipo 2D. PROPRIETÁRIO: JAÚ S/A-CONSTRUTORA E INCORPORADORA, com sede em São Paulo-SP, e filial à av. Getúlio Vargas 1.021, nesta Capital -MT, inscrita no CGC/MF sob nº 61.156.741/0001-56, neste ato representada pelo SR. AILTON MOURA ASSUMPÇÃO, brasileiro, casado, engenheiro, RG nº 4.842.790.SSP.SP, CPF 762.379.748.79, residente e domiciliado nesta Capital-MT, Conf. procuração lavrada às fls 26, do livro 947, em 19.08.86, no Cartório do 24º Tabelião Bel. José Ferreira Alves Cyrillo, em São Paulo-SP, neste ato o SR. AILTON MOURA ASSUMPÇÃO, está sendo representado pelo SR: ROBERTO DIONISIO DA COSTA, brasileiro, casado, economista, RG nº 6.059.523.SSP-SP, CPF 661.412.908.25, conforme procuração de 22.02.88, lavrada às fls 03V do livro 1.072 do 16º Tabelionato de Notas de São Paulo SP.",36.899,,3,,,,"LOTE 02) IMOVEL: Imovel residencial edificado em lote de terreno urbano designado sob nº 13-C, da quadra nº13, localizado no loteamento Jardim Gramado, distrito do Coxipó, da Ponte, Cuiabá-MT, com 330,00mts2, apresentando as seguintes edida e confrontações: frente 10,00 metros para a rua 12, lado direito com/30,00 metros para o lote 13-D, lado esquerdo com 30,00 metros para o lote I: B, fundos 10,00 metros com a prop.SR. LUCIO GOMES, Havido por compra de GUIZA! DI JUNIOR ASSESSORIA IMOBILIÁRIA LTDA, conforme escritura pública de compra e venda, lavrada às fls 65V/72, do livro 254-A, em 31.03.86, no Cartório do 2º Oficio desta Capital-MT.DIVISÃO INTERNA: Sala, 02 dormitórios, banheiro e cozinha, totalizando 39,58mts2(totalizando de área construída Casa tipo 2D. PROPRIETÁRIO: JAÚ S/A-CONSTRUTORA E INCORPORADORA, com sede em São Paulo-SP, e filial à av. Getúlio Vargas 1.021, nesta Capital -MT, inscrita no CGC/MF sob nº 61.156.741/0001-56, neste ato representada pelo SR. AILTON MOURA ASSUMPÇÃO, brasileiro, casado, engenheiro, RG nº 4.842.790.SSP.SP, CPF 762.379.748.79, residente e domiciliado nesta Capital-MT, Conf. procuração lavrada às fls 26, do livro 947, em 19.08.86, no Cartório do 24º Tabelião Bel. José Ferreira Alves Cyrillo, em São Paulo-SP, neste ato o SR. AILTON MOURA ASSUMPÇÃO, está sendo representado pelo SR: ROBERTO DIONISIO DA COSTA, brasileiro, casado, economista, RG nº 6.059.523.SSP-SP, CPF 661.412.908.25, conforme procuração de 22.02.88, lavrada às fls 03V do livro 1.072 do 16º Tabelionato de Notas de São Paulo SP.
+Matrícula nº 36.899 do 5º Serviço Notarial e Registro de Imóveis da 2º circunscrição imobiliária da Comarca de Cuiabá - MT. Avaliação : R$ 257.280,00 (duzentos e cinquenta e sete mil, duzentos e oitenta reais)
+Ônus: OCUPADO. Consta em andamento ação de de usucapião tendo por objeto parte do imóvel em trâmite na 5ª vara cível de Cuiabá/MT sob o nº 1021046-19.2023.8.11.0041.",,https://www.portalbayit.com.br/download/bcbc4885-5dc7-4677-bcb5-38043d63a280.pdf,OCUPADO. Consta em andamento ação de de usucapião tendo por objeto parte do imóvel em trâmite na 5ª vara cível de Cuiabá/MT sob o nº 1021046-19.2023.8.11.0041.,https://www.portalbayit.com.br/imagens/1300x1300/d3015b52-e4b1-42a9-bea8-03b0afca982c.png,https://www.portalbayit.com.br/imagens-center/770x620/d3015b52-e4b1-42a9-bea8-03b0afca982c.png,https://www.portalbayit.com.br/imagens-complete/605x487/d3015b52-e4b1-42a9-bea8-03b0afca982c.png
+https://www.portalbayit.com.br/lote/casa-sao-goncalo-rj/224/,590000.00,"('354000.00',)","Avenida Doutor Eugênio Borges,  1693 - Arsenal - São Gonçalo - RJ",,,,,,3,,,,"Ampla Casa no Condomínio Village do Moinho – São Gonçalo/RJ
+Localizada na Avenida Doutor Eugênio Borges, nº 1693 – Condomínio Residencial Village do Moinho – Bairro Arsenal – São Gonçalo/RJ.
+Imóvel:
+Área construída: 248,19m²
+Área do terreno: 135,13m²
+2 Suítes
+1 Sala de Estar
+1 Sala Secundária
+1 Cozinha
+1 Banheiro Social
+1 Despensa
+Área Externa
+Área Externa Subsolo
+Lavanderia
+Diferenciais:
+Imóvel amplo, com excelente distribuição de ambientes
+Espaços versáteis, ideais para quem busca conforto e funcionalidade",,https://www.portalbayit.com.br/download/5a2dafe3-50bf-430c-8d3b-d4e3afbd96be.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/d03bbf27-7fd0-4a7a-9870-a72031442115.jpg,https://www.portalbayit.com.br/imagens-center/770x620/d03bbf27-7fd0-4a7a-9870-a72031442115.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/d03bbf27-7fd0-4a7a-9870-a72031442115.jpg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/291/,136600.00,"('68300.00',)","Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP",,,,20.153,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Doroteia Pereira de Carvalho Rosa, s/n – Lote nº 12 da Quadra L – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 210,00m²
+Matrícula nº 20.153 – 2º CRI de São José dos Campos/SP",,,,https://www.portalbayit.com.br/imagens/1300x1300/1285413b-6899-4180-9804-0fc91a3df7f8.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/1285413b-6899-4180-9804-0fc91a3df7f8.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/1285413b-6899-4180-9804-0fc91a3df7f8.jpeg
+https://www.portalbayit.com.br/lote/casa-campina-grande-pb/226/,882000.00,"('485100.00',)","Rua Fernando Barbosa de Melo,  227 - Catolé - Campina Grande - PB",,,,,,3,,,,"Casa com Jardim no Catolé – Campina Grande/PB
+Imóvel localizado na Rua Fernando Barbosa de Melo, nº 227 – Lote 01 da Quadra A – Loteamento Granja Provisão II – Campina Grande/PB.
+Destaques do Imóvel:
+Sala
+2 Dormitórios
+Banheiro
+Cozinha
+Área de serviço",,https://www.portalbayit.com.br/download/fb84b339-7db8-4334-85a7-1d43dd128f5e.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/bc6f0546-0d25-4802-9929-36b79305ef1c.jpg,https://www.portalbayit.com.br/imagens-center/770x620/bc6f0546-0d25-4802-9929-36b79305ef1c.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/bc6f0546-0d25-4802-9929-36b79305ef1c.jpg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/290/,136600.00,"('68300.00',)","Rua Dorotéia Pereira de Carvalho Rosa,  Residencial Dunamis - São José dos Campos - SP",,,,20.152,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Doroteia Pereira de Carvalho Rosa – Lote nº 11 da Quadra L – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 210,00 m²
+Matrícula nº 20.152 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/944d728c-e6aa-42e5-8aec-bfbda7d1cebd.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/19c8fb91-4a04-4571-b1d2-176aa2380162.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/19c8fb91-4a04-4571-b1d2-176aa2380162.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/19c8fb91-4a04-4571-b1d2-176aa2380162.jpeg
+https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/298/,920000.00,"('499000.00',)","Rua Cristiano Viana,  1216 a 1246 - Vila Madalena - São Paulo - SP","53,93m²","56,47m²",,,,3,,,,"Loja térrea com fachada ativa no Pinheiros Hy By You, Inc
+Localizada na Rua Cristiano Viana, nº 1.216 a 1.246 – Fachada Ativa 02 – Térreo do Setor Comercial do Condomínio Pinheiros Hy By You, Inc – Vila Madalena – São Paulo/SP.
+Destaques do Imóvel:
+Área privativa: 53,93m²
+Área total construída: 56,47m²
+Excelente ponto comercial, com grande potencial de valorização e visibilidade.",,https://www.portalbayit.com.br/download/1d1391ca-29e0-4e3c-96ad-1e50e3570572.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/3e6e80a5-24ce-4230-bbf2-e683ee02d8f4.jpg,https://www.portalbayit.com.br/imagens-center/770x620/3e6e80a5-24ce-4230-bbf2-e683ee02d8f4.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/3e6e80a5-24ce-4230-bbf2-e683ee02d8f4.jpg
+https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/297/,1700000.00,"('850000.00',)","Rua Cristiano Viana,  1216 a 1246 - Vila Madalena - São Paulo - SP","100,82m²","105,61m²",,,,3,,,,"Loja térrea com fachada ativa no Pinheiros Hy By You, Inc
+Localizada na Rua Cristiano Viana, nº 1.216 a 1.246 – Fachada Ativa 01 – Térreo do Setor Comercial do Condomínio Pinheiros Hy By You, Inc – Vila Madalena – São Paulo/SP.
+Destaques do Imóvel:
+Área privativa: 100,82m²
+Área total construída: 105,61m²
+Imóvel ideal para quem deseja estabelecer sua marca em uma das regiões mais valorizadas da capital paulista.",,https://www.portalbayit.com.br/download/d3872f3a-7e60-4fac-8743-3adfdfbb6ca8.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/54a83e46-968d-411a-ba7e-456996e49893.jpg,https://www.portalbayit.com.br/imagens-center/770x620/54a83e46-968d-411a-ba7e-456996e49893.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/54a83e46-968d-411a-ba7e-456996e49893.jpg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/296/,242100.00,"('121050.00',)","Rua Rosa Nagata Massuda,  Residencial Dunamis - São José dos Campos - SP",,,,17.526,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Rosa Nagata Massuda, s/n – Lote nº 39 da Quadra P – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 350,76m²
+Matrícula nº 17.526 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/a02ab7d1-c76b-4577-b728-eacac066cbdc.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/3fe0338b-0991-4769-a9f2-45d1527f03d1.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/3fe0338b-0991-4769-a9f2-45d1527f03d1.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/3fe0338b-0991-4769-a9f2-45d1527f03d1.jpeg
+https://www.portalbayit.com.br/lote/casa-teresopolis-rj/242/,1200000.00,"('600000.00',)","Rua Pastor José Virgílio De Miranda,  258 - Jardim Europa - Teresópolis - RJ",,,,,,3,,,,"Casa em Teresópolis/RJ
+Localizado na Rua Pastor José Virgílio de Miranda, nº 258 – Jardim Europa – Teresópolis/RJ.
+Destaques do Imóvel:
+2 Dormitórios (sendo 1 Suíte)
+Banheiro social
+Sala de estar
+Sala com lareira
+Sala de jantar
+Sala de inverno
+Bar
+Lavabo
+Cozinha principal
+Cozinha para caseiro
+Lavanderia
+Circulação
+Sótão
+Área para caseiro com sala, dormitório e banheiro
+Espaço gourmet com churrasqueira e banheiro externo
+Hall de entrada
+Garagem
+Área construída: 215,66 m²
+Área de terreno: 470 m²",,https://www.portalbayit.com.br/download/a687d885-0008-435c-ba19-8d5dc0b82978.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/780a3b9e-ad35-4ac6-a3d0-90848daa309f.jpg,https://www.portalbayit.com.br/imagens-center/770x620/780a3b9e-ad35-4ac6-a3d0-90848daa309f.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/780a3b9e-ad35-4ac6-a3d0-90848daa309f.jpg
+https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/301/,2200000.00,"('1250000.00',)","Rua Senador César Lacerda Vergueiro,  304 - Sumarezinho - São Paulo - SP","141,83m²","146,04m²",,,,3,,,,"Loja Comercial na Vila Madalena/SP
+Localizada na Rua Senador César Lacerda de Vergueiro, nº 304 – Loja nº 1 – 3º Subsolo da Torre A do Setor Comercial do Condomínio ""Você, Harmonia"" – Vila Madalena – São Paulo/SP.
+Destaques do Imóvel:
+Área privativa total: 141,83m²
+Área total construída: 146,04m²
+Loja em excelente empreendimento na Vila Madalena, ideal para negócios que demandam espaço reservado e infraestrutura completa.",,https://www.portalbayit.com.br/download/71ab090c-90dd-465c-92c4-3165846f47fe.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/a9b0349d-8f21-4501-83ec-f315b97ae59a.png,https://www.portalbayit.com.br/imagens-center/770x620/a9b0349d-8f21-4501-83ec-f315b97ae59a.png,https://www.portalbayit.com.br/imagens-complete/605x487/a9b0349d-8f21-4501-83ec-f315b97ae59a.png
+https://www.portalbayit.com.br/lote/apartamento-no-rio-de-janeiro-rj/15/,285000.00,"('85500.00',)","Rua Magno Martins,  240 - Freguesia (Ilha do Governador) - Rio de Janeiro - RJ",,,"Apartamento nº 102 do prédio em construção, situado na Rua Magno Martins nº 240, com a fração de 0,10474 do terreno e com direito a duas vagas de carro, na freguesia de N.S.D´Ajuda, medindo o terreno: 25,60m de frente para a Rua Magno Martins, em curva interna subordinada a um raio de 150,00m: à direita mede 40,00: a esquerda mede 42,00m e nos fundos mede 6,80m mais 180mm, configurando com a medida anterior um ângulo obtuso externo: confrontando a direita com o lote 01 do PA nº 41.223, a esquerda com terreno do Major Salvaterra e nos fundos com terrenos da União ou sucessores.",78.481,,3,,,,"LOTE 10) IMOVEL: Apartamento nº 102 do prédio em construção, situado na Rua Magno Martins nº 240, com a fração de 0,10474 do terreno e com direito a duas vagas de carro, na freguesia de N.S.D´Ajuda, medindo o terreno: 25,60m de frente para a Rua Magno Martins, em curva interna subordinada a um raio de 150,00m: à direita mede 40,00: a esquerda mede 42,00m e nos fundos mede 6,80m mais 180mm, configurando com a medida anterior um ângulo obtuso externo: confrontando a direita com o lote 01 do PA nº 41.223, a esquerda com terreno do Major Salvaterra e nos fundos com terrenos da União ou sucessores.
+Matrícula nº 78.481 11º Cartório de Registro de Imóveis de Petrópolis/RJ.
+Avaliação : R$ 285.000,00 (duzentos e oitenta e cinco mil)
+Ônus: OCUPADO. Consta em andamento ação de imissão de posse em trâmite na 3ª vara cível de Ilha do Governador/RJ sob o nº 0801060-62.2022.8.19.0207",,https://www.portalbayit.com.br/download/bf5b20e4-a16a-41e3-9897-005b502daffe.pdf,OCUPADO. Consta em andamento ação de imissão de posse em trâmite na 3ª vara cível de Ilha do Governador/RJ sob o nº 0801060-62.2022.8.19.0207,https://www.portalbayit.com.br/imagens/1300x1300/f8e37481-0e7f-4907-99bf-7a32c3ff99a1.png,https://www.portalbayit.com.br/imagens-center/770x620/f8e37481-0e7f-4907-99bf-7a32c3ff99a1.png,https://www.portalbayit.com.br/imagens-complete/605x487/f8e37481-0e7f-4907-99bf-7a32c3ff99a1.png
+https://www.portalbayit.com.br/lote/casa-jundiai-sp/274/,893006.26,"('893006.26',)","Rua Noêmia de Queiroz Teles da Fonseca,  97 - Vila Mafalda - Jundiaí - SP",,"160,87m²",,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=8L0006OEF0000&processo.foro=309&processo.numero=1020842-37.2017.8.26.0309,,,"Casa em Condomínio – Jundiaí/SP
+Localizado na Rua Noêmia de Queiroz Telles Fonseca, nº 97 – Casa 18 – Vila Mafalda – Jundiaí/SP. Condomínio Village Jardim de Versailles –
+Destaques do Imóvel:
+2 pavimentos
+Dormitórios
+Sala
+Cozinha
+Banheiro social
+Área de serviço
+Quintal
+Garagem
+Área construída privativa: 106,18 m²
+Área total do terreno: 111,20 m²
+Área total da unidade: 160,87 m²
+Estrutura do Condomínio:
+Portaria 24 horas
+Gás encanado
+Churrasqueira
+Área verde
+Condomínio fechado, ideal para quem busca segurança e tranquilidade em uma das regiões residenciais de Jundiaí.",,https://www.portalbayit.com.br/download/81beab87-00f1-454c-aa30-27ae88bbf91b.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/427eddcd-c417-4f15-af6c-3770f8d5fef2.jpg,https://www.portalbayit.com.br/imagens-center/770x620/427eddcd-c417-4f15-af6c-3770f8d5fef2.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/427eddcd-c417-4f15-af6c-3770f8d5fef2.jpg
+https://www.portalbayit.com.br/lote/casa-sao-leopoldo-rs/228/,255000.00,"('153000.00',)","Avenida John Kennedy,  2781 - Jardim América - Porto Alegre - RS",,,,,,3,,,,"Casa com Terreno Amplo – São Leopoldo/RS
+Localizado na Avenida John Kennedy, nº 2781 – Bairro Jardim América – São Leopoldo/RS.
+Destaques do Imóvel:
+Sala
+Dormitórios
+Banheiro
+Cozinha
+Área de serviço",,https://www.portalbayit.com.br/download/fa0e57ac-a1a8-4a96-849d-a29f8dec0be4.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/b2d51b3e-ad8c-427b-a5de-bd9ded6abc03.jpg,https://www.portalbayit.com.br/imagens-center/770x620/b2d51b3e-ad8c-427b-a5de-bd9ded6abc03.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/b2d51b3e-ad8c-427b-a5de-bd9ded6abc03.jpg
+https://www.portalbayit.com.br/lote/casa-em-novo-hamburgo-rs/21/,320009.00,"('96002.70',)","Rua La Salle,  150 - Canudos - Novo Hamburgo - RS",,,"Um terreno sem benfeitorias, situado no Bairro Canudos, no quarteirão indefinido formado pelas ruas Marconi, La Salle e ícaro, constituído do lote nº13 da quadra 72, do loteamento “Arnildo Jacob Loeblein”, medindo no norte, 12 metros de largura, com frente ao alinhamento da rua La Salle, lado par, fundos ao sul, com igual largura, divide com propriedade de Arnildo Jacob Loeblein, a leste mede 30 metros de frente aos fundos e divide com propriedade de Arnildo Jacob Loeblein, e ao oeste com igual comprimento, divide com propriedade de Arnildo Jacob Loeblein, distante 42 metros da esquina com a rua ícaro, que lhe fica a Oeste. Matrícula nº 31.107 do 1º Cartório de Registro de Imóveis de Novo Hamburgo/RS. Avaliação : R$ 320.009,00 (trezentos e vinte mil, e nove reais) Ônus: OCUPADO. Consta em andamento ação de de usucapião tendo por objeto parte do imóvele m trâmite na 3ª vara cível de Novo Hamburgo/RS sob o nº 5006926-58.2021.8.21.0019.",31.107,,3,,,,"LOTE 16) IMOVEL: Um terreno sem benfeitorias, situado no Bairro Canudos, no quarteirão indefinido formado pelas ruas Marconi, La Salle e ícaro, constituído do lote nº13 da quadra 72, do loteamento “Arnildo Jacob Loeblein”, medindo no norte, 12 metros de largura, com frente ao alinhamento da rua La Salle, lado par, fundos ao sul, com igual largura, divide com propriedade de Arnildo Jacob Loeblein, a leste mede 30 metros de frente aos fundos e divide com propriedade de Arnildo Jacob Loeblein, e ao oeste com igual comprimento, divide com propriedade de Arnildo Jacob Loeblein, distante 42 metros da esquina com a rua ícaro, que lhe fica a Oeste. Matrícula nº 31.107 do 1º Cartório de Registro de Imóveis de Novo Hamburgo/RS. Avaliação : R$ 320.009,00 (trezentos e vinte mil, e nove reais) Ônus: OCUPADO. Consta em andamento ação de de usucapião tendo por objeto parte do imóvele m trâmite na 3ª vara cível de Novo Hamburgo/RS sob o nº 5006926-58.2021.8.21.0019.",,https://www.portalbayit.com.br/download/04b4a9c1-fe0e-4509-930a-f479d26442e3.pdf,OCUPADO. Consta em andamento ação de de usucapião tendo por objeto parte do imóvele m trâmite na 3ª vara cível de Novo Hamburgo/RS sob o nº 5006926-58.2021.8.21.0019.,https://www.portalbayit.com.br/imagens/1300x1300/947b3714-caec-4ba7-bece-dd86e7df83ec.png,https://www.portalbayit.com.br/imagens-center/770x620/947b3714-caec-4ba7-bece-dd86e7df83ec.png,https://www.portalbayit.com.br/imagens-complete/605x487/947b3714-caec-4ba7-bece-dd86e7df83ec.png
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/294/,144000.00,"('72000.00',)","Rua Rosa Nagata Massuda,  Residencial Dunamis - São José dos Campos - SP",,,,17.524,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Rosa Nagata Massuda – Lote nº 37, Quadra P – Residencial Dunamis – Bairro do Bairrinho ou Mato Dentro – São José dos Campos/SP.
+Área total: 197,12m²
+Matrícula nº 17.524 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/5e44d8d2-516d-4bcb-9aa3-a33150955e5c.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/32a43bc2-c245-4caa-be03-8393e5fdcef4.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/32a43bc2-c245-4caa-be03-8393e5fdcef4.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/32a43bc2-c245-4caa-be03-8393e5fdcef4.jpeg
+https://www.portalbayit.com.br/lote/predio-bras-sp/98/,79272079.99,"('79272079.99',)","Rua Gomes Cardim,  532 - Brás - São Paulo - SP",,,,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=HD00043420000&processo.foro=625&processo.numero=0010760-83.2017.8.26.0625&gateway=true,,,"IMOVEL (1):
+Um prédio e seu respectivo terreno situado a Rua Gomes Cardim, sob nº 502, no 6º Subdistrito-Brás, desta capital, medindo 5,00 metros de frente, por 25,00 metros da frente aos fundos, em ambos os lados, tendo nos fundos a mesma metragem da frente, com a área de 125,00 metros quadrados, confrontando de quem da rua olha para o imóvel, do lado direito com o prédio 500 da mesma rua; do lado esquerdo com o prédio 508 da mesma rua e de propriedade da Cooperativa Central de Laticínios do Estado de São Paulo, e nos fundos confronta com propriedade de José Roque Gaeta; confrontava anteriormente de um lado com a casa 500 de Anna Izabel Picca Valfré e seu marido, de outro lado e fundos com quem de direito.
+CONTRIBUINTE nº
+027.001.0118-9.
+MATRÍCULA n°
+24.438 do 3° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.
+IMOVEL (2):
+Um prédio e seu respectivo terreno situado a rua Gomes Cardim, sob nº 592, no 6º Subdistrito-Brás, nesta capital, medindo 8,00 metros de frente, 18,00 metros da frente aos fundos em ambos os lados e 8,00 metros na linha dos fundos, encerrando a área de 144,00 metros quadrados, confrontando a direita de quem da rua olha para o imóvel, e nos fundos com o prédio 568 da mesma rua, e pelo lado esquerdo com a vila Barros.
+CONTRIBUINTE nº
+027.001.0118-9.
+MATRÍCULA n°
+35.843 do 3° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.
+IMOVEL (3):
+O imovel situado a rua Gomes Cardim, sob nº 508, antigos ns. 114 e 116, no 6º Subdistrito-Brás, desta capital, medindo 53,35 metros de frente, confinando por um lado com propriedade de Pedro Pica e nos fundos dos quintais do prédio fronteiro da rua 21 de Abril, mede desse lado 132,00 metros da frente aos fundos até encontrar a propriedade da Cooperativa Central de Laticínios do Estado de São Paulo, com a qual confina nos fundos numa extensão de 84,90 metros, ponto em que a linha divisória do terreno quebra À esquerda e segue numa extensão de 35,00 metros até encontrar o corpo principal do terreno, quebrando aí a direita para seguir numa extensão de 102,00 metros, onde confina com o imóvel ns. 568 e 592 da rua Gomes Cardim, de propriedade da Tecelagem Textilia S/A. até encontrar a referida rua Gomes Cardim.
+CONTRIBUINTE nº
+027.001.0118-9.
+MATRÍCULA n°
+35.844 do 3° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.
+IMOVEL (4):
+Um prédio e seu respectivo terreno situado a rua Gomes Cardim, sob nº 568, no 6º Subdistrito-Brás, nesta capital, medindo 28,00 metros de frente, 103,00 metros da frente aos fundos pelo lado direito de quem da rua olha para o imóvel, do lado esquerdo a linha divisória sobe em direção ao fundo até uma distância de 18,00 metros, inflete à esquerda numa distância de 8,00 metros daí deflete à direita e continua subindo obliquamente numa distância de 79,00 metros ao cabo dos quais inflete para a esquerda e segue até o leito da Estrada de Ferro Central do Brasil, ao longo da qual se estende na profundidade de 6,00 metros, em direção aos seus fundos, onde mede em toda a extensão 56,00 metros, perfazendo uma área aproximada de 3.456,00 metros quadrados, e confronta pelo lado direito com imovel da Tecelagem Textilia S/A. do lado esquerdo com o prédio 592 também da Textilia e com a Vila Barros e com a Estrada de Ferro Central do Brasil, e nos fundos em parte com imovel da Textilia, e em parte com terreno da Cooperativa Central de Laticínios do Estado de São Paulo..
+CONTRIBUINTE nº
+027.001.0118-9.
+MATRÍCULA n°
+35.845 do 3° Cartório de Registro de Imóveis da Comarca de São Paulo/SP.
+Observação:
+O cadastro perante a PREFEITURA DE SÃO PAULO consta em área maior, englobando todos os imóveis. Em pesquisa junto a Prefeitura foram localizados débitos em aberto no importe de R$ 965.430,10 e inscritos em dívida ativa no importe de R$ 22.844.411,94
+, atualizados até junho de 2025.",,https://www.portalbayit.com.br/download/ff0fc5a4-8189-41c6-a8eb-e1820a0619d4.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/80f5069c-c374-496d-802f-6c75c9a94a79.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/80f5069c-c374-496d-802f-6c75c9a94a79.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/80f5069c-c374-496d-802f-6c75c9a94a79.jpeg
+https://www.portalbayit.com.br/lote/casa-itaiopolis-sc/229/,290000.00,"('174000.00',)","Rua Cel. Antônio Correa,  2743 - Bom Jesus - Itaiópolis - SC",,,,,,3,,,,"Casa em Itaiópolis/SC
+Localizado na Rua Coronel Antonio Corrêa, nº 2743 – Bairro Bom Jesus – Itaiópolis/SC. Lote 1-B da Quadra 35, proveniente do Loteamento Nova Esperança.
+Destaques do Imóvel:
+Sala
+Dormitórios
+Banheiro
+Cozinha
+Área de serviço
+Área do terreno: 275,00 m²
+Área construída: 54,70 m²",,https://www.portalbayit.com.br/download/1ce6c7dd-68ae-43c2-98c1-355f6aa26ab7.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/a3132621-6179-4564-971d-180360f8d10c.jpg,https://www.portalbayit.com.br/imagens-center/770x620/a3132621-6179-4564-971d-180360f8d10c.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/a3132621-6179-4564-971d-180360f8d10c.jpg
+https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/299/,2900000.00,"('1740000.00',)","Rua Senador Milton Campos,  195 - Brooklin - São Paulo - SP","242,70m²","446,04m²",,,,3,,,,"Loja Comercial no Brooklin/SP
+Localizada na Rua Senador Milton Campos, nº 195 – Loja nº 04 – Pavimento térreo do Setor Comercial do condomínio ""Versa Brooklin"" – Brooklin /SP.
+Destaques do Imóvel:
+Área privativa total: 242,70m²
+Área total construída: 446,04m²
+Localizada em região altamente valorizada da zona sul de São Paulo, esta loja oferece excelente estrutura e fachada para visibilidade comercial.",,https://www.portalbayit.com.br/download/a9aaf65a-116b-4b28-8758-30c56d210100.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/7ec61a72-38ea-45f3-a055-4acb6a9471ea.png,https://www.portalbayit.com.br/imagens-center/770x620/7ec61a72-38ea-45f3-a055-4acb6a9471ea.png,https://www.portalbayit.com.br/imagens-complete/605x487/7ec61a72-38ea-45f3-a055-4acb6a9471ea.png
+https://www.portalbayit.com.br/lote/casa-em-paulista-pe/10/,217397.00,"('65219.10',)","Rua Paulista,  198 - Janga - Paulista - PE",,,"Uma Casa residencial sob o nº2 (dois), com dois pavimentos, edificada no lote de terreno próprio sob nº 8, da quadra B-13, componente do loteamento Felismina Pereira, situado na Praia do Janga, desta Comarca, tendo a referida casa os seguintes cômodos: no pavimento térreo - terraço, sala única, despensa, cozinha, dependência completa de empregada e área de serviço, e no pavimento superior - 3 quartos sociais, sendo 1 suíte, W.C, social, circulação, com uma área construída de 102,90m2, e uma fração ideal do terreno de 0,333%, limitando-se: pela frente, com o lote nº7; pelo lado direito, com a casa nº1; pelo lado esquerdo, com a casa nº3; e pelo fundo, com parte do lote nº9, da mesma quadra e loteamento.",23.470,,3,,,,"LOTE 05) IMOVEL: Uma Casa residencial sob o nº2 (dois), com dois pavimentos, edificada no lote de terreno próprio sob nº 8, da quadra B-13, componente do loteamento Felismina Pereira, situado na Praia do Janga, desta Comarca, tendo a referida casa os seguintes cômodos: no pavimento térreo - terraço, sala única, despensa, cozinha, dependência completa de empregada e área de serviço, e no pavimento superior - 3 quartos sociais, sendo 1 suíte, W.C, social, circulação, com uma área construída de 102,90m2, e uma fração ideal do terreno de 0,333%, limitando-se: pela frente, com o lote nº7; pelo lado direito, com a casa nº1; pelo lado esquerdo, com a casa nº3; e pelo fundo, com parte do lote nº9, da mesma quadra e loteamento.
+Matrícula nº 23.470 Cartório de Registro de Imóveis Paulista/PE
+Avaliação : R$217.397,00 (duzentos e dezessete mil,trezentos e noventa e sete reais)
+Ônus: OCUPADO. Consta em andamento ação de imissão de posse em trâmite na 2ª vara cível de Paulista/PE sob o nº 0001322-83.2022.8.17.3090.",,https://www.portalbayit.com.br/download/2ba6bd4a-b923-4b3b-b55c-e152c6ec6a0e.pdf,OCUPADO. Consta em andamento ação de imissão de posse em trâmite na 2ª vara cível de Paulista/PE sob o nº 0001322-83.2022.8.17.3090.,https://www.portalbayit.com.br/imagens/1300x1300/dd98c859-2e92-428f-aa1e-7f305d1c0a95.png,https://www.portalbayit.com.br/imagens-center/770x620/dd98c859-2e92-428f-aa1e-7f305d1c0a95.png,https://www.portalbayit.com.br/imagens-complete/605x487/dd98c859-2e92-428f-aa1e-7f305d1c0a95.png
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/281/,193600.00,"('96800.00',)","Rua Jose Aparecido Ferreira,  Residencial Dunamis - São José dos Campos - SP",,,,17.398,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua José Aparecido Ferreira, s/n – Lote nº 02 da Quadra A – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 287,00 m²
+Matrícula nº 17.398 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/b1ffa191-b6d1-416e-90a8-8c465c5acafd.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/851e0fe2-cfa4-48b6-8b88-6aef91f86508.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/851e0fe2-cfa4-48b6-8b88-6aef91f86508.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/851e0fe2-cfa4-48b6-8b88-6aef91f86508.jpeg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/292/,181100.00,"('90550.00',)","Rua Rosa Nagata Massuda,  Residencial Dunamis - São José dos Campos - SP",,,,17.517,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua Rosa Nagata Massuda – Lote nº 01 da Quadra N – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 250,06 m²
+Matrícula nº 17.517 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/0ca6eb03-32f3-4826-b312-d186086199e7.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/081f9c39-10ef-44e6-889d-23d77187fe7a.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/081f9c39-10ef-44e6-889d-23d77187fe7a.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/081f9c39-10ef-44e6-889d-23d77187fe7a.jpeg
+https://www.portalbayit.com.br/lote/apartamento-bauru-sp/133/,123269.81,"('86288.86',)","Rua Manoel Rodrigues Maduro,  3-25 - Núcleo Habitacional Vereador Edson Francisco da Silva - Bauru - SP",,"57,00m²",,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=1Z000AL6Q0000&processo.foro=71&processo.numero=1023146-10.2018.8.26.0071,,,"Direitos que a executada possui sobre o imóvel:  A unidade autônoma designada como apartamento, localizado no andar térreo, tipo II (adaptável), identificado pelo nº 04 do bloco 30 do empreendimento Condomínio Residencial Três Américas, situado na Rua Manoel Rodrigues Maduro nº 3-25,na cidade de Bauru - SP, contendo a área privativa de 42,5105m², área comum total de 57,5143m²e área total de 100,0248m², correspondendo o coeficiente de proporcionalidade e fração ideal de 0,2015326% do terreno onde acha-se assentado o empreendimento, que possui uma área total de 31.872,22m².
+MATRÍCULA n°
+107.910 do 2º Cartório de Registro de Imóveis da Comarca de Bauru/SP.
+CONTRIBUINTE nº
+4/1827/477.",,https://www.portalbayit.com.br/download/c90863ed-1287-4445-bf5b-cb50108d656e.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/008eeebe-aa53-4b2f-afb4-8471cf3738a5.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/008eeebe-aa53-4b2f-afb4-8471cf3738a5.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/008eeebe-aa53-4b2f-afb4-8471cf3738a5.jpeg
+https://www.portalbayit.com.br/lote/loja-comercial-sao-paulo-sp/300/,3800000.00,"('1900000.00',)","Rua Doutor Neto de Araújo,  257 - Vila Mariana - São Paulo - SP","258,51m²","324,46m²",,,,3,,,,"Loja Comercial na Vila Mariana/SP
+Localizada na Rua Doutor Neto de Araújo, nº 257 – Loja 01 – Térreo e 1º andar do Setor Comercial do empreendimento ""DNA Vila Mariana by You, Inc"" – Vila Mariana – São Paulo/SP.
+Destaques do Imóvel:
+Loja com 258,511 m² de área privativa total
+Área total construída: 324,462 m²
+Direito de uso de 2 vagas indeterminadas de garagem
+Excelente espaço comercial distribuído em dois pavimentos, localizado em empreendimento moderno na Vila Mariana, com acesso facilitado por vias importantes da região.",,https://www.portalbayit.com.br/download/1e322818-3b1e-4272-8357-6301042ad32b.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/33efef37-5214-4c7a-b88b-1f2260f39d8c.png,https://www.portalbayit.com.br/imagens-center/770x620/33efef37-5214-4c7a-b88b-1f2260f39d8c.png,https://www.portalbayit.com.br/imagens-complete/605x487/33efef37-5214-4c7a-b88b-1f2260f39d8c.png
+https://www.portalbayit.com.br/lote/apartamento-belo-horizonte-mg/234/,266453.31,"('159871.99',)","Rua Lila Borja,  39 - Heliópolis - Belo Horizonte - MG",,"64,95m²",,,,3,,,,"Apartamento – Belo Horizonte/MG
+Localizado na Rua Lila Borja, nº 39 – Apto 201, Bloco 11 – Edifício Lambari – Condomínio Cidades Mineiras – Bairro Heliópolis – Belo Horizonte/MG.
+Destaques do Imóvel:
+Sala
+Dormitórios
+Banheiro
+Cozinha
+Área de serviço
+1 Vaga de garagem
+Área total: 64,96 m²
+Área privativa: 59,19 m²",,https://www.portalbayit.com.br/download/f8a1f330-c8ef-4f3f-8ea3-4c8fb9e6124c.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/1c804c6c-7296-4dbc-9f3b-2ad65be6290f.png,https://www.portalbayit.com.br/imagens-center/770x620/1c804c6c-7296-4dbc-9f3b-2ad65be6290f.png,https://www.portalbayit.com.br/imagens-complete/605x487/1c804c6c-7296-4dbc-9f3b-2ad65be6290f.png
+https://www.portalbayit.com.br/lote/casa-campo-grande-ms/241/,639000.00,"('383400.00',)","Rua Rui Barbosa,  4.244 - Vila São Sebastião - Campo Grande - MS",,,,,,3,,,,"Casa em Campo Grande/MS
+Imóvel localizado na Rua 24 de Fevereiro – Lote 44, Quadra 03 – Vila São Sebastião – Campo Grande/MS.
+Destaques do Imóvel:
+Sala
+3 Dormitórios
+Cozinha
+Banheiro
+Varanda
+Terreno com 500 m²",,https://www.portalbayit.com.br/download/ca4e4c18-05c2-4148-a1a0-33ca853b477e.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/fd5344d1-76e0-4681-be19-d3edc39b7523.jpg,https://www.portalbayit.com.br/imagens-center/770x620/fd5344d1-76e0-4681-be19-d3edc39b7523.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/fd5344d1-76e0-4681-be19-d3edc39b7523.jpg
+https://www.portalbayit.com.br/lote/terreno-ferraz-de-vasconcelos-sp/279/,141300.00,"('70650.00',)","Avenida Luiz Antônio de Paiva,  239 - Jardim Ipanema - Ferraz de Vasconcelos - SP",,,,75.228,,3,,,,"Terreno em Ferraz de Vasconcelos/SP
+Localizado na Avenida Luiz Antônio de Paiva, nº 239 – Lote nº 67 da Quadra A – Parque Atlântida – Ferraz de Vasconcelos/SP.
+Área total: 171,72m²
+Matrícula nº 75.228 – CRI de Poá/SP",,https://www.portalbayit.com.br/download/c56d0c0a-18a3-4e28-8ab8-f480b34c9440.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/7f133b33-4b37-4d7c-96fe-7213fbf5d69a.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/7f133b33-4b37-4d7c-96fe-7213fbf5d69a.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/7f133b33-4b37-4d7c-96fe-7213fbf5d69a.jpeg
+https://www.portalbayit.com.br/lote/terreno-rural-ortigueira-pr/121/,767369.60,"('575527.20',)",,,,,,,3,,,,"Direitos sobre a área de terras com 3,5 alqueires, no quinhão n°11 da fazenda Apucarana Grande, neste município e comarca de Ortigueira – PR, confrontando com terras de Josafat Lestschuk, com quinhão n°4, com Gumercindo Antunes Camargo e com Rodovia do Café.
+Conforme Laudo de avaliação fls. 88/128:
+O imóvel avaliando se encontra desocupado. Casa constituída de alvenaria, com área aproximada de 65m², necessitando de reparos simples e importantes. Galpão, constituído de alvenaria e madeira, com área aproximada de 55m², necessitando de reparos importantes.
+MATRÍCULA n°
+3.089 do Cartório de Registro de Imóveis Alvaro Sady de Brito, Ortigueira/PR.",,https://www.portalbayit.com.br/download/7156dd8c-6378-4f1b-b38e-6b7c59d2ca8d.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/23550e65-5150-4fa2-89a8-a0013e2565e1.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/23550e65-5150-4fa2-89a8-a0013e2565e1.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/23550e65-5150-4fa2-89a8-a0013e2565e1.jpeg
+https://www.portalbayit.com.br/lote/terreno-–-sao-jose-dos-campos-sp/282/,160900.00,"('80450.00',)","Rua José dos Santos Souza,  Residencial Dunamis - São José dos Campos - SP",,,,17.468,,3,,,,"Terreno em São José dos Campos/SP
+Localizado na Rua José dos Santos Souza, s/n – Lote nº 29 da Quadra E – Residencial Dunamis – Eugênio de Melo – São José dos Campos/SP.
+Área total: 231,48m²
+Matrícula nº 17.468 – 2º CRI de São José dos Campos/SP",,https://www.portalbayit.com.br/download/83c618d3-295d-4ed5-8d19-db3d15f22f70.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/5cc6039b-175b-4b19-af1f-0ca6a8fff9dc.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/5cc6039b-175b-4b19-af1f-0ca6a8fff9dc.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/5cc6039b-175b-4b19-af1f-0ca6a8fff9dc.jpeg
+https://www.portalbayit.com.br/lote/gleba-de-terras-cunha-sp/272/,368269.30,"('368269.30',)",,,,,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=4F0000LUE0000&processo.foro=159&processo.numero=1000714-19.2021.8.26.0159,,,"Gleba de Terras – Cunha/SP
+Área rural com aproximadamente 6 alqueires e 3/4, situada nos imóveis “Vão da Campista e Lagos”, município de Cunha/SP.
+Imóvel composto majoritariamente por pastagem, sem benfeitorias ou edificações, e sem acesso por estrada.
+Contribuinte INCRA nº 951.165.552.674-0
+Cadastro CAR/SP nº 35136030338019
+Excelente oportunidade para investimento em área rural, ideal para atividades agropecuárias ou preservação ambiental.",,https://www.portalbayit.com.br/download/7fefe36e-d5ed-4b99-a1b4-1c8fc526bddf.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/b23df4ab-247b-4359-b620-ea05cf2e6744.jpg,https://www.portalbayit.com.br/imagens-center/770x620/b23df4ab-247b-4359-b620-ea05cf2e6744.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/b23df4ab-247b-4359-b620-ea05cf2e6744.jpg
+https://www.portalbayit.com.br/lote/casa-bauru-sp/233/,340000.00,"('200000.00',)","Rua Agenor Martins Vieira,  2-93 - Residencial Nova Bauru - Bauru - SP",,,,,,3,,,,"Casa no Residencial Nova Bauru – Bauru/SP
+Imóvel localizado na Rua Agenor Martins Vieira, nº 2-93 – Residencial Nova Bauru – Bauru/SP.
+Destaques do Imóvel:
+Sala
+Dormitórios
+Banheiro
+Cozinha
+Lavanderia
+Quintal com churrasqueira",,https://www.portalbayit.com.br/download/9e288cb2-5f5b-410f-a618-88356b1f52de.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/4e58b303-2314-4d13-be45-62480faad1cf.jpg,https://www.portalbayit.com.br/imagens-center/770x620/4e58b303-2314-4d13-be45-62480faad1cf.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/4e58b303-2314-4d13-be45-62480faad1cf.jpg
+https://www.portalbayit.com.br/lote/casa-sao-paulo-sp/306/,1000000.00,"('1000000.00',)","Rua José de Oliveira China,  230 - Jardim Dona Sinhá - São Paulo - SP",,"408,00m²",,,,3,,,,"Casa em São Paulo/SP
+Localizada na Rua José de Oliveira China, nº 230 – Vila Sapopemba – São Paulo/SP.
+Destaques do Imóvel:
+Dormitórios
+Banheiro
+Sala
+Cozinha
+Área de serviço
+Quintal
+Área total do terreno: 408,00m²",,https://www.portalbayit.com.br/download/ffe184f6-a959-496d-98ae-0ba75c101289.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/72d959c7-90d1-4bb8-b8c4-af95d0c650da.png,https://www.portalbayit.com.br/imagens-center/770x620/72d959c7-90d1-4bb8-b8c4-af95d0c650da.png,https://www.portalbayit.com.br/imagens-complete/605x487/72d959c7-90d1-4bb8-b8c4-af95d0c650da.png
+https://www.portalbayit.com.br/lote/sala-comercial-barueri-sp/231/,450000.00,"('270000.00',)","Alameda Araguaia,  2044 - Alphaville Industrial - Barueri - SP","55,09m²","99,66m²",,,,3,,,,"Conjunto Comercial no Centro Empresarial Araguaia – Barueri/SP
+Localizado no 7º andar do Bloco 02, no Centro Empresarial Araguaia – Alameda Araguaia, nº 2.044, unidade 701 – Tamboré, Barueri/SP. Excelente oportunidade para quem busca um espaço corporativo funcional, em endereço estratégico e com estrutura empresarial completa.
+Características do Imóvel:
+Área privativa: 55,09m²
+Área comum: 44,57m² (sendo 30,70m² coberta e 13,86m² descoberta)
+Área total: 99,66m²
+1 Vaga de garagem (localizada na garagem coletiva)
+Conjunto com ótima distribuição, ideal para escritórios, consultórios ou coworkings
+Diferenciais:
+Empreendimento moderno e corporativo
+Localização privilegiada na região de Tamboré, com fácil acesso à Rod. Castelo Branco e Av. Piracema
+Infraestrutura adequada para empresas de pequeno e médio porte
+Potencial de valorização em zona empresarial consolidada
+Ideal para quem busca sede própria para negócio ou oportunidade de investimento em Barueri.",,https://www.portalbayit.com.br/download/406660a6-e30f-4899-aa65-3e0136c94643.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/3dfa6492-fe75-4a91-a8fd-13436646bc9c.jpg,https://www.portalbayit.com.br/imagens-center/770x620/3dfa6492-fe75-4a91-a8fd-13436646bc9c.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/3dfa6492-fe75-4a91-a8fd-13436646bc9c.jpg
+https://www.portalbayit.com.br/lote/casa-ourinhos-sp/225/,365000.00,"('200750.00',)","Rua Celso Francisco Barbosa,  101 - Jardim Anchieta - Ourinhos - SP",,,,,,3,,,,"Casa em Ourinhos/SP
+Localizada na Rua Celso Francisco Barbosa, nº 101 – Jardim Anchieta – Ourinhos/SP.
+Imóvel:
+Área construída: 191,27m²
+Área do terreno: 360,00m²
+3 Dormitórios
+1 Sala de Estar
+1 Cozinha
+1 Banheiro
+Garagem
+Quintal com ótimo espaço livre",,https://www.portalbayit.com.br/download/e7527b89-322a-4b1b-a75d-037cd1a47524.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/33a10520-ed21-43cb-b4e0-f01aa94e8fd4.jpg,https://www.portalbayit.com.br/imagens-center/770x620/33a10520-ed21-43cb-b4e0-f01aa94e8fd4.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/33a10520-ed21-43cb-b4e0-f01aa94e8fd4.jpg
+https://www.portalbayit.com.br/lote/apartamento-sao-paulo-sp/269/,610000.00,"('490000.00',)","Avenida Dezenove de Janeiro,  567 - Vila Carrão - São Paulo - SP",,"110,95m²",,,,3,,,,"Apartamento em São Paulo/SP
+Localizado na Avenida Dezenove de Janeiro, nº 567, Apto 188, 18º pavimento, Torre 1, Vila Carrão – São Paulo/SP.  Condomínio Varandas Vila Carrão.
+Destaques do Imóvel:
+Sala
+Dormitórios
+Banheiro
+Cozinha
+Área de serviço
+1 Vaga de garagem
+Área total: 110,95m²
+Área privativa: 70,00m²
+Estrutura de Lazer e Conforto no Condomínio:
+Portaria 24h
+Elevador
+Academia
+Piscina
+Quadra esportiva
+Salão de festas
+Gás encanado
+Churrasqueira
+Playground
+Sauna
+Salão de jogos
+Brinquedoteca
+Área verde
+Localização estratégica na Vila Carrão, próxima ao Terminal Vila Carrão, escolas, UBS e demais pontos de conveniência da região. Ideal para quem busca conforto, segurança e fácil acesso aos serviços da cidade.",,https://www.portalbayit.com.br/download/082a6908-e702-4302-9a77-dbfb26a78f74.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/f67d5e39-aadb-47b0-954e-b9ee521e416e.jpg,https://www.portalbayit.com.br/imagens-center/770x620/f67d5e39-aadb-47b0-954e-b9ee521e416e.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/f67d5e39-aadb-47b0-954e-b9ee521e416e.jpg
+https://www.portalbayit.com.br/lote/casa-taubate-sp/134/,333959.39,"('200375.63',)",,,,,,,3,,,,"TERRENO designado Área B, correspondente a parte do lote nº 12 da quadra E, no imóvel denominado Recanto dos Coqueirais, situado no Bairro Estiva, na cidade de Taubaté/SP, com frente para a Rua Professor Theodoro José Lucci, onde mede 5,00m, por 9,50m nos fundos onde confronta com prédios nº 151, 139 e 143, por 20,00m do lado direito de quem da rua olha para o imóvel, confrontando com o prédio nº 72 e 20,55m do lado esquerdo, seguindo em linha reta por 12,60m, defletindo à esquerda em linha reta por 7,95m, confrontando com o prédio nº 82 (Área A – parte do lote no 12), encerrando uma área de 136,64m².
+Consta no laudo de avaliação
+: Imóvel situado à Rua Professor Theodoro José Lucci nº 76, loteamento “Recanto dos Coqueirais”, com uma edificação residencial, com sinais de abandono, e possui uma área construída total de 171,30m², conforme dados oriundos do cadastro fiscal da Municipalidade de Taubaté, não averbado na matrícula imobiliária.
+MATRÍCULA:
+142.138 do Cartório de Registro de Imóveis da Comarca de Taubaté/SP.
+CONTRIBUINTE:
+4.2.024.132.001.",,https://www.portalbayit.com.br/download/0745a374-b4fa-47e3-8558-68e92e6fbb92.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/ed4252b7-bf79-4da8-a622-6bd29b57c0b8.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/ed4252b7-bf79-4da8-a622-6bd29b57c0b8.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/ed4252b7-bf79-4da8-a622-6bd29b57c0b8.jpeg
+https://www.portalbayit.com.br/lote/casa-irapuru-sp/80/,169744.79,"('169744.79',)","Rua Petronilo Soares,  234 - Irapuru - SP",,,,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=FE0007JE10000&processo.foro=554&processo.numero=0010445-40.2018.8.26.0554,,,"BEM:
+Uma casa e seu respectivo terreno situada na Rua Petronilo Soares, 234 centro, Irapuru-SP, CEP: 17880-000,
+assim descrito em sua matrícula: UM lote de terreno sob número dezessete (17) da quadra número cinquenta e oito (58), situado na cidade, distrito e município de Irapuru, desta comarca, com a área de Trezentos e oito metros quadrados (308,00 m2), com as seguintes divisas: Na testada confronta com a Rua Petronilo Soares, numa distância de 22,00 metros; à esquerda confronta com o lote n. 12, numa distância de 14,00 metros, ao fundo confronta com o lote n. 13, numa distância de 22,00 metros e a direita confronta com o lote n. 11 numa distância de 14,00 metros, localizado no lado par da mencionada rua, distante 23,00 metros da esquina mais próxima.
+Conforme Laudo de avaliação fls. 550-551:
+O imóvel avaliando há no lote de terreno uma construção residencial de madeira e alvenaria, com telhado, portão e muro. No mais, a via é pavimentada com iluminação pública.
+MATRÍCULA n°
+5.724 do 1° Cartório de Registro de Imóveis da Comarca de Pacaembu/SP.
+CONTRIBUINTE nº
+102250.
+Observação
+:
+Em consulta ao site da Prefeitura Municipal de Irapuru, constam débitos fiscais no valor de R$ 440,20, referente ao exercício de 2025, conforme certidão expedida, não constam débitos inscritos em dívida ativa para o imóvel em referência.",,https://www.portalbayit.com.br/download/fc83c97c-af6d-4055-9651-22a57db9f454.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/b9f15234-a31c-45bc-b83f-e07e1b500f05.png,https://www.portalbayit.com.br/imagens-center/770x620/b9f15234-a31c-45bc-b83f-e07e1b500f05.png,https://www.portalbayit.com.br/imagens-complete/605x487/b9f15234-a31c-45bc-b83f-e07e1b500f05.png
+https://www.portalbayit.com.br/lote/sala-comercial-barueri-sp/230/,450000.00,"('270000.00',)","Alameda Araguaia,  2044 - Alphaville Industrial - Barueri - SP","49,32m²","91,66m²",,,,3,,,,"Conjunto Comercial no Centro Empresarial Araguaia – Barueri/SP
+Localizado no 7º andar do Bloco 02, no Centro Empresarial Araguaia – Alameda Araguaia, nº 2.044, unidade 706 – Tamboré, Barueri/SP. Excelente oportunidade para quem busca um espaço corporativo funcional, em endereço estratégico e com estrutura empresarial completa.
+Características do Imóvel:
+Área privativa: 49,32m²
+Área comum: 42,34m² (sendo 29,31m² coberta e 13,02m² descoberta)
+Área total: 91,66m²
+1 Vaga de garagem (localizada na garagem coletiva)
+Conjunto com ótima distribuição, ideal para escritórios, consultórios ou coworkings
+Diferenciais:
+Empreendimento moderno e corporativo
+Localização privilegiada na região de Tamboré, com fácil acesso à Rod. Castelo Branco e Av. Piracema
+Infraestrutura adequada para empresas de pequeno e médio porte
+Potencial de valorização em zona empresarial consolidada
+Ideal para quem busca sede própria para negócio ou oportunidade de investimento em Barueri.",,https://www.portalbayit.com.br/download/4877c0d8-1838-4946-b104-257b8e7505cf.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/7e7ec5b4-cc79-4483-885a-41d7fbe8b836.jpg,https://www.portalbayit.com.br/imagens-center/770x620/7e7ec5b4-cc79-4483-885a-41d7fbe8b836.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/7e7ec5b4-cc79-4483-885a-41d7fbe8b836.jpg
+https://www.portalbayit.com.br/lote/casa-sao-carlos-sp/236/,300000.00,"('180000.00',)","Rua Rheda Widenbruck,  60 - Residencial Samambaia - São Carlos - SP",,,,28.202,,3,,,,"Casa em São Carlos/SP
+Localizado na Rua Rheda Widenbruck, nº 60 – Lote 06, Quadra 18 – Residencial Samambaia – São Carlos/SP. Matrícula nº 28.202 do Registro de Imóveis da Comarca.
+Destaques do Imóvel:
+Sala/cozinha
+1 Dormitório
+1 Banheiro social
+Terreno com 250 m²",,https://www.portalbayit.com.br/download/930442c0-6a30-4945-bd67-6122f685330b.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/92c83d2e-5d54-423f-8628-3bdb35209a8d.jpg,https://www.portalbayit.com.br/imagens-center/770x620/92c83d2e-5d54-423f-8628-3bdb35209a8d.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/92c83d2e-5d54-423f-8628-3bdb35209a8d.jpg
+https://www.portalbayit.com.br/lote/casa-itapetinga-sp/240/,500000.00,"('300000.00',)","Rua Zariffe Yared,  35 - Vila Belo Horizonte - Itapetininga - SP",,,,,,3,,,,"Casa em Itapetininga/SP
+Localizado na Rua Professora Zarife Yared, nº 35 – Vila Belo Horizonte – Itapetininga/SP.
+Destaques do Imóvel:
+Sala
+Cozinha
+Dormitórios
+Banheiros
+Área de serviço
+Quintal amplo",,https://www.portalbayit.com.br/download/bafe1db4-814f-44ef-be74-19465ce66e71.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/bf71472e-389d-48ad-b5a2-c5982e2af50c.jpg,https://www.portalbayit.com.br/imagens-center/770x620/bf71472e-389d-48ad-b5a2-c5982e2af50c.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/bf71472e-389d-48ad-b5a2-c5982e2af50c.jpg
+https://www.portalbayit.com.br/lote/imovel-comercial-sao-paulo-sp/238/,1200000.00,"('720000.00',)","Rua Doutor José Higino,  464 - Vila Oratório - São Paulo - SP",,,,,,3,,,,"Prédio com Barracões – Vila Oratório/SP
+Localizado na Rua Doutor José Higino, nº 464 – Vila Oratório – São Paulo/SP.
+Destaques do Imóvel:
+1 Salão principal
+2 Salas administrativas
+1 Cozinha
+5 Banheiros
+Área construída: 349m²
+Terreno: 258m²
+Atualmente utilizado como estoque de rolamentos, o imóvel oferece excelente potencial para uso comercial, pequenas operações industriais ou como fonte de renda por locação.",,https://www.portalbayit.com.br/download/db90bd1e-c048-4f9f-bffa-88ee953d277b.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/0433b01d-088f-436b-8d48-d6b54ecf3ffb.jpg,https://www.portalbayit.com.br/imagens-center/770x620/0433b01d-088f-436b-8d48-d6b54ecf3ffb.jpg,https://www.portalbayit.com.br/imagens-complete/605x487/0433b01d-088f-436b-8d48-d6b54ecf3ffb.jpg
+https://www.portalbayit.com.br/lote/apartamento-bauru-sp/119/,163081.48,"('114157.03',)","Rua Sargento Leôncio Ferreira dos Santos,  1-31 - Parque Roosevelt - Bauru - SP",,"62,00m²",,,,3,https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=1Z000H6S10000&processo.foro=71&processo.numero=1006986-65.2022.8.26.0071,,,"Direitos sobre a unidade autônoma designada como apartamento, Tipo II, localizada no térreo, identificada pelo nº 04 do Bloco B do empreendimento Residencial Chácara Das Flores II, situado na Rua Claudio de Oliveira Salvadio, nº 1-31, nesta cidade de Bauru/SP, contendo a área privativa de 46,24 m2; área real comum (divisão proporcional) de 63,29 m2; área real total de 109,53 m2; área de construção privativa de 46,24 m2; área de construção comum (divisão proporcional) de 16,14 m2; área de construção total de 62,38 m2; fração ideal no terreno de 0,569% ou 66,96 m2.
+MATRÍCULA n°
+124.865 do 2º Cartório de Registro de Imóveis da Comarca de Bauru/SP.
+CONTRIBUINTE nº
+4.3640.216.",,https://www.portalbayit.com.br/download/2f4ba355-3242-4909-9111-0a5db01aa90b.pdf,,https://www.portalbayit.com.br/imagens/1300x1300/5f5e992c-6285-4e5d-9045-beca2313563f.jpeg,https://www.portalbayit.com.br/imagens-center/770x620/5f5e992c-6285-4e5d-9045-beca2313563f.jpeg,https://www.portalbayit.com.br/imagens-complete/605x487/5f5e992c-6285-4e5d-9045-beca2313563f.jpeg

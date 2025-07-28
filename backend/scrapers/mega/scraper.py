@@ -188,7 +188,7 @@ class MegaleiloesScraper:
             
             # Extração dos dados
             if (valor_div := soup.find("div", class_="value")):
-                data["valor"] = valor_div.get_text(strip=True)
+                data["valor"] = valor_div.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip(),
 
             if (localizacao := soup.find("div", class_="locality-item")):
                 data["endereco"] = localizacao.get_text(strip=True)
