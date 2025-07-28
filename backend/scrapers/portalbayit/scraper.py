@@ -5,6 +5,7 @@ import time
 from bs4 import BeautifulSoup
 import csv
 import unicodedata
+import  traceback,re
 
 class PortalBayitScraper:
     def __init__(self):
@@ -79,7 +80,7 @@ class PortalBayitScraper:
     def get_links(self, url):
         self.driver.get(url)
         time.sleep(3)
-        
+
         # Scroll to load all content
         last_height = self.driver.execute_script("return document.body.scrollHeight")
         while True:
@@ -89,68 +90,53 @@ class PortalBayitScraper:
             if new_height == last_height:
                 break
             last_height = new_height
-        
+
         soup = BeautifulSoup(self.driver.page_source, "html.parser")
-        
-        # Get total count if available
-        count_el = soup.find("span", id="CountTotal")
-        if count_el:
-            try:
-                self.count_total = int(count_el.get_text(strip=True))
-                print(f"Total properties found: {self.count_total}")
-            except ValueError:
-                self.count_total = 0
-        
+
         # Get all property links
-        row_leiloes = soup.find_all("a", class_="dg-leiloes-img")
         links_propriedades = set()
-        for item in row_leiloes:
-            href = item.get('href')
-            if href:
-                links_propriedades.add(href)
-        
+        div_col_opor = soup.find_all("div", class_="col-xs-12 col-sm-6 col-md-4 col-lg-3 dg-leiloes-item-col")
+
+        for opor in div_col_opor:
+            categoria = opor.find("div", class_="dg-leiloes-label-cat")
+            if categoria:
+                if  categoria.get_text(strip=True) != "Veículos":
+                    if  categoria.get_text(strip=True) != "Diversos":
+                        row_leiloes = opor.find_all("a", class_="dg-leiloes-img")
+                        for item in row_leiloes:
+                            href = item.get('href')
+                            if href:
+                                links_propriedades.add(href)
+
         return list(links_propriedades)
 
     def retorna_links(self, max_properties=None):
         base_url = "https://www.portalbayit.com.br/busca/?Engine=Start&Pagina=1&Busca=&Mapa=&Ordem=10&PaginaIndex=1"
         qtd_paginas = self.get_pages(base_url)
         print(f"Total de páginas encontradas: {qtd_paginas}")
-        
+
         all_links = set()
         for pagina in range(1, qtd_paginas + 1):
             print(f"Processando página {pagina} de {qtd_paginas}")
             url = f"https://www.portalbayit.com.br/busca/?Engine=Start&Pagina={pagina}&Busca=&Mapa=&Ordem=10&PaginaIndex=1"
             try:
                 links = self.get_links(url)
-                print(f"Links encontrados na página {pagina}: {len(links)}")
-                for link in links:
-                    full_link = f"https://www.portalbayit.com.br{link}" if not link.startswith('http') else link
-                    all_links.add(full_link)
-                    print(full_link)
-                print(f"Total acumulado: {len(all_links)}")
+                if links:  # Only process if links were found
+                    print(f"Links encontrados na página {pagina}: {len(links)}")
+                    for link in links:
+                        full_link = f"https://www.portalbayit.com.br{link}" if not link.startswith('http') else link
+                        all_links.add(full_link)
+                        print(full_link)
+                    print(f"Total acumulado: {len(all_links)}")
+                else:
+                    print(f"Nenhum link encontrado na página {pagina}")
             except Exception as e:
                 print(f"Erro ao processar página {pagina}: {str(e)}")
+                traceback.print_exc()
                 continue
-            
+
         print(f"\nTotal de links únicos encontrados: {len(all_links)}")
         return list(all_links)
-
-    # Adicione este método para extrair links de documentos
-    def extract_document_links_as_columns(self, page_source):
-        soup = BeautifulSoup(page_source, "html.parser")
-        documents_section = soup.find("div", class_="dg-lote-info-documentos")
-        document_links_data = {}
-
-        if documents_section:
-            links = documents_section.find_all("a", class_="documents-link")
-            for i, link in enumerate(links):
-                link_text = unicodedata.normalize('NFKD', link.get_text(strip=True)).encode('ascii', 'ignore').decode('utf-8')
-                link_href = link.get('href')
-                if link_href:
-                    # Gerar nomes de coluna dinâmicos, por exemplo, "documento_1", "link_documento_1"
-                    document_links_data[f"documento_{i+1}"] = link_text
-                    document_links_data[f"link_documento_{i+1}"] = link_href
-        return document_links_data
 
     def is_valid_url(self, url):
         return url and (url.startswith("http://") or url.startswith("https://"))
@@ -158,19 +144,24 @@ class PortalBayitScraper:
     def get_property_info(self, url):
         data = {
             "url": url,
-            "avaliacao":None,
-            "lance_minimo":None,
+            "avaliacao": None,
+            "lance_minimo": None,
             "endereco": None,
-            "leiloeiro": None,
+            "metragem_util": None,
+            "metragem_total": None,
+            "bem": None,          # Novo campo
+            "matricula": None,    # Novo campo
+            "observacoes": None,  # Novo campo
         }
 
         if not self.is_valid_url(url):
+            print("url invalida")
             return data
 
         try:
             self.driver.get(url)
             time.sleep(3)
-            
+
             last_height = self.driver.execute_script("return document.body.scrollHeight")
             while True:
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -179,22 +170,20 @@ class PortalBayitScraper:
                 if new_height == last_height:
                     break
                 last_height = new_height
-            
-            soup = BeautifulSoup(self.driver.page_source, "html.parser")
-            
-            if(avaliacao:=soup.find("strong",class_="ValorAvaliacao")):
-                data["avaliacao"]=avaliacao.get_text(strip=True)
 
-            if(lance_min:=soup.find("strong",class_="BoxLanceValor")):
-                data["lance_minimo"]=lance_min.get_text(strip=True)
+            soup = BeautifulSoup(self.driver.page_source, "html.parser")
+
+            # Dados básicos
+            if (avaliacao := soup.find("strong", class_="ValorAvaliacao")):
+                data["avaliacao"] = avaliacao.get_text(strip=True)
+
+            if (lance_min := soup.find("strong", class_="BoxLanceValor")):
+                data["lance_minimo"] = lance_min.get_text(strip=True)
 
             if (endereco := soup.find("div", class_="dg-lote-local-endereco")):
                 data["endereco"] = endereco.get_text(strip=True)
 
-            if (leiloeiro := soup.find("div", class_="author item")):
-                data["leiloeiro"] = leiloeiro.get_text(strip=True)
-
-            
+            # Metragens
             metragens_container = soup.find("div", class_="dg-lote-cfgs-box")
             if metragens_container:
                 for item in metragens_container.find_all("div", class_="dg-lote-cfgs-item"):
@@ -208,14 +197,39 @@ class PortalBayitScraper:
                         elif "ÁREA TOTAL" in title:
                             data["metragem_total"] = value_text
 
+            # Extração de BEM, MATRÍCULA e OBSERVAÇÕES
+            descricao_div = soup.find("div", class_="dg-lote-descricao-txt")
+            if descricao_div:
+                descricao_text = descricao_div.get_text(separator="\n", strip=True)
 
-            document_links = self.extract_document_links_as_columns(self.driver.page_source)
-            data.update(document_links)
+                # Extrair BEM
+                bem_match = re.search(r'BEM:\s*(.*?)(?=\n|MATRÍCULA|$)', descricao_text, re.DOTALL)
+                if bem_match:
+                    data["bem"] = bem_match.group(1).strip()
+
+                # Extrair MATRÍCULA
+                matricula_match = re.search(r'MATRÍCULA n°\s*(.*?)(?=\n|OBS|$)', descricao_text, re.DOTALL)
+                if matricula_match:
+                    data["matricula"] = matricula_match.group(1).strip()
+
+                # Extrair todas as OBSERVAÇÕES
+                observacoes = []
+                for obs_match in re.finditer(r'OBS \d+:\s*(.*?)(?=\nOBS \d+:|$)', descricao_text, re.DOTALL):
+                    observacoes.append(obs_match.group(1).strip())
+
+                if observacoes:
+                    data["observacoes"] = "\n".join(observacoes)
+
+            # Processo link (mantido da versão anterior)
+            info_div = soup.find_all("div", class_="dg-lote-descricao-info")
+            for info in info_div:
+                processo_link = info.find("a", href=True)
+                if processo_link:
+                    data["processo_link"] = processo_link["href"]
 
         except Exception as e:
+            print("Erro: {str(e)}")
             traceback.print_exc()
-            print(f"erro: {e}")
-            return  data
 
         return data
 
