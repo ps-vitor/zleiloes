@@ -264,7 +264,7 @@ class SodreSantoroScraper:
             ]
 
             # Export to CSV
-            filename = f"sodresantoro_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+            filename = f"sodresantoro.csv"
             with open(filename, "w", newline="", encoding="utf-8") as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
