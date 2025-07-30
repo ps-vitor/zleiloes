@@ -332,7 +332,7 @@ class PortalBayitScraper:
 
         return data
 
-    def save_to_csv(self, filename="portalbayit_data.csv"):
+    def save_to_csv(self, filename="portalbayit.csv"):
         """Versão corrigida que identifica todos os campos dinâmicos antes de exportar"""
         if not hasattr(self, 'all_properties_data') or not self.all_properties_data:
             print("Nenhum dado disponível para exportar!")
@@ -396,6 +396,18 @@ class PortalBayitScraper:
     def __del__(self):
         if hasattr(self, 'driver'):
             self.driver.quit()
+    
+    def run(self):
+        links = self.retorna_links(max_properties=12) 
+
+        # Coletar os dados de cada propriedade
+        for i, link in enumerate(links):
+            print(f"Processando link {i+1}/{len(links)}: {link}")
+            property_data = self.get_property_info(link)
+            self.all_properties_data.append(property_data)
+
+        # Salvar os dados no CSV
+        self.save_to_csv()
 
 if __name__ == "__main__":
     scraper = PortalBayitScraper()

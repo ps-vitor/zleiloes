@@ -13,7 +13,7 @@ import csv
 from datetime import datetime
 import os
 
-class MegaleiloesScraper:
+class MegaScraper:
     def __init__(self, output_dir="output"):
         # Configurações do navegador
         self.options = webdriver.ChromeOptions()
@@ -243,7 +243,7 @@ class MegaleiloesScraper:
             print(f"Erro ao fechar navegador: {e}")
 
 if __name__ == "__main__":
-    scraper = MegaleiloesScraper()
+    scraper = MegaScraper()
     try:
         scraper.get_homelinks()
     except KeyboardInterrupt:

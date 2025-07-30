@@ -431,13 +431,16 @@ class SuperbidScraper:
             except:
                 pass
 
+    def run(self):
+        try:
+            self.run_parallel()
+            self.save_to_csv()
+        except Exception as e:
+            print(f"Erro principal: {e}")
+            traceback.print_exc()
+        finally:
+            self.close_all_drivers()
+
 if __name__ == "__main__":
     scraper = SuperbidScraper(max_workers=4)
-    try:
-        scraper.run_parallel()
-        scraper.save_to_csv()
-    except Exception as e:
-        print(f"Erro principal: {e}")
-        traceback.print_exc()
-    finally:
-        scraper.close_all_drivers()
+    scraper.run()

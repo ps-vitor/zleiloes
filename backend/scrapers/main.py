@@ -4,6 +4,8 @@ import	time
 from    portalzuk.scraper import  PortalzukScraper 
 from    sodresantoro.scraper    import  SodreSantoroScraper
 from    mega.scraper    import  MegaScraper
+from    portalbayit.scraper import  PortalBayitScraper
+from    superbid.scraper    import  SuperbidScraper
 
 if  __name__   ==   "__main__":
     start=time.time()
@@ -20,8 +22,18 @@ if  __name__   ==   "__main__":
     
     print("\nScrap do Mega:\n")
     megascraper=MegaScraper()
-    megascraper.run()
+    megascraper.get_homelinks()
     print("\nFim\n")
+
+    print("\nScrap do Portalbayit:\n")
+    portalbayitscraper=PortalBayitScraper()
+    portalbayitscraper.run()
+    print("\nFim.\n")
+
+    print("\nScrap do Superbid:\n")
+    superbidscraper=SuperbidScraper()
+    superbidscraper.run()
+    print("\nFim.\n")
     
     end=time.time()
     tempo_total=end-start
