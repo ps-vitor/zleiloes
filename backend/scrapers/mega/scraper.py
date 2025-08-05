@@ -52,7 +52,7 @@ class MegaScraper:
 
     def get_homelinks(self):
         try:
-            print(f"Iniciando scraping em {self.start_url}")
+            # print(f"Iniciando scraping em {self.start_url}")
             
             # Tentativa com retry
             for attempt in range(self.max_retries):
@@ -81,7 +81,7 @@ class MegaScraper:
             # Processa todas as páginas
             page_count = 1
             while True:
-                print(f"\nProcessando página {page_count}")
+                # print(f"\nProcessando página {page_count}")
                 self.process_current_page()
                 
                 if not self.go_to_next_page():
@@ -115,7 +115,7 @@ class MegaScraper:
         while not self.stop_event.is_set():
             try:
                 link = self.link_queue.get(timeout=5)
-                print(f"{threading.current_thread().name} processando: {link}")
+                # print(f"{threading.current_thread().name} processando: {link}")
                 
                 for attempt in range(self.max_retries):
                     try:
@@ -150,7 +150,7 @@ class MegaScraper:
                 if href:
                     full_url = urljoin(self.base_url, href)
                     self.link_queue.put(full_url)
-                    print(f"Adicionado à fila: {full_url}")
+                    # print(f"Adicionado à fila: {full_url}")
                     
         except Exception as e:
             print(f"Erro ao processar página: {e}")
@@ -175,30 +175,34 @@ class MegaScraper:
             print(f"Erro na paginação: {e}")
             return False
     
-    def get_images(self, html_content, max_images=5):
-        """Extrai URLs de imagens e retorna um dicionário com colunas separadas."""
+    def get_images(self, url, max_images):
+        print("extraindo imagens")
+        imagens = []
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless=new')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(options=options)
+        wait = WebDriverWait(driver, 20)
+    
         try:
-            soup = BeautifulSoup(html_content, 'html.parser')
-            imagens = []
-
-            # Extrai URLs únicas (evitando duplicatas)
-            for img in soup.select('div.owl-item img[src]'):
-                src = img['src']
-                # if src not in imagens:
-                    # imagens.append(src)
-                    # if len(imagens) >= max_images:  # Limita o número de imagens
-                        # break
-                    
-            # Cria dicionário no formato {imagem_1: url1, imagem_2: url2, ...}
-            dados_imagens = {}
-            for i, url in enumerate(imagens[:max_images], start=1):
-                dados_imagens[f"imagem_{i}"] = url
-
-            return dados_imagens
-
+            driver.get(url)
+            wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.owl-item img[src]')))
+            img_elements = driver.find_elements(By.CSS_SELECTOR, 'div.owl-item img[src]')
+            for img in img_elements[:max_images]:
+                src = img.get_attribute("src")
+                if src:
+                    imagens.append(src)
         except Exception as e:
             print(f"Erro ao extrair imagens: {e}")
-            return {}
+        finally:
+            driver.quit()
+    
+        return {f"imagem_{i+1}": img_url for i, img_url in enumerate(imagens)}
+    
+
+
     
     def get_row_tabs_data(self, html_content):
         row_tabs_data = {}
@@ -245,7 +249,7 @@ class MegaScraper:
             print(f"Erro ao extrair dados das tabs: {e}")
             return {}
 
-    def get_property_info(self, url, max_images=5):
+    def get_property_info(self, url):
         """Coleta informações de uma propriedade usando requests + BeautifulSoup"""
         data = {
             "url": url,
@@ -270,6 +274,16 @@ class MegaScraper:
 
             html_content = response.text  # Store the HTML content
             soup = BeautifulSoup(html_content, "html.parser")
+
+                    # Extrair o tipo de imóvel do breadcrumb
+            breadcrumb = soup.find("ol", class_="breadcrumb")
+            if breadcrumb:
+                # O tipo de imóvel está normalmente no terceiro item do breadcrumb
+                items = breadcrumb.find_all("li")
+                if len(items) >= 3:
+                    tipo_imovel = items[2].find("span", itemprop="name")
+                    if tipo_imovel:
+                        data["tipo_imovel"] = tipo_imovel.get_text(strip=True)
 
             # Extração dos dados
             if (valor_div := soup.find("div", class_="value")):
@@ -321,7 +335,7 @@ class MegaScraper:
             tabs_data=self.get_row_tabs_data(html_content)
             data.update(tabs_data)
             
-            dados_imagens = self.get_images(html_content, max_images)  # Now html_content is defined
+            dados_imagens = self.get_images(url, 3)
             data.update(dados_imagens)
 
 
