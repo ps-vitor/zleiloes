@@ -185,7 +185,7 @@ class MegaScraper:
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(options=options)
         wait = WebDriverWait(driver, 20)
-    
+
         try:
             driver.get(url)
             wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'div.owl-item img[src]')))
@@ -198,9 +198,9 @@ class MegaScraper:
             print(f"Erro ao extrair imagens: {e}")
         finally:
             driver.quit()
-    
+
         return {f"imagem_{i+1}": img_url for i, img_url in enumerate(imagens)}
-    
+
 
 
     
@@ -235,7 +235,7 @@ class MegaScraper:
                         # Processamento especial para a tab "Descrição"
                         if name == "Descrição":
                             # Extrair a matrícula (tudo até o primeiro ponto ou quebra de linha)
-                            matricula_match = re.search(r'MATRÍCULA Nº.*?(?=[ - \n])', content, re.IGNORECASE)
+                            matricula_match = re.search(r'MATRÍCULA Nº.*?(?=[-\n])', content, re.IGNORECASE)
                             if matricula_match:
                                 row_tabs_data["Matrícula"] = matricula_match.group(0).strip()
                                 # Remover a matrícula da descrição
