@@ -273,6 +273,37 @@ class SuperbidScraper:
     def process_values_section(self, html_content):
         return self.process_characteristics_section(html_content)
 
+    def parse_description(self, description_text):
+        """Extrai campos estruturados da descrição do imóvel"""
+        result = {}
+        if not description_text:
+            return result
+
+        # Padrões comuns em descrições (adaptar conforme necessário)
+        patterns = {
+            "Área Total": r"Área [Tt]otal[:]?\s*([\d,.]+)\s*m²",
+            "Área Privativa": r"Área [Pp]rivativa[:]?\s*([\d,.]+)\s*m²",
+            "Área Construída":r"Área Construída[:]?\s*([\d,.]+)\s*m²",
+            "Status":r"Status da obra",
+            "Quartos": r"Quartos[:]?\s*(\d+)",
+            "Banheiros": r"Banheiros[:]?\s*(\d+)",
+            "Vagas": r"Vagas[:]?\s*(\d+)",
+            "Andar": r"Andar[:]?\s*(\d+|Térreo|[\wçã]+)",
+            "Situação": r"Situação[:]?\s*R?\$?\s*([\d,.]+)",
+            "Tipo de Venda":r"Tipo de Venda[:]",
+        }
+
+        # Procurar por cada padrão
+        for key, pattern in patterns.items():
+            match = re.search(pattern, description_text)
+            if match:
+                result[key] = match.group(1).strip()
+
+        # Adicionar também a descrição completa
+        result["texto_completo"] = description_text
+
+        return result
+
     def get_property_info(self, url, driver):
         data = {
             "url": url,
@@ -290,45 +321,79 @@ class SuperbidScraper:
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             time.sleep(2)
 
+            soup = BeautifulSoup(driver.page_source, "html.parser")
+
+            # 1. Processa a descrição primeiro
+            try:
+                # Tenta expandir a descrição se houver botão
+                try:
+                    expand_button = driver.find_element(By.XPATH, "//button[contains(., 'Continuar lendo')]")
+                    driver.execute_script("arguments[0].click();", expand_button)
+                    time.sleep(1)
+                    # Atualiza o soup após expandir
+                    soup = BeautifulSoup(driver.page_source, "html.parser")
+                except:
+                    pass
+
+                if desc_div := soup.find("div", class_="sc-8126a53f-13"):
+                    desc_text = desc_div.get_text(separator="\n", strip=True)
+                    desc_data = self.parse_description(desc_text)
+
+                    # Adiciona todos os campos da descrição ao data
+                    for key, value in desc_data.items():
+                        clean_key = self.clean_column_name(f"desc_{key}")
+                        data[clean_key] = value
+                        # Adiciona ao conjunto de características para garantir que apareça no CSV
+                        self.all_characteristics.add(clean_key)
+            except Exception as e:
+                print(f"Erro ao processar descrição em {url}: {e}")
+
+            # 2. Processa as seções principais
             sections_data = self.extract_all_sections(driver)
-            
+
             for section_name, section_content in sections_data.items():
                 clean_section_name = self.clean_column_name(section_name.lower())
-                
+
                 if "características do imóvel" in clean_section_name:
                     for key, value in section_content.items():
                         clean_key = self.clean_column_name(f"caract_{key}")
                         data[clean_key] = value
+                        self.all_characteristics.add(clean_key)
                 elif "documentos" in clean_section_name:
                     for key, value in section_content.items():
                         clean_key = self.clean_column_name(f"doc_{key}")
                         data[clean_key] = value
+                        self.all_characteristics.add(clean_key)
                 elif "informações do processo" in clean_section_name:
                     for key, value in section_content.items():
                         clean_key = self.clean_column_name(f"processo_{key}")
                         data[clean_key] = value
+                        self.all_characteristics.add(clean_key)
                 elif "detalhes do imóvel" in clean_section_name:
                     for key, value in section_content.items():
                         clean_key = self.clean_column_name(f"detalhe_{key}")
                         data[clean_key] = value
+                        self.all_characteristics.add(clean_key)
                 elif "descrição" in clean_section_name:
                     data["descricao_completa"] = section_content
+                    self.all_characteristics.add("descricao_completa")
                 elif "valores" in clean_section_name:
                     for key, value in section_content.items():
                         clean_key = self.clean_column_name(f"valor_{key}")
                         data[clean_key] = value
+                        self.all_characteristics.add(clean_key)
 
-            soup = BeautifulSoup(driver.page_source, "html.parser")
-
+            # 3. Informações básicas
             if title := soup.find("h1"):
                 data["titulo"] = title.get_text(strip=True)
 
-            if loc_div := soup.find("div", class_="sc-8126a53f-4"):
-                data["endereco_completo"] = loc_div.get_text(separator=" | ", strip=True)
+            if loc_div := soup.find("div", class_="sc-a7bedf32-8 eHHFUa"):
+                data["endereco"] = loc_div.get_text(separator=" | ", strip=True)
 
             if lance := soup.find("span", class_="lance-atual"):
                 data["ultimo_lance"] = self.clean_value(lance.get_text(strip=True))
 
+            # 4. Informações do leilão
             div_dados_leilao = soup.find_all("div", class_="sc-8126a53f-3 jZSJxj")
             for dado in div_dados_leilao:
                 titles = dado.find_all("p", class_="sc-8126a53f-6 uegjp")
@@ -340,27 +405,29 @@ class SuperbidScraper:
                         data["vendido_por"] = v
                     elif "Leiloeiro" in t:
                         data["leiloeiro"] = v
-            
-            image_containers = soup.select('div[class*="sc-4db409e9-8"]')  # Pega divs com classe parcial
-            images = []
 
-            for i, container in enumerate(image_containers[:10]):  # Limita a 10 imagens
-                img = container.find("img", class_="offer-image")  # Classe fixa das imagens
+            # 5. Extração de imagens (máximo 10)
+            images = []
+            # Tentativa 1: Pela estrutura conhecida
+            image_divs = soup.find_all("div", class_=lambda x: x and "sc-4db409e9-8" in x)
+            for div in image_divs[:10]:
+                img = div.find("img")
                 if img and img.get("src"):
                     images.append(img["src"])
 
-            # Fallback - Abordagem 2 (se a primeira não pegar)
+            # Tentativa 2: Fallback para imagens com classe offer-image
             if not images:
                 images = [img["src"] for img in soup.select('img.offer-image[src]')[:10]]
 
-            # Fallback - Abordagem 3 (último recurso)
+            # Tentativa 3: Fallback genérico por URL
             if not images:
                 images = [img["src"] for img in soup.find_all("img", src=True) 
                          if "sbwebservices.net/photos/" in img["src"]][:10]
 
-            # Adiciona as imagens ao dicionário de dados
+            # Adiciona as imagens ao data
             for idx, img_url in enumerate(images, 1):
                 data[f"imagem_{idx}"] = img_url
+                self.all_characteristics.add(f"imagem_{idx}")
 
             print(f"Processado: {url}")
             return data
