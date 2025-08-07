@@ -112,9 +112,9 @@ class SuperbidScraper:
                 if property_info:
                     with self.lock:
                         # Atualiza o conjunto de todas as características encontradas
-                        for key in property_info.keys():
-                            if key.startswith('caract_') or key.startswith('valor_'):
-                                self.all_characteristics.add(key)
+                        # for key in property_info.keys():
+                            # if key.startswith('caract_') or key.startswith('valor_'):
+                                # self.all_characteristics.add(key)
                         self.property_data.append(property_info)
                 self.task_queue.task_done()
             except queue.Empty:
@@ -140,6 +140,29 @@ class SuperbidScraper:
 
             soup = BeautifulSoup(driver.page_source, "html.parser")
 
+            # Extrair URLs das imagens (máximo de 10)
+            image_containers = soup.select('div[class*="sc-4db409e9-8"]')  # Pega divs com classe parcial
+            images = []
+            
+            for i, container in enumerate(image_containers[:10]):  # Limita a 10 imagens
+                img = container.find("img", class_="offer-image")  # Classe fixa das imagens
+                if img and img.get("src"):
+                    images.append(img["src"])
+            
+            # Fallback - Abordagem 2 (se a primeira não pegar)
+            if not images:
+                images = [img["src"] for img in soup.select('img.offer-image[src]')[:10]]
+            
+            # Fallback - Abordagem 3 (último recurso)
+            if not images:
+                images = [img["src"] for img in soup.find_all("img", src=True) 
+                         if "sbwebservices.net/photos/" in img["src"]][:10]
+            
+            # Adiciona as imagens ao dicionário de dados
+            for idx, img_url in enumerate(images, 1):
+                data[f"imagem_{idx}"] = img_url
+
+            # Restante do código permanece igual...
             # Informações básicas
             if title := soup.find("h1"):
                 data["titulo"] = title.get_text(strip=True)
@@ -166,31 +189,34 @@ class SuperbidScraper:
                         data["leiloeiro"] = v
 
             # Descrição completa
-                try:
-                    driver.find_element(By.XPATH, "//button[contains(., 'Continuar lendo')]").click()
-                    time.sleep(1)
-                except:
-                    pass
-                
-                if desc_div := soup.find("div", class_="sc-8126a53f-13"):
-                    desc_text = desc_div.get_text(separator="\n", strip=True)
-                    # Processa a descrição para extrair campos estruturados
-                    desc_data = self.parse_description(desc_text)
-                    for key, value in desc_data.items():
-                        clean_key = self.clean_column_name(f"desc_{key}")
-                        data[clean_key] = value
-                # Extrair características estruturadas
-                characteristics = self.extract_structured_section(driver, "Características do Imóvel")
-                for key, value in characteristics.items():
-                    clean_key = self.clean_column_name(f"caract_{key}")
+            try:
+                driver.find_element(By.XPATH, "//button[contains(., 'Continuar lendo')]").click()
+                time.sleep(1)
+            except:
+                pass
+            
+            if desc_div := soup.find("div", class_="sc-8126a53f-13"):
+                desc_text = desc_div.get_text(separator="\n", strip=True)
+                # Processa a descrição para extrair campos estruturados
+                desc_data = self.parse_description(desc_text)
+                for key, value in desc_data.items():
+                    clean_key = self.clean_column_name(f"desc_{key}")
                     data[clean_key] = value
-                # Extrair valores estruturados
-                values = self.extract_structured_section(driver, "Valores")
-                for key, value in values.items():
-                    clean_key = self.clean_column_name(f"valor_{key}")
-                    data[clean_key] = value
-                print(f"Processado: {url}")
-                return data
+            
+            # Extrair características estruturadas
+            characteristics = self.extract_structured_section(driver, "Características do Imóvel")
+            for key, value in characteristics.items():
+                clean_key = self.clean_column_name(f"caract_{key}")
+                data[clean_key] = value
+            
+            # Extrair valores estruturados
+            values = self.extract_structured_section(driver, "Valores")
+            for key, value in values.items():
+                clean_key = self.clean_column_name(f"valor_{key}")
+                data[clean_key] = value
+            
+            print(f"Processado: {url}")
+            return data
 
         except Exception as e:
             print(f"Erro ao processar {url}: {e}")
