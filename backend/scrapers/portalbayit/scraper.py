@@ -227,12 +227,27 @@ class PortalBayitScraper:
 
             soup = BeautifulSoup(self.driver.page_source, "html.parser")
 
+            # Extrair documentos com título como nome da coluna e link como valor
+            document_section = soup.find("section", id="dg-lote-documentos")
+            if document_section:
+                items = document_section.find_all("li", class_="dg-lote-documentos-downloads__item")
+                for item in items:
+                    title = item.get_text(separator=' ', strip=True).split("Visualizar")[0].strip()
+                    links = [a["href"] for a in item.find_all("a", href=True) if a["href"].startswith("http")]
+                    download_link = next((l for l in links if "/download/" in l), links[0] if links else None)
+
+                    if title and download_link:
+                        key = title.strip().replace(" ", "_").replace(":", "").lower()
+                        data[key] = download_link
+
             # Dados básicos
             if (avaliacao := soup.find("strong", class_="ValorAvaliacao")):
                 data["avaliacao"] = avaliacao.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip()
 
             if (lance_min := soup.find("strong", class_="BoxLanceValor")):
-                data["lance_minimo"] = lance_min.get_text(strip=True).replace("R$", "").replace(".", "").replace(",", ".").strip(),
+                data["lance_minimo"] = lance_min.get_text(
+                    strip=True
+                ).replace("R$", "").replace(".", "").replace(",", ".").replace("(","").replace(")","").replace("'","").strip(),
 
             if (endereco := soup.find("div", class_="dg-lote-local-endereco")):
                 data["endereco"] = endereco.get_text(strip=True)
@@ -326,6 +341,9 @@ class PortalBayitScraper:
                     if "Edital do Leilão" in item_text:
                         data["edital_do_leilao"] = download_link
 
+            data.pop("imagens", None)
+            data.pop("imagens_full", None)
+
         except Exception as e:
             print("Erro: {str(e)}")
             traceback.print_exc()
@@ -333,61 +351,62 @@ class PortalBayitScraper:
         return data
 
     def save_to_csv(self, filename="portalbayit.csv"):
-        """Versão corrigida que identifica todos os campos dinâmicos antes de exportar"""
+        """Versão corrigida que evita duplicação de colunas"""
         if not hasattr(self, 'all_properties_data') or not self.all_properties_data:
             print("Nenhum dado disponível para exportar!")
             return False
-    
+
         try:
             # Primeiro identificamos todos os campos possíveis
             all_fieldnames = set()
-            
+
             # Campos fixos que sabemos que existem
             base_fields = [
                 'url', 'avaliacao', 'lance_minimo', 'endereco', 
                 'metragem_util', 'metragem_total', 'descricao',
                 'matricula', 'observacoes', 'total_imagens',
-                'processo_link', 'imagens', 'imagens_full'
+                'processo_link', 'edital_do_leilao', 'divida_ativa'  # Adicione aqui todos os campos fixos conhecidos
             ]
-            
+
             # Adiciona os campos base
             all_fieldnames.update(base_fields)
-            
-            # Adiciona todos os campos dinâmicos de imagem encontrados
+
+            # Adiciona todos os campos dinâmicos encontrados (exceto os que já estão em base_fields)
             for prop in self.all_properties_data:
-                all_fieldnames.update(prop.keys())
-            
+                for key in prop.keys():
+                    if key not in base_fields:  # Só adiciona se não for um campo fixo
+                        all_fieldnames.add(key)
+
             # Ordena os campos para melhor organização no CSV
-            # Primeiro os campos fixos, depois os dinâmicos de imagem ordenados numericamente
+            # Primeiro os campos fixos, depois os dinâmicos
             fixed_fields = [f for f in base_fields if f in all_fieldnames]
-            
+
             # Extrai e ordena os campos de imagem (imagem_1, imagem_2, etc.)
             image_fields = sorted(
                 [f for f in all_fieldnames if re.match(r'imagem_\d+', f)],
                 key=lambda x: int(x.split('_')[1])
             )
-            
-            # Campos adicionais que não são de imagem
+
+            # Campos adicionais que não são de imagem nem fixos
             other_fields = sorted(
                 [f for f in all_fieldnames if f not in fixed_fields and f not in image_fields]
             )
-            
+
             # Junta todos os campos na ordem desejada
             ordered_fieldnames = fixed_fields + other_fields + image_fields
-            
+
             with open(filename, mode='w', newline='', encoding='utf-8-sig') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames=ordered_fieldnames)
                 writer.writeheader()
-                
+
                 for prop in self.all_properties_data:
-                    # Se existir a lista 'imagens', podemos removê-la pois já temos os campos individuais
-                    prop.pop('imagens', None)
-                    prop.pop('imagens_full', None)
-                    writer.writerow(prop)
-            
+                    # Remove campos desnecessários
+                    row_data = {k: v for k, v in prop.items() if k in ordered_fieldnames}
+                    writer.writerow(row_data)
+
             print(f"Dados exportados com sucesso para {filename}")
             return True
-    
+
         except Exception as e:
             print(f"Erro ao exportar para CSV: {str(e)}")
             traceback.print_exc()
