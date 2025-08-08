@@ -35,13 +35,13 @@ class PortalBayitScraper:
 
     def get_pages(self, url):
         self.driver.get(url)
-        time.sleep(3)  # Wait for page to load
+        time.sleep(5)  # Wait for page to load
         
         # Scroll to ensure all elements are loaded
         last_height = self.driver.execute_script("return document.body.scrollHeight")
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
+            time.sleep(5)
             new_height = self.driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break
@@ -54,7 +54,7 @@ class PortalBayitScraper:
             return 1
             
         # Find all pagination links
-        page_links = nav_el.find_all("a", onclick=lambda x: x and "BuscaPaginacao" in x)
+        page_links = nav_el.find_all("a", onclick=lambda x: x and "GetLeiloesDestaquePG" in x)
         
         if not page_links:
             return 1
@@ -64,7 +64,7 @@ class PortalBayitScraper:
         for link in page_links:
             onclick = link.get("onclick", "")
             try:
-                page_num = int(onclick.split("BuscaPaginacao(")[1].split(")")[0])
+                page_num = int(onclick.split("GetLeiloesDestaquePG(")[1].split(")")[0])
                 pages.add(page_num)
             except (IndexError, ValueError):
                 continue
@@ -81,13 +81,13 @@ class PortalBayitScraper:
 
     def get_links(self, url):
         self.driver.get(url)
-        time.sleep(3)
+        time.sleep(5)
 
         # Scroll to load all content
         last_height = self.driver.execute_script("return document.body.scrollHeight")
         while True:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
+            time.sleep(5)
             new_height = self.driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
                 break
@@ -203,12 +203,12 @@ class PortalBayitScraper:
 
         try:
             self.driver.get(url)
-            time.sleep(3)
+            time.sleep(5)
 
             last_height = self.driver.execute_script("return document.body.scrollHeight")
             while True:
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                time.sleep(2)
+                time.sleep(5)
                 new_height = self.driver.execute_script("return document.body.scrollHeight")
                 if new_height == last_height:
                     break
@@ -398,26 +398,17 @@ class PortalBayitScraper:
             self.driver.quit()
     
     def run(self):
-        links = self.retorna_links(max_properties=12) 
-
+        scraper = PortalBayitScraper()
+        links = scraper.retorna_links(max_properties=12) 
+    
         # Coletar os dados de cada propriedade
         for i, link in enumerate(links):
             print(f"Processando link {i+1}/{len(links)}: {link}")
-            property_data = self.get_property_info(link)
-            self.all_properties_data.append(property_data)
-
+            property_data = scraper.get_property_info(link)
+            scraper.all_properties_data.append(property_data)
+        
         # Salvar os dados no CSV
-        self.save_to_csv()
-
+        scraper.save_to_csv()
 if __name__ == "__main__":
     scraper = PortalBayitScraper()
-    links = scraper.retorna_links(max_properties=12) 
-
-    # Coletar os dados de cada propriedade
-    for i, link in enumerate(links):
-        print(f"Processando link {i+1}/{len(links)}: {link}")
-        property_data = scraper.get_property_info(link)
-        scraper.all_properties_data.append(property_data)
-    
-    # Salvar os dados no CSV
-    scraper.save_to_csv()
+    links = scraper.run()

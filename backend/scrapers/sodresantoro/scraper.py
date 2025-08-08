@@ -13,6 +13,7 @@ from urllib.parse import urljoin
 import random
 from lib.req_rules import ReqRules
 from lib.circuit_breaker import CircuitBreaker
+from selenium.common.exceptions import TimeoutException
 
 class SodreSantoroScraper:
     def __init__(self, delay=2.0, max_workers=None):
@@ -35,7 +36,7 @@ class SodreSantoroScraper:
 
         service = Service("/usr/bin/chromedriver")
         self.driver = webdriver.Chrome(service=service, options=options)
-        self.wait = WebDriverWait(self.driver, 20)
+        self.wait = WebDriverWait(self.driver, 30)
 
     def __del__(self):
         if hasattr(self, 'driver'):
@@ -169,75 +170,112 @@ class SodreSantoroScraper:
         results = []
         links = []
         page = 1
+
         while True:
             try:
                 url = f"{self.base_url}/imoveis/lotes?page={page}"
                 print(f"Scraping page {page}: {url}")
                 self.driver.get(url)
-                time.sleep(self.delay)
+                time.sleep(3)  # Increased wait time
 
-                self.wait.until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, "div.relative.flex-none.h-fit.rounded-xl"))
-                )
+                # Debug: Save page source
+                with open(f"debug_page_{page}.html", "w", encoding="utf-8") as f:
+                    f.write(self.driver.page_source)
 
-                soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-                cards = soup.find_all('div', class_="relative flex-none h-fit rounded-xl overflow-hidden bg-white border")
+                # Wait for cards using the exact structure from HTML
+                try:
+                    WebDriverWait(self.driver, 20).until(
+                        EC.presence_of_element_located((By.CSS_SELECTOR, "div.flex > a.wrapper"))
+                    )
+                except TimeoutException:
+                    print("No property cards found, ending pagination")
+                    break
+                
+                # Get all property cards using the exact parent-child relationship
+                cards = self.driver.find_elements(By.CSS_SELECTOR, "div.flex > a.wrapper")
+                print(f"Found {len(cards)} property cards on page {page}")
 
                 if not cards:
-                    print(f"No cards found on page {page}, stopping...")
                     break
 
                 for card in cards:
                     try:
-                        title = card.find('h2', class_="text-lg font-bold")
-                        price = card.find('p', class_="text-2xl text-blue-700 font-medium")
-                        link_tag = card.find("a", href=True)
+                        # Extract data using the exact class names from HTML
+                        link = card.get_attribute("href")
 
-                        link = self._clean_url(link_tag['href']) if link_tag else None
+                        # Title - from the exact structure
+                        title = card.find_element(
+                            By.CSS_SELECTOR, "div.text-body-medium span").text
 
-                        item = {
-                            'url': url,
-                            'preco': price.get_text(strip=True) if price else "n/a",
-                            'link': link,
-                        }
-                        results.append(item)
-                        if link:
-                            links.append(link)
-                    except Exception as e:
-                        print(f"Error processing card on page {page}: {e}")
-                        continue
+                        # Price - from the exact structure
+                        price = card.find_element(
+                            By.CSS_SELECTOR, "div.p-2 p.text-headline-small").text
 
-                pagination = soup.find('nav', {'aria-label': 'Navegação de Paginação'})
-                if pagination:
-                    page_buttons = pagination.find_all('button')
-                    next_page_buttons = [
-                        btn for btn in page_buttons
-                        if btn.get_text(strip=True).isdigit()
-                        and int(btn.get_text(strip=True)) == page + 1
-                    ]
+                        # Address - from the exact structure
+                        address = card.find_element(
+                            By.CSS_SELECTOR, "div.text-body-small.uppercase").text
 
-                    if next_page_buttons:
+                        # Auction date - from the exact structure
+                        date_element = card.find_element(
+                            By.CSS_SELECTOR, "div.flex div.inline-flex span.text-body-small")
+                        date = date_element.text if date_element else "n/a"
+
+                        # Images - from the exact structure
+                        images = []
+                        img_elements = card.find_elements(By.CSS_SELECTOR, "picture img")
+                        for img in img_elements[:3]:  # Get first 3 images only
+                            if img.get_attribute("src"):
+                                images.append(img.get_attribute("src"))
+
+                        # Occupancy status - from the exact structure
+                        ocupado = "n/a"
                         try:
-                            next_page_btn = self.driver.find_element(
-                                By.XPATH,
-                                f"//nav[@aria-label='Navegação de Paginação']//button[contains(., '{page + 1}')]"
-                            )
-                            next_page_btn.click()
-                            time.sleep(self.delay + 2)
-                            page += 1
-                        except Exception as e:
-                            print(f"Failed to click page {page + 1} button: {e}")
-                            break
-                    else:
-                        print("No next page button found.")
-                        break
+                            status_btn = card.find_element(
+                                By.CSS_SELECTOR, "button.wrapper span.label")
+                            if status_btn:
+                                ocupado = status_btn.text
+                        except:
+                            pass
+                        
+                        results.append({
+                            'url': url,
+                            'link': link,
+                            'preco': price,
+                            'titulo': title,
+                            'endereco': address,
+                            'data_leilao': date,
+                            'ocupado': ocupado,
+                            'imagens': images
+                        })
+                        links.append(link)
 
-                if page > 50:
-                    print("Reached page limit (50), stopping...")
+                    except Exception as e:
+                        print(f"Error processing card: {str(e)[:100]}...")
+                        continue
+                    
+                # Pagination - more robust approach
+                try:
+                    # Try next page button
+                    next_buttons = self.driver.find_elements(
+                        By.XPATH, "//button[contains(., 'Próxima') or contains(., 'Next') or contains(., '›')]")
+                    if next_buttons:
+                        next_buttons[0].click()
+                        page += 1
+                        time.sleep(3)
+                        continue
+                    
+                    # Try numbered pagination
+                    next_page = self.driver.find_element(
+                        By.XPATH, f"//button[text()='{page + 1}']")
+                    next_page.click()
+                    page += 1
+                    time.sleep(3)
+                except:
+                    print("No more pages available")
                     break
 
             except Exception as e:
-                print(f"Error processing page {page}: {e}")
+                print(f"Error processing page {page}: {str(e)[:100]}...")
                 traceback.print_exc()
                 break
 
@@ -266,7 +304,7 @@ class SodreSantoroScraper:
 
             # Define as colunas baseadas no máximo encontrado
             fieldnames = [
-                "url", "preco", "descricao", "forma_pagamento",
+                "link", "preco", "descricao", "forma_pagamento",
                 "cidade", "bairro", "endereco", "tipo_imovel", 
                 "processo_link", "leiloeiro","ocupado"
             ]
@@ -280,7 +318,8 @@ class SodreSantoroScraper:
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
                 for d in dados:
-                    d.pop("link", None)
+                    # d.pop("link", None)
+                    # d["url"] = d.pop("link")
                     row = {k: d.get(k, "n/a") for k in fieldnames}
                     writer.writerow(row)
 
